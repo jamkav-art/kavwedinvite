@@ -7,6 +7,7 @@ import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, useAnimationControls } from 'framer-motion'
 import gsap from 'gsap'
+import EtherealParallaxBackground from '@/components/EtherealParallaxBackground'
 
 // ── EXISTING DATA — untouched ──────────────────────────────────────────────
 const FEATURES = [
@@ -69,7 +70,8 @@ export default function Pricing() {
 
   return (
     // EXISTING section structure — id, classes preserved
-    <section id="pricing" className="py-24 md:py-32 bg-[--color-cream]">
+    <section id="pricing" className="relative overflow-hidden py-24 md:py-32">
+      <EtherealParallaxBackground />
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
 
         {/* EXISTING section heading — untouched */}
@@ -86,7 +88,7 @@ export default function Pricing() {
           {/* AI-ADDED: pricing-glow-card wrapper activates the spinning CSS pseudo-element border */}
           <div ref={cardRef} className="pricing-glow-card rounded-3xl">
             {/* Glassmorphism bridal card */}
-            <div className="relative rounded-3xl overflow-hidden border border-white/50 shadow-[0_32px_80px_rgba(201,169,98,0.22),0_8px_32px_rgba(192,24,95,0.12),0_2px_8px_rgba(0,0,0,0.05)] bg-gradient-to-br from-white via-[#FFF5F5] to-[#FEF3E2]">
+            <div className="relative rounded-3xl overflow-hidden border border-white/60 shadow-[0_32px_80px_rgba(201,169,98,0.22),0_8px_32px_rgba(192,24,95,0.12),0_2px_8px_rgba(0,0,0,0.05)] bg-white/80 backdrop-blur-md">
 
               <div className="h-1.5 bg-gradient-to-r from-[--color-gold]/60 via-[--color-rose] to-[--color-magenta]/70" />
 

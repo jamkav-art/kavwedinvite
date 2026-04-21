@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import { TEMPLATES } from '@/lib/templates'
+import EtherealParallaxBackground from '@/components/EtherealParallaxBackground'
 
 export const metadata: Metadata = {
   title: 'Wedding Invitation Templates',
@@ -27,7 +28,8 @@ export const metadata: Metadata = {
 
 export default function TemplatesPage() {
   return (
-    <div className="bg-[--color-cream] min-h-screen">
+    <div className="relative overflow-hidden min-h-screen">
+      <EtherealParallaxBackground />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         {/* Page header */}
         <div className="text-center mb-16">
@@ -48,7 +50,7 @@ export default function TemplatesPage() {
           {TEMPLATES.map((template) => (
             <div
               key={template.slug}
-              className="group bg-white rounded-2xl overflow-hidden border border-black/5 hover:shadow-xl hover:border-transparent transition-all duration-300"
+              className="group bg-white/75 backdrop-blur-sm rounded-2xl overflow-hidden border border-white/50 shadow-sm hover:shadow-xl hover:shadow-[--color-gold]/15 hover:border-white/70 transition-all duration-300"
             >
               {/* Visual preview */}
               <div
