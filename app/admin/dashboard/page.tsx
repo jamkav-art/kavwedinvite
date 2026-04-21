@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import Analytics from '@/components/admin/Analytics'
 
 export const metadata: Metadata = { title: 'Dashboard' }
-export const revalidate = 60
+export const dynamic = 'force-dynamic'
 
 function AnalyticsSkeleton() {
   return (

@@ -1,8 +1,11 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useLayoutEffect } from 'react'
 import { motion, useInView, type Variants } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
+// ── EXISTING DATA — untouched ──────────────────────────────────────────────
 const FEATURES = [
   {
     icon: '🎨',
@@ -54,6 +57,7 @@ const FEATURES = [
   },
 ]
 
+// ── EXISTING FRAMER MOTION VARIANTS — untouched ────────────────────────────
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -84,13 +88,51 @@ const headingVariants: Variants = {
 
 export default function Features() {
   const sectionRef = useRef<HTMLDivElement>(null)
-  const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' })
+  const trackRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(sectionRef, { once: true, margin: '-8% 0px' }) // EXISTING
+
+  // AI-ADDED: GSAP horizontal scroll-jacking — desktop only (≥1024px).
+  // On smaller viewports the Framer Motion grid below takes over automatically.
+  useLayoutEffect(() => {
+    gsap.registerPlugin(ScrollTrigger)
+    const mm = gsap.matchMedia()
+
+    mm.add('(min-width: 1024px)', () => {
+      const track = trackRef.current
+      const section = sectionRef.current
+      if (!track || !section) return
+
+      const ctx = gsap.context(() => {
+        gsap.to(track, {
+          x: () => -(track.scrollWidth - window.innerWidth + 64),
+          ease: 'none',
+          scrollTrigger: {
+            trigger: section,
+            start: 'top top',
+            end: () => `+=${track.scrollWidth - window.innerWidth + 64}`,
+            scrub: 1.2,
+            pin: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+          },
+        })
+      }, section)
+
+      return () => ctx.revert()
+    })
+
+    return () => mm.revert()
+  }, [])
 
   return (
-    <section className="py-24 md:py-32 bg-white" ref={sectionRef}>
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    // AI-ADDED: bg-[--color-blush] replaces bg-white for the Festive palette.
+    // overflow-hidden prevents the horizontal track from creating a scrollbar.
+    <section ref={sectionRef} className="relative bg-[--color-blush] overflow-hidden">
+
+      {/* Section heading — EXISTING Framer Motion animation logic preserved */}
+      <div className="py-16 md:py-20 max-w-6xl mx-auto px-4 sm:px-6">
         <motion.div
-          className="text-center mb-16"
+          className="text-center mb-12"
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
           variants={headingVariants}
@@ -103,17 +145,19 @@ export default function Features() {
           </h2>
         </motion.div>
 
+        {/* ── MOBILE GRID (< lg) — EXISTING Framer Motion stagger, glassmorphism cards ── */}
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate={inView ? 'visible' : 'hidden'}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5"
+          className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:hidden"
         >
           {FEATURES.map((feature) => (
             <motion.div
               key={feature.title}
               variants={cardVariants}
-              className="p-6 rounded-2xl border border-black/5 bg-[--color-cream]/50 hover:border-[--color-gold]/30 hover:shadow-lg hover:bg-[--color-cream] transition-all duration-300"
+              // AI-ADDED: glass-feature-card replaces inline bg/border for glassmorphism
+              className="p-6 rounded-2xl glass-feature-card hover:border-[--color-gold]/30 hover:shadow-lg transition-all duration-300"
             >
               <div className="text-3xl mb-4" aria-hidden="true">
                 {feature.icon}
@@ -127,6 +171,32 @@ export default function Features() {
             </motion.div>
           ))}
         </motion.div>
+      </div>
+
+      {/* ── DESKTOP HORIZONTAL SCROLL TRACK (≥ lg) — GSAP translates this div ── */}
+      {/* AI-ADDED: hidden on mobile, flex row on desktop; GSAP pins + scrubs */}
+      <div
+        ref={trackRef}
+        className="hidden lg:flex items-stretch gap-6 px-24 pb-20 will-change-transform"
+        style={{ width: 'max-content' }}
+      >
+        {FEATURES.map((feature) => (
+          <div
+            key={feature.title}
+            // AI-ADDED: glass-feature-card + fixed width for the horizontal track
+            className="flex-none w-72 p-6 rounded-2xl glass-feature-card hover:border-[--color-gold]/30 hover:shadow-lg transition-all duration-300"
+          >
+            <div className="text-3xl mb-4" aria-hidden="true">
+              {feature.icon}
+            </div>
+            <h3 className="font-semibold text-[--color-charcoal] mb-2 text-base leading-snug">
+              {feature.title}
+            </h3>
+            <p className="text-sm text-[--color-charcoal]/50 leading-relaxed">
+              {feature.description}
+            </p>
+          </div>
+        ))}
       </div>
     </section>
   )

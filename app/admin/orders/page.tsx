@@ -3,7 +3,7 @@ import { createAdminClient } from '@/lib/supabase/admin'
 import OrderTable from '@/components/admin/OrderTable'
 
 export const metadata: Metadata = { title: 'Orders' }
-export const revalidate = 30
+export const dynamic = 'force-dynamic'
 
 async function getOrders() {
   const db = createAdminClient()

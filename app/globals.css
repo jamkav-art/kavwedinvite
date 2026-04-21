@@ -8,6 +8,13 @@
   --color-charcoal: #2D2D2D;
   --color-gold: #C9A962;
 
+  /* AI-ADDED: Festive & Ethereal extended palette */
+  --color-blush: #FFF5F5;
+  --color-champagne: #F7E7CE;
+  --color-magenta: #C0185F;
+  --color-rose: #E8638C;
+  --color-deep-gold: #A8720A;
+
   /* Fluid typography */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
   --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
@@ -28,9 +35,128 @@
 :root {
   --background: #FBF7F0;
   --foreground: #2D2D2D;
+  /* AI-ADDED: Dynamic gradient vars — GSAP can tween these on scroll */
+  --hero-grad-from: #FFF5F5;
+  --hero-grad-via: #F7E7CE;
+  --hero-grad-to: #FBF7F0;
+  /* AI-ADDED: Pricing glow border angle — animated by GSAP */
+  --border-angle: 0deg;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
+}
+
+/* ============================================================
+   AI-ADDED: GLASSMORPHISM UTILITIES
+   ============================================================ */
+
+.glass-card {
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow:
+    0 8px 32px rgba(201, 169, 98, 0.1),
+    0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.glass-feature-card {
+  backdrop-filter: blur(10px) saturate(150%);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  background: rgba(251, 247, 240, 0.7);
+  border: 1px solid rgba(201, 169, 98, 0.18);
+  box-shadow:
+    0 4px 20px rgba(201, 169, 98, 0.08),
+    0 1px 4px rgba(0, 0, 0, 0.04);
+}
+
+/* ============================================================
+   AI-ADDED: HERO BACKGROUND — DYNAMIC GRADIENT
+   ============================================================ */
+
+.hero-gradient-bg {
+  background: radial-gradient(
+    ellipse at 65% 35%,
+    var(--hero-grad-from) 0%,
+    var(--hero-grad-via) 48%,
+    var(--hero-grad-to) 100%
+  );
+}
+
+/* ============================================================
+   AI-ADDED: FLOATING 3D CARD ANIMATIONS (Hero glass cards)
+   ============================================================ */
+
+@keyframes float-a {
+  0%, 100% { transform: perspective(900px) rotateY(8deg) rotateX(4deg) translateY(0px); }
+  50%       { transform: perspective(900px) rotateY(5deg) rotateX(2deg) translateY(-18px); }
+}
+
+@keyframes float-b {
+  0%, 100% { transform: perspective(900px) rotateY(-7deg) rotateX(-3deg) translateY(-8px); }
+  50%       { transform: perspective(900px) rotateY(-9deg) rotateX(1deg) translateY(10px); }
+}
+
+@keyframes float-c {
+  0%, 100% { transform: perspective(900px) rotateY(10deg) rotateX(-4deg) translateY(5px); }
+  50%       { transform: perspective(900px) rotateY(7deg)  rotateX(2deg)  translateY(-14px); }
+}
+
+.float-card-a { animation: float-a 6s   ease-in-out infinite; }
+.float-card-b { animation: float-b 7.5s ease-in-out infinite; animation-delay: -3s; }
+.float-card-c { animation: float-c 5.5s ease-in-out infinite; animation-delay: -1.5s; }
+
+/* ============================================================
+   AI-ADDED: ORNAMENT DRIFT (Hero decorative glyphs)
+   ============================================================ */
+
+@keyframes ornament-drift {
+  0%, 100% { transform: translateY(0)   rotate(0deg); }
+  33%       { transform: translateY(-18px) rotate(4deg); }
+  66%       { transform: translateY(10px)  rotate(-3deg); }
+}
+
+.ornament-drift      { animation: ornament-drift 14s ease-in-out infinite; }
+.ornament-drift-slow { animation: ornament-drift 20s ease-in-out infinite; animation-delay: -8s; }
+
+/* ============================================================
+   AI-ADDED: PRICING GLOW BORDER
+   Card wrapper uses --border-angle (CSS var), a rotating
+   conic-gradient pseudo-element creates the animated ring.
+   GSAP tweens --border-angle from 0 → 360 on repeat.
+   ============================================================ */
+
+.pricing-glow-card {
+  position: relative;
+  isolation: isolate;
+}
+
+.pricing-glow-card::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 26px; /* matches rounded-3xl (24px) + 2px border */
+  background: conic-gradient(
+    from var(--border-angle),
+    #C9A962 0deg,
+    #F7E7CE 60deg,
+    #E8638C 130deg,
+    #C0185F 190deg,
+    #E8638C 250deg,
+    #F7E7CE 310deg,
+    #C9A962 360deg
+  );
+  z-index: -1;
+  opacity: 0.55;
+}
+
+.pricing-glow-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 24px;
+  background: white;
+  z-index: -1;
 }
