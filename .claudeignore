@@ -1,0 +1,69 @@
+# .claudeignore
+# Excludes files from Claude's context window.
+# Nothing here affects the build, imports, or runtime.
+
+# ── Dependencies ──────────────────────────────────────────────────────────────
+node_modules/
+
+# ── Build output ──────────────────────────────────────────────────────────────
+.next/
+out/
+dist/
+build/
+
+# ── Lock files (deterministic, not human-readable logic) ──────────────────────
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+bun.lockb
+
+# ── Local env / secrets ───────────────────────────────────────────────────────
+.env.local
+.env*.local
+.env.production
+# .env.example is kept — it documents required vars
+
+# ── TypeScript incremental build cache ────────────────────────────────────────
+tsconfig.tsbuildinfo
+*.tsbuildinfo
+
+# ── Auto-generated Next.js type shim (do not edit) ────────────────────────────
+next-env.d.ts
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+*.log
+logs/
+npm-debug.log*
+
+# ── OS / IDE noise ────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.cursor/
+.cursorrules
+
+# ── Cache directories ─────────────────────────────────────────────────────────
+.cache/
+.turbo/
+.eslintcache
+.stylelintcache
+
+# ── Test coverage output ──────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+
+# ── Static public assets (not source logic) ───────────────────────────────────
+# Decorative SVG borders — referenced as URL strings, not JS imports
+public/templates/
+# Image/font folders (empty now; will hold binary assets only)
+public/images/
+public/fonts/
+
+# ── Large generated snapshot file ─────────────────────────────────────────────
+# 971 KB auto-generated directory listing, not source code
+project_tree.txt
+
+# ── Planning / blueprint HTML documents ───────────────────────────────────────
+# Superseded by CLAUDE.md; not imported anywhere in source
+wedinvite_master_blueprint.html
+wedinvite_nextjs_blueprint.html
+wedinvite_template_architecture.html

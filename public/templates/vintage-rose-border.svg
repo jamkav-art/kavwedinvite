@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Delicate corner frame -->
+  <line x1="8" y1="8" x2="72" y2="8" stroke="#DEB8C2" stroke-width="1"/>
+  <line x1="8" y1="8" x2="8" y2="72" stroke="#DEB8C2" stroke-width="1"/>
+  <!-- Corner rosette -->
+  <circle cx="8" cy="8" r="5" fill="#B5768A" opacity="0.3"/>
+  <circle cx="8" cy="8" r="3" fill="#B5768A" opacity="0.6"/>
+  <!-- Rose bloom: layered petals at mid-corner -->
+  <ellipse cx="44" cy="40" rx="8" ry="5" fill="#DEB8C2" opacity="0.7" transform="rotate(-30 44 40)"/>
+  <ellipse cx="44" cy="40" rx="8" ry="5" fill="#DEB8C2" opacity="0.7" transform="rotate(30 44 40)"/>
+  <ellipse cx="44" cy="40" rx="8" ry="5" fill="#C4957A" opacity="0.5" transform="rotate(90 44 40)"/>
+  <ellipse cx="44" cy="40" rx="8" ry="5" fill="#C4957A" opacity="0.5" transform="rotate(-90 44 40)"/>
+  <!-- Rose center -->
+  <circle cx="44" cy="40" rx="4" ry="4" fill="#B5768A" opacity="0.9"/>
+  <circle cx="44" cy="40" r="2" fill="#F5E8E0"/>
+  <!-- Leaves and stem -->
+  <path d="M44 48 L40 64" stroke="#9CA986" stroke-width="1" stroke-linecap="round" fill="none"/>
+  <path d="M42 54 Q36 50 34 56 Q39 52 42 56 Z" fill="#9CA986" opacity="0.7"/>
+  <path d="M41 60 Q35 58 34 64 Q39 60 41 62 Z" fill="#9CA986" opacity="0.5"/>
+  <!-- Small bud at top -->
+  <ellipse cx="60" cy="16" rx="4" ry="5" fill="#DEB8C2" opacity="0.5"/>
+  <ellipse cx="60" cy="16" rx="2" ry="3" fill="#B5768A" opacity="0.7"/>
+  <path d="M60 21 L58 28" stroke="#9CA986" stroke-width="0.75" stroke-linecap="round" fill="none"/>
+  <path d="M60 21 Q55 24 54 30 Q57 24 62 24 Z" fill="#9CA986" opacity="0.5"/>
+</svg>

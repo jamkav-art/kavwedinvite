@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Ornate L-corner frame -->
+  <line x1="8" y1="8" x2="80" y2="8" stroke="#1B2C4E" stroke-width="1.5"/>
+  <line x1="8" y1="8" x2="8" y2="80" stroke="#1B2C4E" stroke-width="1.5"/>
+  <line x1="14" y1="14" x2="70" y2="14" stroke="#C9A962" stroke-width="0.75" opacity="0.6"/>
+  <line x1="14" y1="14" x2="14" y2="70" stroke="#C9A962" stroke-width="0.75" opacity="0.6"/>
+  <!-- Corner star burst -->
+  <circle cx="8" cy="8" r="4" fill="#1B2C4E"/>
+  <line x1="8" y1="2" x2="8" y2="14" stroke="#C9A962" stroke-width="1"/>
+  <line x1="2" y1="8" x2="14" y2="8" stroke="#C9A962" stroke-width="1"/>
+  <line x1="3.5" y1="3.5" x2="12.5" y2="12.5" stroke="#C9A962" stroke-width="0.75" opacity="0.7"/>
+  <line x1="12.5" y1="3.5" x2="3.5" y2="12.5" stroke="#C9A962" stroke-width="0.75" opacity="0.7"/>
+  <!-- 4-point star at mid-corner -->
+  <polygon points="44,36 46,44 44,52 42,44" fill="#C9A962" opacity="0.8"/>
+  <polygon points="36,44 44,46 52,44 44,42" fill="#C9A962" opacity="0.8"/>
+  <circle cx="44" cy="44" r="2.5" fill="#C9A962"/>
+  <!-- Crescent moon -->
+  <path d="M60 24 Q56 28 56 34 Q56 40 60 44 Q52 40 52 34 Q52 28 60 24 Z" fill="#C9A962" opacity="0.7"/>
+  <!-- Small stars scattered -->
+  <circle cx="28" cy="8" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="52" cy="8" r="1" fill="#C9A962" opacity="0.6"/>
+  <circle cx="8" cy="28" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="8" cy="52" r="1" fill="#C9A962" opacity="0.6"/>
+  <circle cx="32" cy="28" r="1" fill="#C9A962" opacity="0.4"/>
+  <circle cx="24" cy="56" r="1" fill="#C9A962" opacity="0.4"/>
+</svg>

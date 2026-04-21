@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Clean L-corner: two thick lines -->
+  <line x1="8" y1="8" x2="64" y2="8" stroke="#1A1A1A" stroke-width="2"/>
+  <line x1="8" y1="8" x2="8" y2="64" stroke="#1A1A1A" stroke-width="2"/>
+  <!-- Inner thin offset lines -->
+  <line x1="16" y1="16" x2="56" y2="16" stroke="#1A1A1A" stroke-width="0.5" opacity="0.4"/>
+  <line x1="16" y1="16" x2="16" y2="56" stroke="#1A1A1A" stroke-width="0.5" opacity="0.4"/>
+  <!-- Precise corner square -->
+  <rect x="4" y="4" width="8" height="8" fill="#1A1A1A"/>
+  <!-- End-cap squares -->
+  <rect x="60" y="5" width="7" height="7" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+  <rect x="5" y="60" width="7" height="7" fill="none" stroke="#1A1A1A" stroke-width="1.5"/>
+  <!-- Tiny centered square ornament -->
+  <rect x="36" y="36" width="6" height="6" fill="none" stroke="#1A1A1A" stroke-width="1" opacity="0.5" transform="rotate(45 39 39)"/>
+  <rect x="37.5" y="37.5" width="3" height="3" fill="#1A1A1A" opacity="0.3" transform="rotate(45 39 39)"/>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Thin clean L-corner lines -->
+  <line x1="8" y1="8" x2="72" y2="8" stroke="#7C8C6E" stroke-width="1"/>
+  <line x1="8" y1="8" x2="8" y2="72" stroke="#7C8C6E" stroke-width="1"/>
+  <!-- End caps -->
+  <line x1="72" y1="5" x2="72" y2="11" stroke="#7C8C6E" stroke-width="1"/>
+  <line x1="5" y1="72" x2="11" y2="72" stroke="#7C8C6E" stroke-width="1"/>
+  <!-- Corner dot -->
+  <circle cx="8" cy="8" r="2.5" fill="#7C8C6E"/>
+  <!-- Leaf cluster: three leaves from a common stem point -->
+  <path d="M40 56 Q36 44 28 40 Q36 40 40 48 Z" fill="#9CA986" opacity="0.8"/>
+  <path d="M40 56 Q48 44 56 42 Q50 50 44 54 Z" fill="#7C8C6E" opacity="0.9"/>
+  <path d="M40 56 Q32 52 24 56 Q30 48 40 52 Z" fill="#9CA986" opacity="0.6"/>
+  <!-- Stem -->
+  <path d="M40 56 L40 72" stroke="#7C8C6E" stroke-width="1" stroke-linecap="round"/>
+  <!-- Small leaf at base -->
+  <path d="M40 64 Q34 62 32 68 Q37 64 40 66 Z" fill="#9CA986" opacity="0.5"/>
+</svg>

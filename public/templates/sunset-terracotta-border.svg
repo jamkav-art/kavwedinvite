@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Radiating sun-ray lines from corner -->
+  <line x1="8" y1="8" x2="72" y2="8" stroke="#C05A3A" stroke-width="1.5"/>
+  <line x1="8" y1="8" x2="8" y2="72" stroke="#C05A3A" stroke-width="1.5"/>
+  <!-- Concentric quarter-circle arcs -->
+  <path d="M8 44 Q8 8 44 8" stroke="#E8A87C" stroke-width="1" fill="none" opacity="0.7"/>
+  <path d="M8 60 Q8 8 60 8" stroke="#E8A87C" stroke-width="0.75" fill="none" opacity="0.5"/>
+  <path d="M8 28 Q8 8 28 8" stroke="#C05A3A" stroke-width="0.75" fill="none" opacity="0.5"/>
+  <!-- Corner sun dot -->
+  <circle cx="8" cy="8" r="4" fill="#C05A3A"/>
+  <circle cx="8" cy="8" r="7" fill="none" stroke="#E8A87C" stroke-width="0.75" opacity="0.6"/>
+  <!-- Geometric diamond accent -->
+  <polygon points="44,44 50,38 56,44 50,50" fill="none" stroke="#C05A3A" stroke-width="1"/>
+  <polygon points="44,44 50,40 56,44 50,48" fill="#E8A87C" opacity="0.4"/>
+  <!-- Decorative line end -->
+  <circle cx="72" cy="8" r="2" fill="#E8A87C"/>
+  <circle cx="8" cy="72" r="2" fill="#E8A87C"/>
+</svg>

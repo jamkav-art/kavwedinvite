@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Outer L-frame lines -->
+  <line x1="8" y1="8" x2="90" y2="8" stroke="#C9A962" stroke-width="1.5"/>
+  <line x1="8" y1="8" x2="8" y2="90" stroke="#C9A962" stroke-width="1.5"/>
+  <!-- Inner L-frame lines -->
+  <line x1="16" y1="16" x2="78" y2="16" stroke="#8B1A1A" stroke-width="0.75"/>
+  <line x1="16" y1="16" x2="16" y2="78" stroke="#8B1A1A" stroke-width="0.75"/>
+  <!-- Corner diamond -->
+  <polygon points="8,3 13,8 8,13 3,8" fill="#C9A962"/>
+  <!-- Ornamental dots along outer lines -->
+  <circle cx="32" cy="8" r="2" fill="#C9A962"/>
+  <circle cx="56" cy="8" r="2" fill="#C9A962"/>
+  <circle cx="8" cy="32" r="2" fill="#C9A962"/>
+  <circle cx="8" cy="56" r="2" fill="#C9A962"/>
+  <!-- Small tick marks between dots -->
+  <line x1="44" y1="5.5" x2="44" y2="10.5" stroke="#C9A962" stroke-width="0.75" opacity="0.6"/>
+  <line x1="5.5" y1="44" x2="10.5" y2="44" stroke="#C9A962" stroke-width="0.75" opacity="0.6"/>
+  <!-- Central diamond ornament -->
+  <polygon points="48,48 54,42 60,48 54,54" fill="none" stroke="#C9A962" stroke-width="1"/>
+  <circle cx="54" cy="48" r="2.5" fill="#C9A962" opacity="0.7"/>
+  <!-- Arch motif (mandap) -->
+  <path d="M24 80 Q24 56 48 56 L80 56" stroke="#8B1A1A" stroke-width="1" fill="none"/>
+  <path d="M28 80 Q28 60 50 60 L80 60" stroke="#C9A962" stroke-width="0.5" fill="none" opacity="0.6"/>
+  <!-- Gold leaf accent dots -->
+  <circle cx="80" cy="56" r="1.5" fill="#C9A962"/>
+  <circle cx="80" cy="60" r="1" fill="#C9A962" opacity="0.5"/>
+</svg>

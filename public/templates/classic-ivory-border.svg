@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" fill="none">
+  <!-- Outer double frame -->
+  <line x1="6" y1="6" x2="88" y2="6" stroke="#C9A962" stroke-width="1.5"/>
+  <line x1="6" y1="6" x2="6" y2="88" stroke="#C9A962" stroke-width="1.5"/>
+  <line x1="12" y1="12" x2="80" y2="12" stroke="#8B4513" stroke-width="0.75" opacity="0.7"/>
+  <line x1="12" y1="12" x2="12" y2="80" stroke="#8B4513" stroke-width="0.75" opacity="0.7"/>
+  <!-- Kolam dot grid in L-shape -->
+  <circle cx="6" cy="6" r="3" fill="#C9A962"/>
+  <circle cx="28" cy="6" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="50" cy="6" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="72" cy="6" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="6" cy="28" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="6" cy="50" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <circle cx="6" cy="72" r="1.5" fill="#C9A962" opacity="0.8"/>
+  <!-- Kolam curved connector pattern -->
+  <path d="M28 28 Q28 20 36 20 Q44 20 44 28 Q44 36 36 36 Q28 36 28 28" stroke="#8B4513" stroke-width="0.75" fill="none" opacity="0.6"/>
+  <circle cx="36" cy="28" r="2" fill="#C9A962" opacity="0.6"/>
+  <!-- Secondary ornament -->
+  <path d="M48 56 Q48 48 56 48 Q64 48 64 56 Q64 64 56 64 Q48 64 48 56" stroke="#C9A962" stroke-width="0.75" fill="none" opacity="0.5"/>
+  <circle cx="56" cy="56" r="1.5" fill="#8B4513" opacity="0.5"/>
+</svg>

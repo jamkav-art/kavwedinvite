@@ -1,0 +1,404 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.tab{padding:7px 16px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s;}
+.tab.active{background:#D85A30;border-color:#D85A30;color:#fff;font-weight:500;}
+.tab:hover:not(.active){background:var(--color-background-secondary);}
+.sec{display:none;}.sec.active{display:block;}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.intro{font-size:13px;color:var(--color-text-secondary);margin-bottom:1.2rem;line-height:1.6;}
+.sh{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.06em;margin:1.2rem 0 8px;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:10px;}
+.ct{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.cs{font-size:12px;color:var(--color-text-secondary);line-height:1.6;}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;margin:2px 3px 2px 0;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:10px;margin-bottom:10px;}
+.grid4{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:8px;margin-bottom:12px;}
+.cta{display:inline-block;margin-top:1rem;padding:9px 20px;border-radius:20px;background:#D85A30;color:#fff;font-size:13px;font-weight:500;cursor:pointer;border:none;}
+.cta:hover{background:#993C1D;}
+
+/* Template cards */
+.tpl-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:12px;margin-bottom:1rem;}
+.tpl{border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);}
+.tpl-header{padding:20px 16px 14px;position:relative;}
+.tpl-badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 8px;border-radius:20px;margin-bottom:8px;}
+.tpl-name{font-size:15px;font-weight:500;margin-bottom:4px;}
+.tpl-sub{font-size:12px;line-height:1.5;margin-bottom:10px;}
+.tpl-swatches{display:flex;gap:4px;}
+.sw{width:16px;height:16px;border-radius:3px;}
+.tpl-tags{padding:10px 16px;border-top:0.5px solid rgba(0,0,0,0.08);display:flex;flex-wrap:wrap;gap:4px;}
+.tpl-tag{font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;}
+
+/* Architecture */
+.arch-layer{border-radius:var(--border-radius-lg);padding:12px 14px;margin-bottom:8px;}
+.arch-title{font-size:12px;font-weight:500;margin-bottom:6px;}
+.arch-items{display:flex;flex-wrap:wrap;gap:6px;}
+.arch-item{font-size:11px;padding:4px 10px;border-radius:20px;font-weight:500;}
+
+/* Customisation system */
+.custom-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.custom-row:last-child{border-bottom:none;}
+.custom-prop{font-family:var(--font-mono);font-size:11px;font-weight:500;color:#D85A30;min-width:160px;padding-top:1px;}
+.custom-desc{font-size:12px;color:var(--color-text-secondary);line-height:1.5;}
+.code{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-family:var(--font-mono);font-size:11px;line-height:1.9;color:var(--color-text-primary);margin:8px 0;overflow-x:auto;}
+.k{color:#7F77DD;}.s{color:#D85A30;}.c{color:var(--color-text-secondary);}
+.section-note{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;line-height:1.6;}
+</style>
+
+<div style="padding:1.5rem 0;">
+<h2>Building 8 amazing templates</h2>
+<p class="intro">One smart architecture · all 8 templates share the same component tree · only the config changes</p>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('strategy')">Strategy</div>
+  <div class="tab" onclick="show('templates')">All 8 templates</div>
+  <div class="tab" onclick="show('architecture')">Architecture</div>
+  <div class="tab" onclick="show('config')">Config system</div>
+  <div class="tab" onclick="show('customise')">Customisation</div>
+  <div class="tab" onclick="show('fonts')">Fonts & assets</div>
+</div>
+
+<!-- STRATEGY -->
+<div class="sec active" id="strategy">
+<div class="section-note">The secret: you only build ONE invite page. All 8 templates are just different CSS configs injected into the same React component tree. This means fixing a bug fixes it for all 8 templates instantly.</div>
+
+<div class="grid2">
+  <div class="card"><div class="ct">Wrong way to build templates</div><div class="cs">8 separate HTML files, each with its own layout. When you want to add a feature (e.g. voice message), you have to add it 8 times. Bugs multiply. Maintenance is a nightmare.</div></div>
+  <div class="card" style="border-color:#D85A30;"><div class="ct" style="color:#D85A30;">Right way — config-driven</div><div class="cs">One <code>app/invite/[id]/page.tsx</code> that reads a template config object. The config holds colors, fonts, layout variant, animation style, border art. Swap the config → completely different look.</div></div>
+</div>
+
+<div class="sh">What actually changes between templates</div>
+<div class="grid4">
+  <div class="card"><div class="ct">Colors</div><div class="cs">Background, primary, accent, text — 4 color variables per template</div></div>
+  <div class="card"><div class="ct">Fonts</div><div class="cs">Heading font (serif/script/sans) + body font — loaded from Google Fonts</div></div>
+  <div class="card"><div class="ct">Layout</div><div class="cs">Hero style: fullscreen photo / color bg / video bg / split layout</div></div>
+  <div class="card"><div class="ct">Border art</div><div class="cs">SVG decorative borders — floral, kolam, minimal line, none</div></div>
+  <div class="card"><div class="ct">Animation</div><div class="cs">Petal fall / star twinkle / minimal fade / confetti burst</div></div>
+  <div class="card"><div class="ct">Section order</div><div class="cs">Some templates lead with video, some with gallery, some with countdown</div></div>
+  <div class="card"><div class="ct">Card style</div><div class="cs">Event cards: flat / bordered / glassmorphism / outlined gold</div></div>
+  <div class="card"><div class="ct">Dividers</div><div class="cs">SVG ornamental dividers between sections — mandap, floral, geometric</div></div>
+</div>
+
+<div class="sh">What stays the same across all 8</div>
+<div class="card">
+  <div class="cs">CountdownTimer · PhotoGallery · MusicPlayer · VoiceMessage · VideoSection · EventDetails · VenueMap · RSVPForm · ShareButtons · CoupleStory — all identical components, all receive the same props. Only the visual styling wrapping them changes.</div>
+</div>
+
+<button class="cta" onclick="sendPrompt('Show me the complete lib/templates.ts config file for all 8 WedInvite templates with all config properties')">Generate templates.ts config ↗</button>
+</div>
+
+<!-- ALL 8 TEMPLATES -->
+<div class="sec" id="templates">
+<p class="intro">Click any template to ask Claude to build it.</p>
+<div class="tpl-grid">
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#3D0C0C;">
+      <div class="tpl-badge" style="background:rgba(201,168,76,0.25);color:#C9A84C;">traditional</div>
+      <div class="tpl-name" style="color:#C9A84C;font-family:Georgia,serif;">Royal Maroon</div>
+      <div class="tpl-sub" style="color:rgba(201,168,76,0.7);">Dark maroon + gold serif. Heavy elegance. Mandap arch illustration. Best for North Indian weddings.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#3D0C0C;"></div><div class="sw" style="background:#7B1C1C;"></div><div class="sw" style="background:#C9A84C;"></div><div class="sw" style="background:#FDF6E3;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#2A0808;">
+      <span class="tpl-tag" style="background:#C9A84C22;color:#C9A84C;">Playfair Display</span>
+      <span class="tpl-tag" style="background:#C9A84C22;color:#C9A84C;">Petal fall anim</span>
+      <span class="tpl-tag" style="background:#C9A84C22;color:#C9A84C;">Mandap SVG art</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#FDF0EE;">
+      <div class="tpl-badge" style="background:#F4C0D1;color:#72243E;">romantic</div>
+      <div class="tpl-name" style="color:#72243E;font-family:Georgia,serif;">Garden Floral</div>
+      <div class="tpl-sub" style="color:#993556;">Blush pinks, watercolour borders. Script fonts. Soft, airy, garden wedding energy.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#FDF0EE;"></div><div class="sw" style="background:#E8C4C4;"></div><div class="sw" style="background:#D4537E;"></div><div class="sw" style="background:#6B4C3B;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#FBE8EC;">
+      <span class="tpl-tag" style="background:#F4C0D1;color:#72243E;">Great Vibes</span>
+      <span class="tpl-tag" style="background:#F4C0D1;color:#72243E;">Floral SVG border</span>
+      <span class="tpl-tag" style="background:#F4C0D1;color:#72243E;">Petal rain</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#0D0D1A;">
+      <div class="tpl-badge" style="background:rgba(128,0,200,0.3);color:#C084FC;">premium</div>
+      <div class="tpl-name" style="color:#E2B96F;font-family:Georgia,serif;">Midnight Luxe</div>
+      <div class="tpl-sub" style="color:rgba(226,185,111,0.65);">Deep navy, gold + purple. Star constellation pattern. Evening reception perfection.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#0D0D1A;"></div><div class="sw" style="background:#1A1A2E;"></div><div class="sw" style="background:#E2B96F;"></div><div class="sw" style="background:#C084FC;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#08080F;">
+      <span class="tpl-tag" style="background:rgba(226,185,111,0.2);color:#E2B96F;">Cormorant Garamond</span>
+      <span class="tpl-tag" style="background:rgba(226,185,111,0.2);color:#E2B96F;">Star twinkle</span>
+      <span class="tpl-tag" style="background:rgba(226,185,111,0.2);color:#E2B96F;">Dark bg video</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#F7F7F2;">
+      <div class="tpl-badge" style="background:#F4C0D1;color:#72243E;">modern</div>
+      <div class="tpl-name" style="color:#1A1A1A;font-family:Arial,sans-serif;font-weight:300;letter-spacing:3px;">MODERN MINIMAL</div>
+      <div class="tpl-sub" style="color:#555;">Clean white, black type, single pink accent. Sans-serif. Instagram-aesthetic couples.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#F7F7F2;"></div><div class="sw" style="background:#222;"></div><div class="sw" style="background:#D4537E;"></div><div class="sw" style="background:#fff;border:0.5px solid #ddd;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#EFEFEA;">
+      <span class="tpl-tag" style="background:#ddd;color:#333;">DM Sans</span>
+      <span class="tpl-tag" style="background:#ddd;color:#333;">Minimal fade</span>
+      <span class="tpl-tag" style="background:#ddd;color:#333;">Split layout hero</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#FFF8E7;">
+      <div class="tpl-badge" style="background:#D4A01722;color:#854F0B;">regional</div>
+      <div class="tpl-name" style="color:#8B0000;font-family:Georgia,serif;">South Indian Gold</div>
+      <div class="tpl-sub" style="color:#6B4A10;">Cream + deep red + gold. Kolam/rangoli borders. Tamil & Telugu script support.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#FFF8E7;"></div><div class="sw" style="background:#8B0000;"></div><div class="sw" style="background:#D4A017;"></div><div class="sw" style="background:#F9E4A0;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#FEF2C8;">
+      <span class="tpl-tag" style="background:#D4A01722;color:#854F0B;">Noto Serif Tamil</span>
+      <span class="tpl-tag" style="background:#D4A01722;color:#854F0B;">Kolam SVG border</span>
+      <span class="tpl-tag" style="background:#D4A01722;color:#854F0B;">Gold dividers</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#F7EEE2;">
+      <div class="tpl-badge" style="background:#A8C5A033;color:#3B6D11;">trendy</div>
+      <div class="tpl-name" style="color:#7B5030;font-family:Georgia,serif;">Boho Pastel</div>
+      <div class="tpl-sub" style="color:#8B6545;">Warm pastels, macrame patterns, earthy tones. Destination weddings. Urban couples.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#F7EEE2;"></div><div class="sw" style="background:#A8C5A0;"></div><div class="sw" style="background:#D4A5A5;"></div><div class="sw" style="background:#C4923A;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#EEDFC8;">
+      <span class="tpl-tag" style="background:#A8C5A033;color:#3B6D11;">Josefin Sans</span>
+      <span class="tpl-tag" style="background:#A8C5A033;color:#3B6D11;">Macrame SVG</span>
+      <span class="tpl-tag" style="background:#A8C5A033;color:#3B6D11;">Leaf fall anim</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#100804;">
+      <div class="tpl-badge" style="background:rgba(196,146,58,0.25);color:#C4923A;">wow factor</div>
+      <div class="tpl-name" style="color:#E8D5B7;font-family:Georgia,serif;font-weight:300;letter-spacing:2px;">Cinematic Story</div>
+      <div class="tpl-sub" style="color:rgba(232,213,183,0.6);">Full-screen video background. Minimal text overlay. Feels like a movie trailer. Highest wow factor.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#100804;"></div><div class="sw" style="background:#2C1810;"></div><div class="sw" style="background:#E8D5B7;"></div><div class="sw" style="background:#C4923A;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#080402;">
+      <span class="tpl-tag" style="background:rgba(232,213,183,0.15);color:#E8D5B7;">Tenor Sans</span>
+      <span class="tpl-tag" style="background:rgba(232,213,183,0.15);color:#E8D5B7;">Video fullscreen</span>
+      <span class="tpl-tag" style="background:rgba(232,213,183,0.15);color:#E8D5B7;">Ken Burns effect</span>
+    </div>
+  </div>
+
+  <div class="tpl">
+    <div class="tpl-header" style="background:#FFFBF0;">
+      <div class="tpl-badge" style="background:#4A7C5922;color:#3B6D11;">festive</div>
+      <div class="tpl-name" style="color:#7B4010;font-family:Georgia,serif;">Festive Mehndi</div>
+      <div class="tpl-sub" style="color:#6B5020;">Orange + green + yellow. Mehndi/henna borders. Multi-event tabs: Mehndi, Haldi, Sangeet, Wedding.</div>
+      <div class="tpl-swatches"><div class="sw" style="background:#FFFBF0;"></div><div class="sw" style="background:#E67E22;"></div><div class="sw" style="background:#4A7C59;"></div><div class="sw" style="background:#F1C40F;"></div></div>
+    </div>
+    <div class="tpl-tags" style="background:#FFF3D0;">
+      <span class="tpl-tag" style="background:#E67E2222;color:#7B4010;">Hind</span>
+      <span class="tpl-tag" style="background:#E67E2222;color:#7B4010;">Mehndi SVG border</span>
+      <span class="tpl-tag" style="background:#E67E2222;color:#7B4010;">Event tabs</span>
+    </div>
+  </div>
+
+</div>
+<button class="cta" onclick="sendPrompt('Build the complete Royal Maroon wedding invite template as a Next.js page — dark maroon background, gold text, Playfair Display font, mandap SVG decoration, all invite sections included')">Build Royal Maroon now ↗</button>
+</div>
+
+<!-- ARCHITECTURE -->
+<div class="sec" id="architecture">
+<p class="intro">One component tree. Eight visual personalities. Here's how it fits together.</p>
+
+<div class="arch-layer" style="background:#EEEDFE;border:0.5px solid #AFA9EC;">
+  <div class="arch-title" style="color:#3C3489;">app/invite/[id]/page.tsx — the only invite page</div>
+  <div class="arch-items">
+    <div class="arch-item" style="background:#CECBF6;color:#26215C;">fetches order from Supabase</div>
+    <div class="arch-item" style="background:#CECBF6;color:#26215C;">loads template config from slug</div>
+    <div class="arch-item" style="background:#CECBF6;color:#26215C;">injects CSS variables into :root</div>
+    <div class="arch-item" style="background:#CECBF6;color:#26215C;">renders InviteLayout</div>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:20px;color:var(--color-text-secondary);margin:2px 0;">↓</div>
+
+<div class="arch-layer" style="background:#FBEAF0;border:0.5px solid #ED93B1;">
+  <div class="arch-title" style="color:#72243E;">InviteLayout — receives templateConfig + inviteData</div>
+  <div class="arch-items">
+    <div class="arch-item" style="background:#F4C0D1;color:#4B1528;">applies theme CSS vars</div>
+    <div class="arch-item" style="background:#F4C0D1;color:#4B1528;">renders border art SVG</div>
+    <div class="arch-item" style="background:#F4C0D1;color:#4B1528;">starts ambient animation</div>
+    <div class="arch-item" style="background:#F4C0D1;color:#4B1528;">orders sections by config</div>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:20px;color:var(--color-text-secondary);margin:2px 0;">↓</div>
+
+<div class="arch-layer" style="background:#E1F5EE;border:0.5px solid #5DCAA5;">
+  <div class="arch-title" style="color:#085041;">Shared components — same code, themed by CSS variables</div>
+  <div class="arch-items">
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">InviteHero</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">PhotoGallery</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">MusicPlayer</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">VoiceMessage</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">VideoSection</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">CountdownTimer</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">EventDetails</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">VenueMap</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">RSVPForm</div>
+    <div class="arch-item" style="background:#9FE1CB;color:#04342C;">ShareButtons</div>
+  </div>
+</div>
+
+<div style="text-align:center;font-size:20px;color:var(--color-text-secondary);margin:2px 0;">↓</div>
+
+<div class="arch-layer" style="background:#FAEEDA;border:0.5px solid #EF9F27;">
+  <div class="arch-title" style="color:#633806;">CSS variables — what actually makes each template look different</div>
+  <div class="arch-items">
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-bg (background)</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-primary (heading color)</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-accent (gold/pink/green)</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-text (body text)</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-card-bg</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-border</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-heading-font</div>
+    <div class="arch-item" style="background:#FAC775;color:#412402;">--t-body-font</div>
+  </div>
+</div>
+
+<button class="cta" onclick="sendPrompt('Build the InviteLayout.tsx component for WedInvite that accepts templateConfig and inviteData props, injects CSS variables, renders border art and ambient animation, then renders all invite sections in configurable order')">Build InviteLayout.tsx ↗</button>
+</div>
+
+<!-- CONFIG SYSTEM -->
+<div class="sec" id="config">
+<p class="intro">Each template is just a TypeScript object. Here's the full shape.</p>
+
+<div class="code">
+<span class="k">export interface</span> TemplateConfig {<br>
+&nbsp;&nbsp;slug: <span class="s">string</span>               <span class="c">// 'royal-maroon'</span><br>
+&nbsp;&nbsp;name: <span class="s">string</span>               <span class="c">// 'Royal Maroon'</span><br>
+&nbsp;&nbsp;category: <span class="s">string</span>           <span class="c">// 'traditional' | 'modern' | 'regional'</span><br>
+&nbsp;&nbsp;heroStyle: <span class="s">HeroStyle</span>       <span class="c">// 'fullscreen-photo' | 'color-bg' | 'video-bg' | 'split'</span><br>
+&nbsp;&nbsp;sectionOrder: <span class="s">string</span>[]    <span class="c">// ['hero','gallery','countdown','events','map','rsvp']</span><br>
+&nbsp;&nbsp;colors: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;bg: <span class="s">string</span>             <span class="c">// '#3D0C0C'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;primary: <span class="s">string</span>        <span class="c">// '#C9A84C'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;accent: <span class="s">string</span>         <span class="c">// '#7B1C1C'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;text: <span class="s">string</span>           <span class="c">// '#FDF6E3'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cardBg: <span class="s">string</span>         <span class="c">// 'rgba(255,255,255,0.07)'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;border: <span class="s">string</span>         <span class="c">// 'rgba(201,168,76,0.3)'</span><br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;fonts: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;heading: <span class="s">string</span>        <span class="c">// 'Playfair Display'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;body: <span class="s">string</span>           <span class="c">// 'Lato'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;googleFontsUrl: <span class="s">string</span> <span class="c">// full Google Fonts import URL</span><br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;decorations: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;borderArt: <span class="s">string</span> | <span class="k">null</span>  <span class="c">// 'mandap' | 'floral' | 'kolam' | 'mehndi' | null</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;divider: <span class="s">string</span>            <span class="c">// 'ornamental' | 'floral' | 'line' | 'dots'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;animation: <span class="s">string</span>          <span class="c">// 'petals' | 'stars' | 'leaves' | 'fade' | 'confetti'</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;cardStyle: <span class="s">string</span>          <span class="c">// 'flat' | 'bordered' | 'outlined-gold' | 'glass'</span><br>
+&nbsp;&nbsp;}<br>
+&nbsp;&nbsp;features: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;multiEvent: <span class="s">boolean</span>     <span class="c">// Festive Mehndi = true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;videoHero: <span class="s">boolean</span>      <span class="c">// Cinematic = true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;regionalScript: <span class="s">boolean</span> <span class="c">// South Indian = true</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;coupleStory: <span class="s">boolean</span>    <span class="c">// optional section</span><br>
+&nbsp;&nbsp;}<br>
+}
+</div>
+
+<div class="sh">How the page uses it</div>
+<div class="code">
+<span class="c">// app/invite/[id]/page.tsx</span><br>
+<span class="k">const</span> config = getTemplateConfig(order.template_slug)<br>
+<br>
+<span class="c">// Inject CSS variables into the page</span><br>
+<span class="k">const</span> cssVars = {<br>
+&nbsp;&nbsp;<span class="s">'--t-bg'</span>: config.colors.bg,<br>
+&nbsp;&nbsp;<span class="s">'--t-primary'</span>: config.colors.primary,<br>
+&nbsp;&nbsp;<span class="s">'--t-accent'</span>: config.colors.accent,<br>
+&nbsp;&nbsp;<span class="s">'--t-heading-font'</span>: `'${config.fonts.heading}'`,<br>
+} <span class="k">as</span> React.CSSProperties<br>
+<br>
+<span class="k">return</span> (<br>
+&nbsp;&nbsp;&lt;div style={cssVars}&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;InviteLayout config={config} data={inviteData} /&gt;<br>
+&nbsp;&nbsp;&lt;/div&gt;<br>
+)
+</div>
+
+<button class="cta" onclick="sendPrompt('Write the complete lib/templates.ts file for WedInvite with all 8 template config objects — Royal Maroon, Garden Floral, Midnight Luxe, Modern Minimal, South Indian Gold, Boho Pastel, Cinematic Story, Festive Mehndi')">Generate full templates.ts ↗</button>
+</div>
+
+<!-- CUSTOMISATION -->
+<div class="sec" id="customise">
+<p class="intro">What your clients can customise inside their chosen template — and how you implement it.</p>
+
+<div class="card">
+  <div class="sh" style="margin-top:0;">Level 1 — always included (order form fields)</div>
+  <div class="custom-row"><span class="custom-prop">coupleNames</span><span class="custom-desc">Bride & groom names. Displayed in hero in template's heading font. Client fills in order form step 2.</span></div>
+  <div class="custom-row"><span class="custom-prop">weddingDate</span><span class="custom-desc">Powers the live countdown timer. Stored as ISO date string in Supabase.</span></div>
+  <div class="custom-row"><span class="custom-prop">photos[]</span><span class="custom-desc">Up to 10 photos. Uploaded in step 3. Stored in Supabase Storage. Displayed in gallery carousel.</span></div>
+  <div class="custom-row"><span class="custom-prop">backgroundSong</span><span class="custom-desc">MP3 upload or YouTube link. Auto-plays on page load after first user tap.</span></div>
+  <div class="custom-row"><span class="custom-prop">voiceMessage</span><span class="custom-desc">MP3 of bride/groom speaking. Plays when guest taps the voice message card.</span></div>
+  <div class="custom-row"><span class="custom-prop">video</span><span class="custom-desc">Couple reel / pre-wedding video. Displayed in video section or as hero background (Cinematic template).</span></div>
+  <div class="custom-row"><span class="custom-prop">events[]</span><span class="custom-desc">Array of events: name, date, time, venue, address. Each becomes an event card with map.</span></div>
+  <div class="custom-row"><span class="custom-prop">specialMessage</span><span class="custom-desc">A personal message from the couple displayed in a quote card near the bottom.</span></div>
+</div>
+
+<div class="card">
+  <div class="sh" style="margin-top:0;">Level 2 — upsell add-ons (charged extra)</div>
+  <div class="custom-row"><span class="custom-prop">primaryColor override</span><span class="custom-desc">+₹299. Client picks their own accent color (color picker in order form). Replaces template default accent.</span></div>
+  <div class="custom-row"><span class="custom-prop">customDomain</span><span class="custom-desc">+₹499. sara-rahul.com points to their invite. Vercel custom domain + DNS setup.</span></div>
+  <div class="custom-row"><span class="custom-prop">guestPersonalisation</span><span class="custom-desc">+₹399. Each WhatsApp share auto-fills "Dear [Guest Name]" using URL params: /invite/abc?to=Priya</span></div>
+  <div class="custom-row"><span class="custom-prop">coupleStory</span><span class="custom-desc">+₹199. Timeline of how they met. Client fills 3–5 milestones with photos in order form.</span></div>
+  <div class="custom-row"><span class="custom-prop">extendedValidity</span><span class="custom-desc">+₹199. Default is 60 days. Extended = 1 year. Just update expires_at in Supabase.</span></div>
+</div>
+
+<button class="cta" onclick="sendPrompt('Build Step2Details.tsx for the WedInvite order form — couple names, wedding date picker, venue details, multi-event toggle, special message, language selector — Tailwind CSS, bold design')">Build order form step 2 ↗</button>
+</div>
+
+<!-- FONTS & ASSETS -->
+<div class="sec" id="fonts">
+<p class="intro">Every font and SVG art asset you need — all free.</p>
+
+<div class="sh">Google Fonts — one per template (free, fast)</div>
+<div class="grid2">
+  <div class="card"><div class="ct">Royal Maroon</div><div class="cs" style="font-family:serif;font-size:15px;color:var(--color-text-primary);">Playfair Display — "Priya weds Rahul"</div><div class="cs" style="margin-top:4px;">Classical serif. The gold standard of wedding fonts.</div></div>
+  <div class="card"><div class="ct">Garden Floral</div><div class="cs" style="font-size:16px;color:var(--color-text-primary);font-style:italic;">Great Vibes — "Priya weds Rahul"</div><div class="cs" style="margin-top:4px;">Flowing script. Romantic and handwritten feeling.</div></div>
+  <div class="card"><div class="ct">Midnight Luxe</div><div class="cs" style="font-family:serif;font-size:15px;color:var(--color-text-primary);font-weight:300;letter-spacing:2px;">Cormorant Garamond — thin + elegant</div><div class="cs" style="margin-top:4px;">Ultra-light serif. Looks expensive on dark backgrounds.</div></div>
+  <div class="card"><div class="ct">Modern Minimal</div><div class="cs" style="font-size:14px;color:var(--color-text-primary);letter-spacing:3px;text-transform:uppercase;">DM Sans — PRIYA WEDS RAHUL</div><div class="cs" style="margin-top:4px;">Clean geometric sans. Wide letter-spacing = modern feel.</div></div>
+  <div class="card"><div class="ct">South Indian Gold</div><div class="cs" style="font-size:14px;color:var(--color-text-primary);">Noto Serif Tamil — ப்ரியா + ராகுல்</div><div class="cs" style="margin-top:4px;">Full Tamil/Telugu support. Falls back to English gracefully.</div></div>
+  <div class="card"><div class="ct">Boho Pastel</div><div class="cs" style="font-size:14px;color:var(--color-text-primary);letter-spacing:1px;">Josefin Sans — clean & earthy</div><div class="cs" style="margin-top:4px;">Geometric lowercase. Trendy, light, boho energy.</div></div>
+  <div class="card"><div class="ct">Cinematic Story</div><div class="cs" style="font-family:serif;font-size:15px;color:var(--color-text-primary);font-weight:300;letter-spacing:4px;">Tenor Sans — CINEMATIC</div><div class="cs" style="margin-top:4px;">Wide-tracked sans. Looks exactly like a movie title card.</div></div>
+  <div class="card"><div class="ct">Festive Mehndi</div><div class="cs" style="font-size:14px;color:var(--color-text-primary);">Hind — readable at all sizes, Hindi support</div><div class="cs" style="margin-top:4px;">Devanagari + Latin. Perfect for Hindi text support.</div></div>
+</div>
+
+<div class="sh">SVG border art — build once, reuse across templates</div>
+<div class="card">
+  <div class="cs">You only need 4 SVG border art files. Each is a repeating pattern tile that you apply to the top and bottom of the invite page using CSS <code>background-repeat</code>. Build them once as SVG files in <code>public/borders/</code> and reference from template config. Claude can generate all 4 for you.</div>
+  <div style="margin-top:8px;display:flex;flex-wrap:wrap;gap:8px;">
+    <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#FBEAF0;color:#993556;font-weight:500;">mandap.svg → Royal Maroon</span>
+    <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#FBEAF0;color:#993556;font-weight:500;">floral.svg → Garden Floral</span>
+    <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#FBEAF0;color:#993556;font-weight:500;">kolam.svg → South Indian Gold</span>
+    <span style="font-size:11px;padding:4px 10px;border-radius:20px;background:#FBEAF0;color:#993556;font-weight:500;">mehndi.svg → Festive Mehndi</span>
+  </div>
+</div>
+
+<button class="cta" onclick="sendPrompt('Generate the 4 SVG border art files for WedInvite: mandap arch, floral corner border, kolam/rangoli pattern tile, and mehndi henna border — each as a repeating SVG tile')">Generate all 4 SVG border arts ↗</button>
+</div>
+
+</div>
+
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>

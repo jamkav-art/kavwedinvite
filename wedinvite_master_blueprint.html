@@ -1,0 +1,524 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.tabs{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:1.5rem;}
+.tab{padding:6px 13px;border-radius:20px;border:0.5px solid var(--color-border-secondary);font-size:11px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all 0.15s;font-weight:500;}
+.tab.active{background:#D4537E;border-color:#D4537E;color:#fff;}
+.tab:hover:not(.active){background:var(--color-background-secondary);}
+.sec{display:none;}.sec.active{display:block;}
+h2{font-size:18px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px;}
+.intro{font-size:12px;color:var(--color-text-secondary);margin-bottom:1.2rem;line-height:1.6;}
+.sh{font-size:10px;font-weight:500;color:var(--color-text-secondary);text-transform:uppercase;letter-spacing:0.07em;margin:1.2rem 0 7px;}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.9rem 1.1rem;margin-bottom:9px;}
+.ct{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px;}
+.cs{font-size:11px;color:var(--color-text-secondary);line-height:1.6;}
+.badge{display:inline-block;font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;margin:2px 3px 2px 0;}
+.bp{background:#FBEAF0;color:#993556;}.bt{background:#E1F5EE;color:#0F6E56;}.ba{background:#FAEEDA;color:#854F0B;}.bb{background:#E6F1FB;color:#185FA5;}.bpu{background:#EEEDFE;color:#534AB7;}.bgr{background:#EAF3DE;color:#3B6D11;}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:9px;margin-bottom:9px;}
+.grid3{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:8px;margin-bottom:9px;}
+.cta{display:inline-block;margin-top:.9rem;padding:8px 18px;border-radius:20px;background:#D4537E;color:#fff;font-size:12px;font-weight:500;cursor:pointer;border:none;}
+.cta:hover{background:#993556;}
+.row{display:flex;align-items:flex-start;gap:10px;padding:9px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.row:last-child{border-bottom:none;}
+.rkey{font-family:var(--font-mono);font-size:11px;font-weight:500;min-width:200px;color:#D4537E;padding-top:1px;}
+.rdesc{font-size:11px;color:var(--color-text-secondary);line-height:1.5;}
+.code{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:9px 12px;font-family:var(--font-mono);font-size:11px;line-height:1.9;color:var(--color-text-primary);margin:6px 0;}
+.k{color:#1D9E75;}.s{color:#D4537E;}.c{color:var(--color-text-secondary);}
+.warn{background:#FCEBEB;border:0.5px solid #F09595;border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;color:#A32D2D;margin-bottom:9px;line-height:1.6;}
+.info{background:#E1F5EE;border:0.5px solid #5DCAA5;border-radius:var(--border-radius-md);padding:9px 12px;font-size:11px;color:#085041;margin-bottom:9px;line-height:1.6;}
+.flow-step{display:flex;gap:10px;align-items:flex-start;margin-bottom:10px;}
+.fn{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;}
+.fb{flex:1;}
+.ft{font-size:12px;font-weight:500;color:var(--color-text-primary);}
+.fd{font-size:11px;color:var(--color-text-secondary);margin-top:2px;line-height:1.5;}
+.layer{border-radius:var(--border-radius-lg);padding:10px 12px;margin-bottom:7px;}
+.layer-title{font-size:11px;font-weight:500;margin-bottom:6px;}
+.layer-items{display:flex;flex-wrap:wrap;gap:5px;}
+.item{font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;}
+.page-row{display:flex;gap:8px;align-items:flex-start;padding:8px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.page-row:last-child{border-bottom:none;}
+.page-url{font-family:var(--font-mono);font-size:10px;color:#7F77DD;min-width:200px;font-weight:500;padding-top:1px;}
+.page-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.5;flex:1;}
+.page-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:3px;}
+.status-row{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:0.5px solid var(--color-border-tertiary);}
+.status-row:last-child{border-bottom:none;}
+.status-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;}
+.status-name{font-size:12px;font-weight:500;color:var(--color-text-primary);min-width:100px;}
+.status-desc{font-size:11px;color:var(--color-text-secondary);}
+.status-next{font-size:10px;font-weight:500;padding:2px 7px;border-radius:20px;margin-left:auto;}
+.metric{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.9rem;text-align:center;}
+.mval{font-size:20px;font-weight:500;color:var(--color-text-primary);}
+.mlbl{font-size:11px;color:var(--color-text-secondary);margin-top:2px;}
+</style>
+
+<div style="padding:1.5rem 0;">
+<h2>WedInvite — production master blueprint</h2>
+<p class="intro">Complete A–Z technical, UI and business documentation · everything before writing code</p>
+
+<div class="tabs">
+  <div class="tab active" onclick="show('overview')">System overview</div>
+  <div class="tab" onclick="show('pages')">All pages</div>
+  <div class="tab" onclick="show('userflow')">User flows</div>
+  <div class="tab" onclick="show('backend')">Backend</div>
+  <div class="tab" onclick="show('database')">Database</div>
+  <div class="tab" onclick="show('invite')">Invite anatomy</div>
+  <div class="tab" onclick="show('admin')">Admin flow</div>
+  <div class="tab" onclick="show('security')">Security</div>
+  <div class="tab" onclick="show('errors')">Error states</div>
+  <div class="tab" onclick="show('performance')">Performance</div>
+  <div class="tab" onclick="show('seo')">SEO & OG</div>
+  <div class="tab" onclick="show('checklist')">Launch checklist</div>
+</div>
+
+<!-- SYSTEM OVERVIEW -->
+<div class="sec active" id="overview">
+<div class="grid3">
+  <div class="metric"><div class="mval">9</div><div class="mlbl">env variables</div></div>
+  <div class="metric"><div class="mval">10</div><div class="mlbl">pages / routes</div></div>
+  <div class="metric"><div class="mval">5</div><div class="mlbl">API routes</div></div>
+  <div class="metric"><div class="mval">4</div><div class="mlbl">DB tables</div></div>
+  <div class="metric"><div class="mval">8</div><div class="mlbl">templates</div></div>
+  <div class="metric"><div class="mval">1</div><div class="mlbl">storage bucket</div></div>
+</div>
+
+<div class="sh">System layers — top to bottom</div>
+<div class="layer" style="background:#FBEAF0;border:0.5px solid #ED93B1;">
+  <div class="layer-title" style="color:#72243E;">Layer 1 — client browser (Next.js, React, Tailwind, Framer Motion, GSAP)</div>
+  <div class="layer-items">
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Homepage</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Templates page</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Demo invite pages</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Order form (4 steps)</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Live invite page</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Order success page</div>
+    <div class="item" style="background:#F4C0D1;color:#4B1528;">Admin dashboard</div>
+  </div>
+</div>
+<div class="layer" style="background:#EEEDFE;border:0.5px solid #AFA9EC;">
+  <div class="layer-title" style="color:#3C3489;">Layer 2 — Next.js API routes (server-side, Vercel serverless)</div>
+  <div class="layer-items">
+    <div class="item" style="background:#CECBF6;color:#26215C;">POST /api/razorpay/create-order</div>
+    <div class="item" style="background:#CECBF6;color:#26215C;">POST /api/razorpay/verify</div>
+    <div class="item" style="background:#CECBF6;color:#26215C;">POST /api/rsvp/submit</div>
+    <div class="item" style="background:#CECBF6;color:#26215C;">POST /api/upload/media</div>
+    <div class="item" style="background:#CECBF6;color:#26215C;">POST /api/admin/deliver</div>
+  </div>
+</div>
+<div class="layer" style="background:#E1F5EE;border:0.5px solid #5DCAA5;">
+  <div class="layer-title" style="color:#085041;">Layer 3 — Supabase (PostgreSQL + Storage + Realtime)</div>
+  <div class="layer-items">
+    <div class="item" style="background:#9FE1CB;color:#04342C;">orders table</div>
+    <div class="item" style="background:#9FE1CB;color:#04342C;">events table</div>
+    <div class="item" style="background:#9FE1CB;color:#04342C;">media table</div>
+    <div class="item" style="background:#9FE1CB;color:#04342C;">rsvps table</div>
+    <div class="item" style="background:#9FE1CB;color:#04342C;">invite-media bucket</div>
+    <div class="item" style="background:#9FE1CB;color:#04342C;">Realtime (admin alerts)</div>
+  </div>
+</div>
+<div class="layer" style="background:#FAEEDA;border:0.5px solid #EF9F27;">
+  <div class="layer-title" style="color:#633806;">Layer 4 — third-party services</div>
+  <div class="layer-items">
+    <div class="item" style="background:#FAC775;color:#412402;">Razorpay (payments)</div>
+    <div class="item" style="background:#FAC775;color:#412402;">Vercel (hosting + CDN)</div>
+    <div class="item" style="background:#FAC775;color:#412402;">GitHub (source + CI/CD)</div>
+    <div class="item" style="background:#FAC775;color:#412402;">Google Fonts (typography)</div>
+    <div class="item" style="background:#FAC775;color:#412402;">WhatsApp (delivery + support)</div>
+  </div>
+</div>
+
+<div class="sh">Order lifecycle — 6 states</div>
+<div class="card">
+  <div class="status-row"><div class="status-dot" style="background:#888780;"></div><div class="status-name">pending_payment</div><div class="status-desc">Form submitted, payment not completed yet</div><span class="status-next" style="background:#FAEEDA;color:#854F0B;">expires 30min</span></div>
+  <div class="status-row"><div class="status-dot" style="background:#378ADD;"></div><div class="status-name">paid</div><div class="status-desc">Payment verified by server, order saved to Supabase</div><span class="status-next" style="background:#E6F1FB;color:#185FA5;">notify admin</span></div>
+  <div class="status-row"><div class="status-dot" style="background:#EF9F27;"></div><div class="status-name">building</div><div class="status-desc">You are working on building the invite</div><span class="status-next" style="background:#FAEEDA;color:#854F0B;">SLA: 24h</span></div>
+  <div class="status-row"><div class="status-dot" style="background:#1D9E75;"></div><div class="status-name">live</div><div class="status-desc">Invite published, link delivered to client via WhatsApp</div><span class="status-next" style="background:#E1F5EE;color:#0F6E56;">active</span></div>
+  <div class="status-row"><div class="status-dot" style="background:#E24B4A;"></div><div class="status-name">expired</div><div class="status-desc">60 days passed since delivery — invite deactivated</div><span class="status-next" style="background:#FCEBEB;color:#A32D2D;">upsell renewal</span></div>
+  <div class="status-row"><div class="status-dot" style="background:#A32D2D;"></div><div class="status-name">refunded</div><div class="status-desc">Payment refunded — invite never delivered</div><span class="status-next" style="background:#FCEBEB;color:#A32D2D;">via Razorpay</span></div>
+</div>
+<button class="cta" onclick="sendPrompt('Build the Supabase orders table migration SQL with all 6 status values as an enum and all columns we discussed')">Build orders table SQL ↗</button>
+</div>
+
+<!-- ALL PAGES -->
+<div class="sec" id="pages">
+<p class="intro">Every route — what it renders, who sees it, server vs client, key components.</p>
+
+<div class="sh">Public pages</div>
+<div class="card">
+  <div class="page-row"><div class="page-url">/ (homepage)</div><div class="page-desc">Hero with GSAP text reveal. Template preview grid. How it works (3 steps). Pricing highlight. Testimonials ticker. Footer.<div class="page-tags"><span class="badge bb">server component</span><span class="badge bp">GSAP</span><span class="badge bpu">Framer Motion</span></div></div></div>
+  <div class="page-row"><div class="page-url">/templates</div><div class="page-desc">Grid of all 8 templates. Each card: thumbnail, name, color swatches, "Live demo" + "Order this" buttons. Filter by style (traditional/modern/regional).<div class="page-tags"><span class="badge bb">server component</span><span class="badge bpu">Framer hover</span></div></div></div>
+  <div class="page-row"><div class="page-url">/demo/[slug]</div><div class="page-desc">Full live preview of each template with fake couple data (Sara & Rahul, fake venue, fake photos). Fully interactive — music, countdown, RSVP works. "Order this template" sticky CTA.<div class="page-tags"><span class="badge bp">client component</span><span class="badge ba">all 8 slugs static</span></div></div></div>
+  <div class="page-row"><div class="page-url">/how-it-works</div><div class="page-desc">Animated 4-step process. GSAP ScrollTrigger draws connecting line between steps. Video walkthrough embed. FAQ accordion.<div class="page-tags"><span class="badge bp">client component</span><span class="badge bp">GSAP ScrollTrigger</span></div></div></div>
+  <div class="page-row"><div class="page-url">/pricing</div><div class="page-desc">Base package feature list. Add-on pricing cards. "vs printed cards" comparison. Single "Order now" CTA.<div class="page-tags"><span class="badge bb">server component</span></div></div></div>
+  <div class="page-row"><div class="page-url">/contact</div><div class="page-desc">WhatsApp direct chat button. Expected delivery time notice. Instagram link. Simple inquiry form (stores to Supabase).<div class="page-tags"><span class="badge bb">server component</span></div></div></div>
+</div>
+
+<div class="sh">Order & invite pages</div>
+<div class="card">
+  <div class="page-row"><div class="page-url">/order</div><div class="page-desc">4-step form. No login. Step 1: template picker. Step 2: couple + event details. Step 3: media upload (photos/video/voice/song). Step 4: review + Razorpay payment.<div class="page-tags"><span class="badge bp">client component</span><span class="badge bp">react-hook-form</span><span class="badge ba">Razorpay modal</span></div></div></div>
+  <div class="page-row"><div class="page-url">/order/success</div><div class="page-desc">Confetti animation. Order ID displayed. WhatsApp number to contact. "What happens next" 3-step guide. Expected delivery: within 24 hours.<div class="page-tags"><span class="badge bp">client component</span><span class="badge bpu">Framer confetti</span></div></div></div>
+  <div class="page-row"><div class="page-url">/invite/[id]</div><div class="page-desc">The live client invite. Loads data from Supabase by unique ID. Renders template config. If expired → shows "This invite has expired" page with renewal CTA.<div class="page-tags"><span class="badge bp">client component</span><span class="badge bp">dynamic OG tags</span><span class="badge ba">60-day expiry</span></div></div></div>
+</div>
+
+<div class="sh">Admin pages (protected)</div>
+<div class="card">
+  <div class="page-row"><div class="page-url">/admin</div><div class="page-desc">Order list with status badges. Revenue total. Realtime new order badge. Filter by status. Click order → go to /admin/orders/[id].<div class="page-tags"><span class="badge ba">password protected</span><span class="badge bt">Supabase realtime</span></div></div></div>
+  <div class="page-row"><div class="page-url">/admin/orders/[id]</div><div class="page-desc">Full order detail. Client's uploaded files. Upload final assets. Set template live. Copy invite URL. Send WhatsApp to client. Change order status.<div class="page-tags"><span class="badge ba">admin only</span></div></div></div>
+  <div class="page-row"><div class="page-url">/admin/login</div><div class="page-desc">Single password field. On match → sets httpOnly cookie → redirects to /admin. Middleware checks cookie on every /admin/* request.<div class="page-tags"><span class="badge ba">middleware protected</span></div></div></div>
+</div>
+<button class="cta" onclick="sendPrompt('Build the /admin page in Next.js with order list, status badges, revenue total, and Supabase realtime listener that shows a badge when a new order arrives')">Build admin dashboard ↗</button>
+</div>
+
+<!-- USER FLOWS -->
+<div class="sec" id="userflow">
+<p class="intro">Every path a user can take — happy path and all edge cases.</p>
+
+<div class="sh">Flow 1 — new customer ordering (happy path)</div>
+<div class="card">
+  <div class="flow-step"><div class="fn" style="background:#FBEAF0;color:#993556;">1</div><div class="fb"><div class="ft">Discovers via Instagram / WhatsApp referral</div><div class="fd">Lands on homepage. Sees hero, price ₹1,299, template previews.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FBEAF0;color:#993556;">2</div><div class="fb"><div class="ft">Browses templates page</div><div class="fd">Clicks "Live demo" on Royal Maroon. Demo opens in new tab — fully interactive.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FBEAF0;color:#993556;">3</div><div class="fb"><div class="ft">Clicks "Order this template"</div><div class="fd">Goes to /order with template pre-selected (URL param: ?template=royal-maroon).</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#EEEDFE;color:#534AB7;">4</div><div class="fb"><div class="ft">Step 1 — template confirmed</div><div class="fd">Can change template here. Progress bar shows Step 1 of 4.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#EEEDFE;color:#534AB7;">5</div><div class="fb"><div class="ft">Step 2 — couple + event details</div><div class="fd">Bride name, groom name, wedding date, number of events (1–4). Per event: event name, date, time, venue name, full address, Google Maps link (paste from share). Dress code (optional).</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#EEEDFE;color:#534AB7;">6</div><div class="fb"><div class="ft">Step 3 — media upload</div><div class="fd">Photos: drag-drop or tap, up to 10, JPG/PNG, max 5MB each. Video: MP4, max 100MB. Voice message: MP3, max 10MB. Background song: MP3, max 10MB. All upload directly to Supabase Storage.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#EEEDFE;color:#534AB7;">7</div><div class="fb"><div class="ft">Step 4 — review + pay</div><div class="fd">Order summary card. Phone number (WhatsApp). Special message (optional). Add-ons selector. Total shown. "Pay ₹1,299" button.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">8</div><div class="fb"><div class="ft">Razorpay modal opens</div><div class="fd">UPI / card / netbanking / wallet. User completes payment on Razorpay's UI.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">9</div><div class="fb"><div class="ft">Server verifies + saves order</div><div class="fd">POST /api/razorpay/verify. HMAC verified. Order saved to Supabase with status="paid". Admin gets realtime alert.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">10</div><div class="fb"><div class="ft">Redirected to /order/success</div><div class="fd">Confetti. Order ID shown. "We will WhatsApp you your invite within 24 hours." WhatsApp chat button shown.</div></div></div>
+</div>
+
+<div class="sh">Flow 2 — guest viewing invite</div>
+<div class="card">
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">1</div><div class="fb"><div class="ft">Receives link via WhatsApp</div><div class="fd">wedinvite.in/invite/abc123. WhatsApp shows OG preview: couple names, photo, wedding date.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">2</div><div class="fb"><div class="ft">Opens invite page</div><div class="fd">Template loads. Music auto-plays on first tap. Hero section with GSAP entrance animation.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">3</div><div class="fb"><div class="ft">Scrolls through all sections</div><div class="fd">Gallery → Voice message → Video → Countdown → Events → Venue → RSVP → Share.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">4</div><div class="fb"><div class="ft">Submits RSVP</div><div class="fd">Name, attending yes/no, guest count, optional blessing. Stored in Supabase rsvps table.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#E1F5EE;color:#085041;">5</div><div class="fb"><div class="ft">Shares with others</div><div class="fd">WhatsApp share button → native share sheet. Copy link button → clipboard. Invite spreads.</div></div></div>
+</div>
+
+<div class="sh">Flow 3 — payment failure edge case</div>
+<div class="card">
+  <div class="flow-step"><div class="fn" style="background:#FCEBEB;color:#A32D2D;">1</div><div class="fb"><div class="ft">User closes Razorpay modal / card declined</div><div class="fd">Razorpay fires onDismiss / onPaymentFailed callback.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FCEBEB;color:#A32D2D;">2</div><div class="fb"><div class="ft">User stays on Step 4</div><div class="fd">Toast: "Payment unsuccessful. Please try again." Order stays in pending_payment status. Form data preserved — user does NOT need to re-fill.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FCEBEB;color:#A32D2D;">3</div><div class="fb"><div class="ft">User retries or abandons</div><div class="fd">If retries → new Razorpay order created. If abandons → pending_payment record auto-deleted after 30 minutes via Supabase cron.</div></div></div>
+</div>
+
+<div class="sh">Flow 4 — invite expiry edge case</div>
+<div class="card">
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">1</div><div class="fb"><div class="ft">Guest opens expired invite link</div><div class="fd">Server checks expires_at in orders table. Date has passed.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">2</div><div class="fb"><div class="ft">Expired page shown</div><div class="fd">"This invitation has expired." Beautiful page in the original template style. Shows couple names and wedding date.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">3</div><div class="fb"><div class="ft">Renewal upsell</div><div class="fd">"Renew for ₹199 — keep memories alive for 1 more year." Link to WhatsApp to arrange renewal.</div></div></div>
+</div>
+<button class="cta" onclick="sendPrompt('Build the /order page in Next.js — 4-step form with Framer Motion step transitions, react-hook-form validation, Supabase media upload in step 3, and Razorpay payment in step 4')">Build the order form ↗</button>
+</div>
+
+<!-- BACKEND -->
+<div class="sec" id="backend">
+<p class="intro">Every API route — method, input, what it does, output, error handling.</p>
+
+<div class="sh">POST /api/razorpay/create-order</div>
+<div class="card">
+  <div class="row"><span class="rkey">Triggered by</span><span class="rdesc">User clicks "Pay ₹1,299" on Step 4 of order form</span></div>
+  <div class="row"><span class="rkey">Input body</span><span class="rdesc">{ amount: 129900, currency: "INR", receipt: "order_form_uuid" }</span></div>
+  <div class="row"><span class="rkey">Server does</span><span class="rdesc">Calls Razorpay API with RAZORPAY_KEY_SECRET. Creates Razorpay order. Returns orderId to browser.</span></div>
+  <div class="row"><span class="rkey">Output</span><span class="rdesc">{ razorpay_order_id, amount, currency }</span></div>
+  <div class="row"><span class="rkey">Error handling</span><span class="rdesc">Razorpay API down → 503 response → show "Payment service unavailable, try again" toast</span></div>
+</div>
+
+<div class="sh">POST /api/razorpay/verify</div>
+<div class="card">
+  <div class="row"><span class="rkey">Triggered by</span><span class="rdesc">Razorpay modal fires onSuccess callback in browser</span></div>
+  <div class="row"><span class="rkey">Input body</span><span class="rdesc">{ razorpay_payment_id, razorpay_order_id, razorpay_signature, orderFormData }</span></div>
+  <div class="row"><span class="rkey">Server does</span><span class="rdesc">1. Verify HMAC-SHA256 signature using RAZORPAY_KEY_SECRET. 2. If valid: save order + events + media URLs to Supabase using service role. 3. Generate unique invite_id (nanoid). 4. Set status = "paid".</span></div>
+  <div class="row"><span class="rkey">Output</span><span class="rdesc">{ success: true, orderId, inviteId } → browser redirects to /order/success</span></div>
+  <div class="row"><span class="rkey">Error handling</span><span class="rdesc">Signature mismatch → 400 "Payment verification failed" → show error, DO NOT save order. Duplicate payment_id → 409 → already processed.</span></div>
+</div>
+
+<div class="sh">POST /api/rsvp/submit</div>
+<div class="card">
+  <div class="row"><span class="rkey">Triggered by</span><span class="rdesc">Guest submits RSVP form on invite page</span></div>
+  <div class="row"><span class="rkey">Input body</span><span class="rdesc">{ invite_id, guest_name, attending, guest_count, message }</span></div>
+  <div class="row"><span class="rkey">Server does</span><span class="rdesc">1. Validate invite_id exists and is not expired. 2. Insert into rsvps table using anon client (RLS allows insert). 3. Return success.</span></div>
+  <div class="row"><span class="rkey">Output</span><span class="rdesc">{ success: true } → browser shows confetti + thank you message</span></div>
+  <div class="row"><span class="rkey">Error handling</span><span class="rdesc">Duplicate RSVP (same name) → 409 → "You've already RSVPed! Thank you." Expired invite → 410 → "This invite is no longer active."</span></div>
+</div>
+
+<div class="sh">POST /api/upload/media</div>
+<div class="card">
+  <div class="row"><span class="rkey">Triggered by</span><span class="rdesc">User drops/selects files in Step 3 of order form</span></div>
+  <div class="row"><span class="rkey">Input</span><span class="rdesc">FormData: { file, media_type, order_temp_id }</span></div>
+  <div class="row"><span class="rkey">Server does</span><span class="rdesc">1. Validate file type and size. 2. Generate unique filename (nanoid + extension). 3. Upload to Supabase Storage bucket "invite-media" using service role. 4. Return public URL.</span></div>
+  <div class="row"><span class="rkey">File limits</span><span class="rdesc">Photos: JPG/PNG/WEBP max 5MB. Video: MP4/MOV max 100MB. Audio: MP3/M4A max 10MB.</span></div>
+  <div class="row"><span class="rkey">Error handling</span><span class="rdesc">File too large → 413 → "File too large. Max 5MB for photos." Wrong type → 415 → "Only JPG/PNG allowed for photos."</span></div>
+</div>
+
+<div class="sh">POST /api/admin/deliver</div>
+<div class="card">
+  <div class="row"><span class="rkey">Triggered by</span><span class="rdesc">You click "Mark as live" on admin order detail page</span></div>
+  <div class="row"><span class="rkey">Input body</span><span class="rdesc">{ order_id } (admin cookie verified by middleware)</span></div>
+  <div class="row"><span class="rkey">Server does</span><span class="rdesc">1. Verify admin cookie. 2. Set order status = "live". 3. Set delivered_at = now(). 4. Set expires_at = now() + 60 days. 5. Return invite URL.</span></div>
+  <div class="row"><span class="rkey">Output</span><span class="rdesc">{ invite_url: "https://wedinvite.in/invite/abc123" } → admin copies and sends via WhatsApp</span></div>
+</div>
+<button class="cta" onclick="sendPrompt('Write the complete app/api/razorpay/verify/route.ts file — HMAC verification, save order to Supabase, generate invite_id with nanoid, handle all error cases')">Build verify route ↗</button>
+</div>
+
+<!-- DATABASE -->
+<div class="sec" id="database">
+<p class="intro">Complete Supabase schema — every table, column, constraint, RLS policy.</p>
+
+<div class="sh">orders table — master record</div>
+<div class="code">
+id               uuid PK DEFAULT gen_random_uuid()<br>
+created_at       timestamptz DEFAULT now()<br>
+couple_name_1    text NOT NULL          <span class="c">← bride</span><br>
+couple_name_2    text NOT NULL          <span class="c">← groom</span><br>
+wedding_date     date NOT NULL<br>
+template_slug    text NOT NULL          <span class="c">← 'royal-maroon'</span><br>
+phone            text NOT NULL          <span class="c">← WhatsApp number</span><br>
+special_message  text<br>
+status           order_status DEFAULT 'pending_payment'  <span class="c">← enum</span><br>
+invite_id        text UNIQUE            <span class="c">← nanoid, public URL slug</span><br>
+payment_id       text UNIQUE            <span class="c">← Razorpay payment ID</span><br>
+razorpay_order_id text<br>
+amount_paid      integer                <span class="c">← paise: 129900</span><br>
+delivered_at     timestamptz<br>
+expires_at       timestamptz            <span class="c">← delivered_at + 60 days</span><br>
+addons           jsonb DEFAULT '{}'     <span class="c">← { custom_color, guest_names }</span>
+</div>
+
+<div class="sh">events table — per event (wedding/mehndi etc)</div>
+<div class="code">
+id               uuid PK DEFAULT gen_random_uuid()<br>
+order_id         uuid REFERENCES orders(id) ON DELETE CASCADE<br>
+event_name       text NOT NULL          <span class="c">← 'Wedding', 'Mehndi'</span><br>
+event_date       date NOT NULL<br>
+event_time       text                   <span class="c">← '7:00 PM'</span><br>
+venue_name       text NOT NULL<br>
+venue_address    text NOT NULL          <span class="c">← full readable address</span><br>
+venue_map_link   text                   <span class="c">← pasted Google Maps share link</span><br>
+dress_code       text<br>
+sort_order       integer DEFAULT 0
+</div>
+
+<div class="sh">media table — all uploaded files</div>
+<div class="code">
+id               uuid PK DEFAULT gen_random_uuid()<br>
+order_id         uuid REFERENCES orders(id) ON DELETE CASCADE<br>
+media_type       text NOT NULL   <span class="c">← 'photo'|'video'|'voice'|'song'</span><br>
+file_url         text NOT NULL   <span class="c">← Supabase Storage public URL</span><br>
+sort_order       integer DEFAULT 0
+</div>
+
+<div class="sh">rsvps table — guest responses</div>
+<div class="code">
+id               uuid PK DEFAULT gen_random_uuid()<br>
+created_at       timestamptz DEFAULT now()<br>
+invite_id        text NOT NULL   <span class="c">← matches orders.invite_id</span><br>
+guest_name       text NOT NULL<br>
+attending        boolean NOT NULL<br>
+guest_count      integer DEFAULT 1<br>
+message          text<br>
+UNIQUE(invite_id, guest_name)  <span class="c">← prevent duplicate RSVPs</span>
+</div>
+
+<div class="sh">Row Level Security policies</div>
+<div class="card">
+  <div class="row"><span class="rkey">orders — INSERT</span><span class="rdesc">Allow all (anon). Anyone can create a pending order during checkout flow.</span></div>
+  <div class="row"><span class="rkey">orders — SELECT</span><span class="rdesc">Anon can only read their own invite row (WHERE invite_id = input AND status = 'live'). Service role reads all.</span></div>
+  <div class="row"><span class="rkey">orders — UPDATE</span><span class="rdesc">Service role only. No client-side updates ever.</span></div>
+  <div class="row"><span class="rkey">events — SELECT</span><span class="rdesc">Allow all. Events are public — needed to render invite page.</span></div>
+  <div class="row"><span class="rkey">media — SELECT</span><span class="rdesc">Allow all. Media URLs are public — needed to render invite page.</span></div>
+  <div class="row"><span class="rkey">media — INSERT/UPDATE</span><span class="rdesc">Service role only. Admin uploads final assets.</span></div>
+  <div class="row"><span class="rkey">rsvps — INSERT</span><span class="rdesc">Allow all (anon). Any guest can RSVP.</span></div>
+  <div class="row"><span class="rkey">rsvps — SELECT</span><span class="rdesc">Service role only. Only admin can view RSVP list.</span></div>
+</div>
+<button class="cta" onclick="sendPrompt('Generate the complete Supabase SQL migration file for WedInvite — all 4 tables, order_status enum, foreign keys, unique constraints, and all 8 RLS policies exactly as described')">Generate full SQL migration ↗</button>
+</div>
+
+<!-- INVITE ANATOMY -->
+<div class="sec" id="invite">
+<p class="intro">Every section of the live invite page — order, component, data source, behaviour.</p>
+
+<div class="sh">Section render order (default — configurable per template)</div>
+<div class="card">
+  <div class="row"><span class="rkey">1. InviteHero</span><span class="rdesc">Full-screen. Couple names in heading font. Background: photo[0] or template color. GSAP split text entrance. Music auto-starts on first tap anywhere on page.</span></div>
+  <div class="row"><span class="rkey">2. PhotoGallery</span><span class="rdesc">Swipeable carousel (Embla). Up to 10 photos. Framer Motion scale-in on scroll entry. Tap any photo → fullscreen lightbox.</span></div>
+  <div class="row"><span class="rkey">3. VoiceMessage</span><span class="rdesc">Card with "Hear from us" heading. Play/pause button. Audio progress bar. Framer Motion fade-in. Source: media table WHERE media_type = 'voice'.</span></div>
+  <div class="row"><span class="rkey">4. VideoSection</span><span class="rdesc">Inline video player. Poster = photo[0]. Muted autoplay on scroll into view. Tap to unmute. Cinematic template: this is fullscreen hero background instead.</span></div>
+  <div class="row"><span class="rkey">5. CountdownTimer</span><span class="rdesc">Days/Hours/Mins/Secs. useCountdown hook. GSAP digit flip on each tick. Source: orders.wedding_date. On date pass: "We are married!" + confetti.</span></div>
+  <div class="row"><span class="rkey">6. EventDetails</span><span class="rdesc">One card per event from events table. Event name, date, time, venue name, full address, "Get Directions" button (opens orders.venue_map_link). Framer stagger entrance.</span></div>
+  <div class="row"><span class="rkey">7. MusicPlayer</span><span class="rdesc">Floating bottom-right. Animated equaliser bars when playing. Tap to mute/unmute. Source: media WHERE media_type = 'song'. Loops infinitely.</span></div>
+  <div class="row"><span class="rkey">8. RSVPForm</span><span class="rdesc">Guest name, attending toggle, guest count stepper, blessing message. POST to /api/rsvp/submit. On success: Framer confetti burst + "Thank you [name]!"</span></div>
+  <div class="row"><span class="rkey">9. ShareButtons</span><span class="rdesc">WhatsApp: navigator.share() or wa.me deep link. Copy link: clipboard API. Shows invite URL. "Share the joy" heading.</span></div>
+  <div class="row"><span class="rkey">10. InviteFooter</span><span class="rdesc">Small "Made with WedInvite" watermark link. This is your free marketing — every invite promotes you to all guests.</span></div>
+</div>
+
+<div class="sh">Music player — technical detail</div>
+<div class="card">
+  <div class="cs">Browser blocks audio autoplay until user gesture. Solution: add a "Tap anywhere to begin" overlay on first load. On first tap: dismiss overlay + start music. Store user preference in sessionStorage so it doesn't re-show on page refresh during same session.</div>
+</div>
+
+<div class="sh">Invite expiry check</div>
+<div class="card">
+  <div class="cs">In app/invite/[id]/page.tsx server component: fetch order, check expires_at. If null (not yet delivered) → show "Coming soon" page. If expired → show expired page with renewal CTA. If live → render invite. This check is server-side — no flicker.</div>
+</div>
+<button class="cta" onclick="sendPrompt('Build the complete app/invite/[id]/page.tsx with expiry check, data fetching from Supabase, template config loading, CSS variable injection, and all 10 invite sections in order')">Build invite page ↗</button>
+</div>
+
+<!-- ADMIN FLOW -->
+<div class="sec" id="admin">
+<p class="intro">Your complete workflow after a paid order arrives — from notification to delivery.</p>
+
+<div class="sh">Step-by-step admin workflow</div>
+<div class="card">
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">1</div><div class="fb"><div class="ft">New order notification</div><div class="fd">Supabase realtime fires in admin dashboard. Badge shows "1 new order". Phone also buzzes if you have the admin page open on mobile.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">2</div><div class="fb"><div class="ft">Open order in admin</div><div class="fd">See: couple names, template chosen, wedding date, all events with venue details, uploaded photos/video/audio. Review everything.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">3</div><div class="fb"><div class="ft">Change status to "building"</div><div class="fd">Click status dropdown → "building". Client can see this if they check order status (future feature).</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">4</div><div class="fb"><div class="ft">Build the invite</div><div class="fd">The invite auto-builds from their uploaded data + template config. You just review it looks good. Open /invite/[id]?preview=true to see it before going live.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">5</div><div class="fb"><div class="ft">Click "Mark as live"</div><div class="fd">Calls POST /api/admin/deliver. Sets status=live, delivered_at=now(), expires_at=60 days from now. Invite URL is now publicly accessible.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">6</div><div class="fb"><div class="ft">Send to client via WhatsApp</div><div class="fd">Admin page shows a pre-written WhatsApp message with the invite link. One tap opens WhatsApp with message pre-filled. You just hit send.</div></div></div>
+  <div class="flow-step"><div class="fn" style="background:#FAEEDA;color:#854F0B;">7</div><div class="fb"><div class="ft">Client shares with guests</div><div class="fd">Client shares the link via WhatsApp groups, family chats. Each guest opens invite, RSVPs, shares further. Your brand "Made with WedInvite" is on every invite.</div></div></div>
+</div>
+
+<div class="sh">Pre-written WhatsApp delivery message</div>
+<div class="card">
+  <div class="code" style="font-family:var(--font-sans);white-space:pre-wrap;">Hi [CoupleName1] & [CoupleName2]! 🎉
+
+Your beautiful wedding invitation is ready!
+
+Open here: https://wedinvite.in/invite/[id]
+
+Share this link with all your family and friends via WhatsApp.
+Your invite will be active for 60 days.
+
+Thank you for choosing WedInvite! 💕
+For any changes, reply to this message.</div>
+</div>
+<button class="cta" onclick="sendPrompt('Build the /admin/orders/[id] page — shows order details, uploaded media preview, status changer, Mark as live button, and pre-filled WhatsApp delivery message generator')">Build admin order page ↗</button>
+</div>
+
+<!-- SECURITY -->
+<div class="sec" id="security">
+<p class="intro">Every security measure — production grade, nothing skipped.</p>
+<div class="grid2">
+  <div class="card"><div class="ct">Payment verification</div><div class="cs">Never trust the browser for payment success. Always verify Razorpay HMAC-SHA256 signature server-side before saving any order. A forged request without the valid signature will be rejected with 400.</div></div>
+  <div class="card"><div class="ct">Admin protection</div><div class="cs">middleware.ts intercepts every /admin/* request. Checks for httpOnly cookie set at login. No cookie or wrong value → redirect to /admin/login. Cookie is httpOnly so JS cannot read it.</div></div>
+  <div class="card"><div class="ct">Service role key</div><div class="cs">SUPABASE_SERVICE_ROLE_KEY only used in server API routes. Never passed to browser. Never in any NEXT_PUBLIC_ variable. Bypasses RLS — treat like a root password.</div></div>
+  <div class="card"><div class="ct">File upload validation</div><div class="cs">Server validates file type by checking magic bytes (not just extension). Validates file size before accepting upload. Sanitises filename — strip special characters, use nanoid instead.</div></div>
+  <div class="card"><div class="ct">RLS on Supabase</div><div class="cs">Even if someone finds your anon key, RLS prevents them reading other users' orders, accessing admin data, or modifying any record. Each table has explicit policies.</div></div>
+  <div class="card"><div class="ct">Rate limiting</div><div class="cs">Vercel's built-in rate limiting on API routes. Add extra protection on /api/rsvp/submit (max 3 per IP per invite) and /api/razorpay/create-order (max 5 per IP per hour).</div></div>
+  <div class="card"><div class="ct">CORS</div><div class="cs">API routes only accept requests from NEXT_PUBLIC_APP_URL. Set in next.config.ts. Prevents other sites from calling your payment APIs.</div></div>
+  <div class="card"><div class="ct">Input sanitisation</div><div class="cs">All text inputs from order form are sanitised before Supabase insert. Strip HTML tags, limit lengths (names max 100 chars, messages max 500 chars). Prevents XSS in invite pages.</div></div>
+</div>
+<button class="cta" onclick="sendPrompt('Write the middleware.ts file for WedInvite that protects all /admin routes by checking an httpOnly cookie against ADMIN_SECRET env variable')">Build middleware.ts ↗</button>
+</div>
+
+<!-- ERROR STATES -->
+<div class="sec" id="errors">
+<p class="intro">Every error state your app must handle gracefully — never show a blank page or raw error.</p>
+<div class="card">
+  <div class="row"><span class="rkey">Invite not found</span><span class="rdesc">/invite/[id] where ID doesn't exist → Custom 404 page in invite template style: "This invitation was not found." with WedInvite branding.</span></div>
+  <div class="row"><span class="rkey">Invite expired</span><span class="rdesc">expires_at in the past → Beautiful expired page. Couple names shown. "Renew for ₹199" WhatsApp CTA.</span></div>
+  <div class="row"><span class="rkey">Invite not yet live</span><span class="rdesc">status = "paid" or "building" → "Your invitation is being prepared. Check back soon!" — shown to couple if they visit early.</span></div>
+  <div class="row"><span class="rkey">Payment failed</span><span class="rdesc">Razorpay onPaymentFailed → Stay on Step 4. Toast: "Payment failed. Please try again or use a different payment method." Form data preserved.</span></div>
+  <div class="row"><span class="rkey">Upload failed</span><span class="rdesc">File too large / wrong type → Inline error under the file input. "Max 5MB for photos. Please compress and try again." Retry button.</span></div>
+  <div class="row"><span class="rkey">RSVP duplicate</span><span class="rdesc">409 from API → "You've already RSVPed! We have your response." Show their original response if available.</span></div>
+  <div class="row"><span class="rkey">Network offline</span><span class="rdesc">Detect navigator.onLine. Show sticky banner: "No internet connection. Some features may not work." Reconnect detection auto-dismisses banner.</span></div>
+  <div class="row"><span class="rkey">Supabase down</span><span class="rdesc">API route returns 503 → Catch in frontend → Toast: "Something went wrong. Please try again in a moment." Log error to console for debugging.</span></div>
+  <div class="row"><span class="rkey">Admin wrong password</span><span class="rdesc">/admin/login wrong password → "Incorrect password" shown. No redirect. After 5 wrong attempts → 30-minute lockout (cookie-based).</span></div>
+  <div class="row"><span class="rkey">Video won't load</span><span class="rdesc">Video src 404 or format unsupported → Hide video section entirely. Show photo gallery only. Don't show broken video player.</span></div>
+</div>
+<button class="cta" onclick="sendPrompt('Build a reusable Toast notification component for WedInvite using Framer Motion — success, error, warning variants, auto-dismiss after 4 seconds, stacks multiple toasts')">Build Toast component ↗</button>
+</div>
+
+<!-- PERFORMANCE -->
+<div class="sec" id="performance">
+<p class="intro">Every performance decision — invite pages must load fast on slow Indian mobile networks.</p>
+<div class="grid2">
+  <div class="card"><div class="ct">Image optimisation</div><div class="cs">Use Next.js &lt;Image&gt; component for all photos. Auto-converts to WebP. Lazy loads below-fold images. Set sizes prop correctly. Target: each photo under 200kb after compression.</div></div>
+  <div class="card"><div class="ct">Video — don't autoload</div><div class="cs">Never autoload video on mobile. Show poster image with play button. Only load video when user taps play. Cinematic template: load video only after hero animation completes.</div></div>
+  <div class="card"><div class="ct">Music — defer</div><div class="cs">Don't load audio file until first user tap. Use HTML5 Audio API with preload="none". This prevents the audio file from consuming bandwidth before the user wants it.</div></div>
+  <div class="card"><div class="ct">Font loading</div><div class="cs">Load Google Fonts with display=swap. Only load the 2 weights you use (400 + 600). Subset to Latin + Devanagari/Tamil only where needed. Preconnect to fonts.googleapis.com.</div></div>
+  <div class="card"><div class="ct">GSAP — load once</div><div class="cs">Import GSAP at root layout level — loaded once, cached across pages. Don't import per-component. Use @gsap/react useGSAP hook for cleanup.</div></div>
+  <div class="card"><div class="ct">Supabase query</div><div class="cs">In invite page: single JOIN query fetches order + events + media in one round trip. Don't make 3 separate queries. Use Supabase select with nested relation syntax.</div></div>
+  <div class="card"><div class="ct">Static pages</div><div class="cs">Homepage, /templates, /pricing, /how-it-works are all server components with no dynamic data — statically generated at build time. Instant load from Vercel CDN edge.</div></div>
+  <div class="card"><div class="ct">Core Web Vitals targets</div><div class="cs">LCP (Largest Contentful Paint): under 2.5s on 4G. CLS (Cumulative Layout Shift): under 0.1 — reserve image dimensions. FID/INP: under 100ms — no heavy JS on main thread during load.</div></div>
+</div>
+<button class="cta" onclick="sendPrompt('Show me the optimised Supabase query for the invite page that fetches order + events + media in a single query using Supabase JS v2 select with nested relations')">Get optimised DB query ↗</button>
+</div>
+
+<!-- SEO & OG -->
+<div class="sec" id="seo">
+<p class="intro">SEO for the marketing site + dynamic OG tags for every invite link shared on WhatsApp.</p>
+<div class="sh">Static pages — SEO metadata</div>
+<div class="card">
+  <div class="row"><span class="rkey">Homepage title</span><span class="rdesc">WedInvite — Beautiful Digital Wedding Invitations | ₹1,299</span></div>
+  <div class="row"><span class="rkey">Homepage description</span><span class="rdesc">Send your wedding invitation as a beautiful link. Photos, music, video, countdown, RSVP — all in one page. Starting ₹1,299.</span></div>
+  <div class="row"><span class="rkey">Target keywords</span><span class="rdesc">digital wedding invitation India, online wedding invite WhatsApp, wedding e-invite ₹, shaadi invitation link</span></div>
+  <div class="row"><span class="rkey">Sitemap</span><span class="rdesc">Auto-generated via next-sitemap package. Includes all static pages + /demo/[slug] pages. Excludes /admin/* and /invite/* (private).</span></div>
+  <div class="row"><span class="rkey">robots.txt</span><span class="rdesc">Allow all public pages. Disallow /admin/*, /api/*. Let Google index homepage, templates, pricing, how-it-works.</span></div>
+</div>
+<div class="sh">Dynamic OG tags — invite pages (critical for WhatsApp preview)</div>
+<div class="card">
+  <div class="cs" style="margin-bottom:8px;">When a guest receives the invite link on WhatsApp, they see a rich preview card before opening. This is generated by the OG meta tags in the invite page's &lt;head&gt;.</div>
+  <div class="row"><span class="rkey">og:title</span><span class="rdesc">"{CoupleName1} & {CoupleName2} are getting married!" — e.g. "Priya & Rahul are getting married!"</span></div>
+  <div class="row"><span class="rkey">og:description</span><span class="rdesc">"{EventDate} · {VenueName}" — e.g. "15 February 2025 · The Leela Palace Chennai"</span></div>
+  <div class="row"><span class="rkey">og:image</span><span class="rdesc">First photo from media table (photo[0] public URL). Must be min 1200×630px. WhatsApp shows this as the preview image.</span></div>
+  <div class="row"><span class="rkey">og:url</span><span class="rdesc">https://wedinvite.in/invite/[id]</span></div>
+  <div class="row"><span class="rkey">Implementation</span><span class="rdesc">Next.js generateMetadata() function in app/invite/[id]/page.tsx. Fetches order server-side, builds metadata object. Runs at request time.</span></div>
+</div>
+<div class="info">The WhatsApp OG preview is one of the most powerful marketing tools you have. Every time a client shares their invite link, all their guests see "WedInvite" branding in the preview. This is free advertising reaching thousands of people per invite.</div>
+<button class="cta" onclick="sendPrompt('Write the generateMetadata function for app/invite/[id]/page.tsx that fetches couple names, wedding date, venue and first photo from Supabase and returns correct og:title, og:description and og:image tags')">Build generateMetadata ↗</button>
+</div>
+
+<!-- LAUNCH CHECKLIST -->
+<div class="sec" id="checklist">
+<p class="intro">Every item to verify before going live — nothing shipped until all are green.</p>
+
+<div class="sh">Code & config</div>
+<div class="card">
+  <div class="row"><span class="rkey">All 9 env vars set</span><span class="rdesc">In both .env.local (dev) and Vercel dashboard (prod). No placeholder values remain.</span></div>
+  <div class="row"><span class="rkey">Razorpay live keys</span><span class="rdesc">Switched from rzp_test_ to rzp_live_ in Vercel production env vars.</span></div>
+  <div class="row"><span class="rkey">NEXT_PUBLIC_APP_URL</span><span class="rdesc">Set to https://wedinvite.in in Vercel production (not localhost).</span></div>
+  <div class="row"><span class="rkey">Admin password strong</span><span class="rdesc">ADMIN_SECRET is 20+ chars, random, not a dictionary word.</span></div>
+  <div class="row"><span class="rkey">No console.log secrets</span><span class="rdesc">Search codebase for console.log — remove any that print env vars or payment data.</span></div>
+</div>
+
+<div class="sh">Database</div>
+<div class="card">
+  <div class="row"><span class="rkey">All 4 tables created</span><span class="rdesc">orders, events, media, rsvps — run SQL migration in Supabase SQL editor.</span></div>
+  <div class="row"><span class="rkey">All RLS policies active</span><span class="rdesc">RLS is ON for all tables. All 8 policies created. Test with anon key that you cannot read others' orders.</span></div>
+  <div class="row"><span class="rkey">Storage bucket created</span><span class="rdesc">"invite-media" bucket exists. Set to public. RLS: public read, service role write.</span></div>
+  <div class="row"><span class="rkey">order_status enum</span><span class="rdesc">Enum created with all 6 values: pending_payment, paid, building, live, expired, refunded.</span></div>
+</div>
+
+<div class="sh">End-to-end testing</div>
+<div class="card">
+  <div class="row"><span class="rkey">Full order placed</span><span class="rdesc">Place a complete test order with Razorpay test card 4111 1111 1111 1111. Verify order appears in Supabase.</span></div>
+  <div class="row"><span class="rkey">Admin marks live</span><span class="rdesc">Open admin, find test order, click Mark as live. Verify status changes and expires_at is set.</span></div>
+  <div class="row"><span class="rkey">Invite opens correctly</span><span class="rdesc">Open /invite/[test-id]. Verify all sections load. Music plays. Countdown shows correct date.</span></div>
+  <div class="row"><span class="rkey">RSVP works</span><span class="rdesc">Submit RSVP on test invite. Verify row appears in Supabase rsvps table.</span></div>
+  <div class="row"><span class="rkey">Expiry works</span><span class="rdesc">Manually set expires_at to past date. Verify invite shows expired page not invite.</span></div>
+  <div class="row"><span class="rkey">OG tags correct</span><span class="rdesc">Paste invite URL into https://opengraph.xyz — verify title, description, image all show correctly.</span></div>
+  <div class="row"><span class="rkey">Mobile tested</span><span class="rdesc">Test on real Android + iOS device. Not just browser dev tools. Especially test music, video, file upload.</span></div>
+  <div class="row"><span class="rkey">Payment failure tested</span><span class="rdesc">Use Razorpay test card that declines. Verify user stays on Step 4 with error toast. Form data not lost.</span></div>
+</div>
+
+<div class="sh">Performance & SEO</div>
+<div class="card">
+  <div class="row"><span class="rkey">Lighthouse score</span><span class="rdesc">Run Lighthouse on homepage and one invite page. Target: Performance 90+, Accessibility 95+, SEO 100.</span></div>
+  <div class="row"><span class="rkey">sitemap.xml generated</span><span class="rdesc">Visit https://wedinvite.in/sitemap.xml — verify all public pages listed.</span></div>
+  <div class="row"><span class="rkey">Google Search Console</span><span class="rdesc">Add site to Google Search Console. Submit sitemap. Verify no crawl errors.</span></div>
+</div>
+
+<button class="cta" onclick="sendPrompt('We have completed our full planning. Now start building WedInvite from scratch. First file: lib/templates.ts — complete config for all 8 templates.')">Start building now ↗</button>
+</div>
+
+</div>
+<script>
+function show(id){
+  document.querySelectorAll('.sec').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
