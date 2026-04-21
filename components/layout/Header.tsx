@@ -2,13 +2,30 @@
 
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
 import { cn } from '@/lib/utils'
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/templates', label: 'Templates' },
-  { href: '/#pricing', label: 'Pricing' },
-  { href: '/#contact', label: 'Contact' },
+  {
+    href: '/',
+    label: 'Home',
+    gradient: 'linear-gradient(135deg, #E8638C 0%, #C9A962 40%, #F7E7CE 70%, #E8638C 100%)',
+  },
+  {
+    href: '/templates',
+    label: 'Templates',
+    gradient: 'linear-gradient(135deg, #C9A962 0%, #F7E7CE 35%, #C0185F 65%, #C9A962 100%)',
+  },
+  {
+    href: '/#pricing',
+    label: 'Pricing',
+    gradient: 'linear-gradient(135deg, #F7E7CE 0%, #C9A962 35%, #E8638C 65%, #C9A962 100%)',
+  },
+  {
+    href: '/#contact',
+    label: 'Contact',
+    gradient: 'linear-gradient(135deg, #C0185F 0%, #E8638C 35%, #C9A962 65%, #F7E7CE 100%)',
+  },
 ]
 
 export default function Header() {
@@ -32,23 +49,25 @@ export default function Header() {
     >
       <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-0.5">
-          <span className="font-[--font-cormorant] text-2xl font-semibold tracking-wide text-[--color-charcoal]">
-            Wed
-          </span>
-          <span className="text-[--color-gold] font-[--font-cormorant] text-2xl">✦</span>
-          <span className="font-[--font-cormorant] text-2xl font-semibold tracking-wide text-[--color-charcoal]">
-            Inviter
+        <Link href="/" className="flex items-center">
+          <span className="logo-gradient-text font-[--font-cormorant] text-2xl font-semibold tracking-wide">
+            Wed✦Inviter
           </span>
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">
-          {navLinks.map((link) => (
+          {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className="text-sm font-medium text-[--color-charcoal]/70 hover:text-[--color-charcoal] transition-colors duration-200"
+              className="nav-gradient-text text-sm font-medium"
+              style={
+                {
+                  '--nav-grad': link.gradient,
+                  animationDelay: `${i * -1.8}s`,
+                } as React.CSSProperties
+              }
             >
               {link.label}
             </Link>
@@ -57,12 +76,22 @@ export default function Header() {
 
         {/* Desktop CTA + Mobile Hamburger */}
         <div className="flex items-center gap-3">
-          <Link
-            href="/order"
-            className="hidden md:inline-flex items-center h-10 px-5 rounded-full bg-[--color-charcoal] text-[--color-cream] text-sm font-medium hover:bg-black transition-colors duration-200"
+          <motion.div
+            className="hidden md:inline-flex"
+            initial={{ filter: 'drop-shadow(0 0px 0px rgba(192,24,95,0))' }}
+            whileHover={{
+              scale: 1.05,
+              filter: 'drop-shadow(0 4px 22px rgba(192,24,95,0.5))',
+            }}
+            transition={{ type: 'spring', stiffness: 400, damping: 18 }}
           >
-            Create Invite — ₹699
-          </Link>
+            <Link
+              href="/order"
+              className="cta-gradient-btn inline-flex items-center h-10 px-5 rounded-full text-white text-sm font-semibold tracking-wide shadow-md"
+            >
+              Create Invite — ₹699
+            </Link>
+          </motion.div>
 
           <button
             className="md:hidden w-10 h-10 flex items-center justify-center rounded-full hover:bg-black/5 transition-colors"
@@ -106,11 +135,17 @@ export default function Header() {
           className="bg-[--color-cream]/98 backdrop-blur-md border-t border-black/5 px-4 py-4 flex flex-col gap-1"
           aria-label="Mobile navigation"
         >
-          {navLinks.map((link) => (
+          {navLinks.map((link, i) => (
             <Link
               key={link.href}
               href={link.href}
-              className="py-3 px-2 text-base font-medium text-[--color-charcoal]/70 hover:text-[--color-charcoal] border-b border-black/5 last:border-0 transition-colors"
+              className="nav-gradient-text py-3 px-2 text-base font-medium border-b border-black/5 last:border-0"
+              style={
+                {
+                  '--nav-grad': link.gradient,
+                  animationDelay: `${i * -1.8}s`,
+                } as React.CSSProperties
+              }
               onClick={() => setMenuOpen(false)}
             >
               {link.label}
@@ -118,7 +153,7 @@ export default function Header() {
           ))}
           <Link
             href="/order"
-            className="mt-3 flex items-center justify-center h-12 rounded-full bg-[--color-charcoal] text-[--color-cream] font-medium"
+            className="cta-gradient-btn mt-3 flex items-center justify-center h-12 rounded-full text-white font-semibold"
             onClick={() => setMenuOpen(false)}
           >
             Create Invite — ₹699

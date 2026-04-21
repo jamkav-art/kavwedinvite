@@ -1,9 +1,9 @@
 'use client'
 
 import { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 import { useOrderStore } from '@/hooks/useOrderStore'
 import { Input } from '@/components/ui/Input'
-import { Button } from '@/components/ui/Button'
 import TemplateSelector from '@/components/order/TemplateSelector'
 import { step1Schema } from '@/lib/validation'
 import { cn } from '@/lib/utils'
@@ -52,7 +52,7 @@ export default function Step1() {
     <div className="space-y-8">
       {/* Section heading */}
       <div>
-        <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold text-[--color-charcoal] leading-tight">
+        <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold logo-gradient-text leading-tight">
           Let&rsquo;s start with your details
         </h1>
         <p className="mt-1 text-sm text-gray-500">
@@ -62,7 +62,7 @@ export default function Step1() {
 
       {/* Couple names */}
       <div className="space-y-4">
-        <h2 className="text-base font-semibold text-[--color-charcoal]">The couple</h2>
+        <h2 className="text-base font-semibold logo-gradient-text">The couple</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <Input
             label="Bride / Partner 1"
@@ -92,7 +92,7 @@ export default function Step1() {
 
       {/* Wedding date */}
       <div className="space-y-4">
-        <h2 className="text-base font-semibold text-[--color-charcoal]">Wedding date</h2>
+        <h2 className="text-base font-semibold logo-gradient-text">Wedding date</h2>
         <div className="max-w-xs">
           <Input
             label="Date of the wedding"
@@ -114,7 +114,7 @@ export default function Step1() {
       {/* Template selection */}
       <div ref={templateRef} className="space-y-3">
         <div className="flex items-baseline gap-2">
-          <h2 className="text-base font-semibold text-[--color-charcoal]">
+          <h2 className="text-base font-semibold logo-gradient-text">
             Choose your template
             <span className="ml-0.5 text-[--color-terracotta]" aria-hidden="true">
               *
@@ -150,7 +150,17 @@ export default function Step1() {
 
       {/* Navigation */}
       <div className="flex justify-end pt-2 border-t border-gray-100">
-        <Button onClick={handleNext} size="lg" className="gap-2">
+        <motion.button
+          onClick={handleNext}
+          whileHover={{
+            scale: 1.04,
+            y: -2,
+            boxShadow: '0 12px 40px rgba(192,24,95,0.45), 0 0 0 3px rgba(201,169,98,0.35)',
+          }}
+          whileTap={{ scale: 0.97, y: 0 }}
+          transition={{ type: 'spring', stiffness: 280, damping: 18 }}
+          className="order-cta-btn inline-flex items-center gap-2 h-14 px-8 text-base font-semibold rounded-full text-white"
+        >
           Continue to Events
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4" aria-hidden="true">
             <path
@@ -159,7 +169,7 @@ export default function Step1() {
               clipRule="evenodd"
             />
           </svg>
-        </Button>
+        </motion.button>
       </div>
     </div>
   )

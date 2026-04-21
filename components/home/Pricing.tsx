@@ -3,9 +3,9 @@
 // AI-ADDED: "use client" directive added — required for useRef, useLayoutEffect,
 // and mouse-event handlers. No server-only APIs were used in the original file.
 
-import { useRef, useLayoutEffect, useState } from 'react'
+import { useRef, useLayoutEffect, useState, useEffect } from 'react'
 import Link from 'next/link'
-import { motion } from 'framer-motion'
+import { motion, useAnimationControls } from 'framer-motion'
 import gsap from 'gsap'
 
 // ── EXISTING DATA — untouched ──────────────────────────────────────────────
@@ -22,11 +22,9 @@ const FEATURES = [
 ]
 
 export default function Pricing() {
-  // AI-ADDED: Refs for the glow card and CTA button
   const cardRef = useRef<HTMLDivElement>(null)
   const btnWrapRef = useRef<HTMLDivElement>(null)
-
-  // AI-ADDED: Magnetic button position state
+  const priceControls = useAnimationControls()
   const [magPos, setMagPos] = useState({ x: 0, y: 0 })
 
   // AI-ADDED: GSAP tween for the spinning conic-gradient border via CSS variable
@@ -46,7 +44,19 @@ export default function Pricing() {
     return () => { tween.kill() }
   }, [])
 
-  // AI-ADDED: Magnetic button mouse handlers
+  // Periodic 3D pop on ₹699 every 4 seconds
+  useEffect(() => {
+    const trigger = () => {
+      priceControls.start({
+        scale: [1, 1.14, 0.96, 1.06, 1],
+        rotateX: [0, -10, 4, -2, 0],
+        transition: { duration: 0.75, ease: 'easeInOut' },
+      })
+    }
+    const id = setInterval(trigger, 4000)
+    return () => clearInterval(id)
+  }, [priceControls])
+
   const handleBtnMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const el = btnWrapRef.current
     if (!el) return
@@ -75,21 +85,25 @@ export default function Pricing() {
         <div className="max-w-md mx-auto">
           {/* AI-ADDED: pricing-glow-card wrapper activates the spinning CSS pseudo-element border */}
           <div ref={cardRef} className="pricing-glow-card rounded-3xl">
-            {/* EXISTING card — shadow, overflow, border preserved; bg-white kept */}
-            <div className="relative bg-white rounded-3xl shadow-2xl shadow-black/8 overflow-hidden border border-black/5">
+            {/* Glassmorphism bridal card */}
+            <div className="relative rounded-3xl overflow-hidden border border-white/50 shadow-[0_32px_80px_rgba(201,169,98,0.22),0_8px_32px_rgba(192,24,95,0.12),0_2px_8px_rgba(0,0,0,0.05)] bg-gradient-to-br from-white via-[#FFF5F5] to-[#FEF3E2]">
 
-              {/* EXISTING gold accent bar — untouched */}
-              <div className="h-1.5 bg-gradient-to-r from-[--color-gold]/60 via-[--color-gold] to-[--color-gold]/60" />
+              <div className="h-1.5 bg-gradient-to-r from-[--color-gold]/60 via-[--color-rose] to-[--color-magenta]/70" />
 
               <div className="p-8 md:p-10">
 
-                {/* EXISTING price display — untouched */}
+                {/* Animated gradient price with periodic 3D pop */}
                 <div className="text-center mb-8">
-                  <div className="inline-flex items-start gap-1">
-                    <span className="mt-4 text-xl font-medium text-[--color-charcoal]/50">₹</span>
-                    <span className="font-[--font-cormorant] text-8xl font-semibold leading-none text-[--color-charcoal]">
-                      699
-                    </span>
+                  <div className="inline-flex items-start gap-1" style={{ perspective: '600px' }}>
+                    <motion.div
+                      animate={priceControls}
+                      style={{ transformStyle: 'preserve-3d', display: 'inline-flex', alignItems: 'flex-start', gap: '2px' }}
+                    >
+                      <span className="mt-4 text-xl font-medium price-gradient-text">₹</span>
+                      <span className="font-[--font-cormorant] text-8xl font-semibold leading-none price-gradient-text">
+                        699
+                      </span>
+                    </motion.div>
                   </div>
                   <p className="text-sm text-[--color-charcoal]/45 mt-2">
                     One-time payment · No subscriptions
@@ -134,16 +148,15 @@ export default function Pricing() {
                   >
                     <Link
                       href="/order"
-                      className="flex items-center justify-center h-14 rounded-full bg-[--color-charcoal] text-[--color-cream] font-medium text-base hover:bg-black transition-all duration-300 hover:scale-[1.02] shadow-lg shadow-black/15"
+                      className="cta-gradient-btn flex items-center justify-center h-14 rounded-full text-white font-semibold text-base transition-all duration-300 hover:scale-[1.02] hover:brightness-110 shadow-lg shadow-[--color-magenta]/25"
                     >
                       Get Started — ₹699
                     </Link>
                   </motion.div>
                 </div>
 
-                {/* EXISTING footer text — untouched */}
-                <p className="text-center text-xs text-[--color-charcoal]/35 mt-4">
-                  Secured by Razorpay · UPI, Cards, Net Banking
+                <p className="text-center text-xs text-[--color-charcoal]/45 mt-4">
+                  🔒 Secured by Razorpay · 💳 UPI, Cards, Net Banking
                 </p>
               </div>
             </div>

@@ -31,10 +31,10 @@ export default function TemplatesPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-16 md:py-24">
         {/* Page header */}
         <div className="text-center mb-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-[--color-gold] mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] logo-gradient-text mb-4">
             8 Premium Designs
           </p>
-          <h1 className="font-[--font-cormorant] text-[clamp(2.5rem,5vw,4rem)] font-semibold text-[--color-charcoal] mb-4">
+          <h1 className="font-[--font-cormorant] text-[clamp(2.5rem,5vw,4rem)] font-semibold logo-gradient-text mb-4">
             Choose Your Template
           </h1>
           <p className="text-[--color-charcoal]/55 max-w-lg mx-auto text-base leading-relaxed">
@@ -105,7 +105,7 @@ export default function TemplatesPage() {
 
                 <Link
                   href={`/order?template=${template.slug}`}
-                  className="flex items-center justify-center h-10 rounded-full bg-[--color-charcoal] text-[--color-cream] text-sm font-medium hover:bg-black transition-colors duration-200"
+                  className="template-card-btn flex items-center justify-center h-10 rounded-full text-sm font-medium"
                 >
                   Choose This Template
                 </Link>
@@ -121,7 +121,7 @@ export default function TemplatesPage() {
           </p>
           <Link
             href="/order"
-            className="inline-flex items-center justify-center h-12 px-8 rounded-full border border-[--color-charcoal]/25 text-[--color-charcoal] font-medium hover:bg-[--color-charcoal] hover:text-[--color-cream] hover:border-[--color-charcoal] transition-all duration-300"
+            className="templates-main-cta inline-flex items-center justify-center h-12 px-8 rounded-full"
           >
             Start your invite — ₹699
           </Link>

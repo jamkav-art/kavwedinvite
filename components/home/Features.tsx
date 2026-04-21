@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useLayoutEffect } from 'react'
+import { useRef, useLayoutEffect, type CSSProperties } from 'react'
 import { motion, useInView, type Variants } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -56,6 +56,14 @@ const FEATURES = [
       'Add your favourite song that plays softly as guests scroll through your invitation.',
   },
 ]
+
+// Per-card pastel glow + gradient heading colours (cycles every 4 cards)
+const CARD_PALETTES = [
+  { bg: 'rgba(255, 240, 245, 0.78)', shadow: '0 8px 32px rgba(232, 99, 140, 0.18)', fhFrom: '#E8638C', fhVia: '#C0185F', fhTo: '#F7B7C5' },
+  { bg: 'rgba(236, 253, 245, 0.78)', shadow: '0 8px 32px rgba(20, 184, 166, 0.15)',  fhFrom: '#0D9488', fhVia: '#14B8A6', fhTo: '#6EE7B7' },
+  { bg: 'rgba(255, 248, 232, 0.78)', shadow: '0 8px 32px rgba(201, 169, 98, 0.22)',  fhFrom: '#C9A962', fhVia: '#A8720A', fhTo: '#F7E7CE' },
+  { bg: 'rgba(250, 245, 255, 0.78)', shadow: '0 8px 32px rgba(139, 92, 246, 0.14)', fhFrom: '#9B59B6', fhVia: '#8B5CF6', fhTo: '#C4B5FD' },
+] as const
 
 // ── EXISTING FRAMER MOTION VARIANTS — untouched ────────────────────────────
 const containerVariants: Variants = {
@@ -152,24 +160,30 @@ export default function Features() {
           animate={inView ? 'visible' : 'hidden'}
           className="grid grid-cols-1 sm:grid-cols-2 gap-5 lg:hidden"
         >
-          {FEATURES.map((feature) => (
-            <motion.div
-              key={feature.title}
-              variants={cardVariants}
-              // AI-ADDED: glass-feature-card replaces inline bg/border for glassmorphism
-              className="p-6 rounded-2xl glass-feature-card hover:border-[--color-gold]/30 hover:shadow-lg transition-all duration-300"
-            >
-              <div className="text-3xl mb-4" aria-hidden="true">
-                {feature.icon}
-              </div>
-              <h3 className="font-semibold text-[--color-charcoal] mb-2 text-base leading-snug">
-                {feature.title}
-              </h3>
-              <p className="text-sm text-[--color-charcoal]/50 leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
-          ))}
+          {FEATURES.map((feature, i) => {
+            const palette = CARD_PALETTES[i % 4]
+            return (
+              <motion.div
+                key={feature.title}
+                variants={cardVariants}
+                className="p-6 rounded-2xl glass-feature-card hover:scale-[1.02] transition-all duration-300"
+                style={{ background: palette.bg, boxShadow: palette.shadow }}
+              >
+                <div className="text-3xl mb-4" aria-hidden="true">
+                  {feature.icon}
+                </div>
+                <h3
+                  className="font-semibold mb-2 text-base leading-snug feature-heading-gradient"
+                  style={{ '--fh-from': palette.fhFrom, '--fh-via': palette.fhVia, '--fh-to': palette.fhTo } as CSSProperties}
+                >
+                  {feature.title}
+                </h3>
+                <p className="text-sm text-[--color-charcoal]/50 leading-relaxed">
+                  {feature.description}
+                </p>
+              </motion.div>
+            )
+          })}
         </motion.div>
       </div>
 
@@ -180,23 +194,29 @@ export default function Features() {
         className="hidden lg:flex items-stretch gap-6 px-24 pb-20 will-change-transform"
         style={{ width: 'max-content' }}
       >
-        {FEATURES.map((feature) => (
-          <div
-            key={feature.title}
-            // AI-ADDED: glass-feature-card + fixed width for the horizontal track
-            className="flex-none w-72 p-6 rounded-2xl glass-feature-card hover:border-[--color-gold]/30 hover:shadow-lg transition-all duration-300"
-          >
-            <div className="text-3xl mb-4" aria-hidden="true">
-              {feature.icon}
+        {FEATURES.map((feature, i) => {
+          const palette = CARD_PALETTES[i % 4]
+          return (
+            <div
+              key={feature.title}
+              className="flex-none w-72 p-6 rounded-2xl glass-feature-card hover:scale-[1.02] transition-all duration-300"
+              style={{ background: palette.bg, boxShadow: palette.shadow }}
+            >
+              <div className="text-3xl mb-4" aria-hidden="true">
+                {feature.icon}
+              </div>
+              <h3
+                className="font-semibold mb-2 text-base leading-snug feature-heading-gradient"
+                style={{ '--fh-from': palette.fhFrom, '--fh-via': palette.fhVia, '--fh-to': palette.fhTo } as CSSProperties}
+              >
+                {feature.title}
+              </h3>
+              <p className="text-sm text-[--color-charcoal]/50 leading-relaxed">
+                {feature.description}
+              </p>
             </div>
-            <h3 className="font-semibold text-[--color-charcoal] mb-2 text-base leading-snug">
-              {feature.title}
-            </h3>
-            <p className="text-sm text-[--color-charcoal]/50 leading-relaxed">
-              {feature.description}
-            </p>
-          </div>
-        ))}
+          )
+        })}
       </div>
     </section>
   )

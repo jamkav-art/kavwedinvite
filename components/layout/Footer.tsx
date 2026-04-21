@@ -4,13 +4,24 @@ const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919846224086
 
 export default function Footer() {
   return (
-    <footer id="contact" className="bg-[--color-charcoal] text-[--color-cream]/80">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mb-10">
+    <footer id="contact" className="footer-bridal-bg text-[--color-cream]/80 relative overflow-hidden">
+
+      {/* Decorative top gradient accent */}
+      <div className="h-px bg-gradient-to-r from-transparent via-[--color-gold]/60 to-transparent" />
+
+      {/* Ambient glow blobs */}
+      <div className="absolute inset-0 pointer-events-none" aria-hidden="true">
+        <div className="absolute top-0 left-1/4 w-96 h-80 bg-[--color-magenta]/6 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-80 h-64 bg-[--color-gold]/7 rounded-full blur-3xl" />
+      </div>
+
+      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-12 md:py-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+
           {/* Brand */}
-          <div>
-            <div className="font-[--font-cormorant] text-2xl font-semibold text-[--color-cream] mb-3">
-              Wed<span className="text-[--color-gold]">✦</span>Inviter
+          <div className="backdrop-blur-sm bg-white/[0.04] border border-white/10 rounded-2xl p-6">
+            <div className="font-[--font-cormorant] text-2xl font-semibold mb-3 logo-gradient-text">
+              Wed✦Inviter
             </div>
             <p className="text-sm leading-relaxed text-[--color-cream]/50 max-w-xs">
               Premium digital wedding invitations delivered via WhatsApp.
@@ -19,7 +30,7 @@ export default function Footer() {
           </div>
 
           {/* Quick Links */}
-          <div className="md:mx-auto">
+          <div className="backdrop-blur-sm bg-white/[0.04] border border-white/10 rounded-2xl p-6 md:mx-auto w-full">
             <h3 className="text-xs font-semibold uppercase tracking-widest text-[--color-gold] mb-4">
               Quick Links
             </h3>
@@ -33,7 +44,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-[--color-cream]/60 hover:text-[--color-cream] transition-colors duration-200"
+                    className="text-sm text-[--color-cream]/55 hover:text-[--color-gold] transition-colors duration-200"
                   >
                     {link.label}
                   </Link>
@@ -43,7 +54,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div className="md:ml-auto">
+          <div className="backdrop-blur-sm bg-white/[0.04] border border-white/10 rounded-2xl p-6 md:ml-auto w-full">
             <h3 className="text-xs font-semibold uppercase tracking-widest text-[--color-gold] mb-4">
               Contact Us
             </h3>
@@ -51,7 +62,7 @@ export default function Footer() {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1eb85a] transition-colors duration-200"
+              className="inline-flex items-center gap-2 h-10 px-5 rounded-full bg-[#25D366] text-white text-sm font-medium hover:bg-[#1eb85a] transition-colors duration-200 shadow-lg shadow-[#25D366]/20"
             >
               <svg
                 width="16"
@@ -76,13 +87,13 @@ export default function Footer() {
           <div className="flex items-center gap-5">
             <Link
               href="/privacy"
-              className="text-xs text-[--color-cream]/30 hover:text-[--color-cream]/60 transition-colors duration-200"
+              className="text-xs text-[--color-cream]/30 hover:text-[--color-gold]/70 transition-colors duration-200"
             >
               Privacy Policy
             </Link>
             <Link
               href="/terms"
-              className="text-xs text-[--color-cream]/30 hover:text-[--color-cream]/60 transition-colors duration-200"
+              className="text-xs text-[--color-cream]/30 hover:text-[--color-gold]/70 transition-colors duration-200"
             >
               Terms of Service
             </Link>

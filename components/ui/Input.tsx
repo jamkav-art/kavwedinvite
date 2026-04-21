@@ -18,11 +18,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="text-sm font-medium text-[--color-charcoal]"
+            className="text-sm font-semibold text-[--color-charcoal]/75"
           >
             {label}
             {props.required && (
-              <span className="ml-0.5 text-[--color-terracotta]" aria-hidden="true">
+              <span className="ml-0.5 text-[--color-magenta]/80" aria-hidden="true">
                 *
               </span>
             )}
@@ -36,14 +36,14 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
             error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined
           }
           className={cn(
-            'h-11 w-full rounded-lg border bg-white px-4 text-base text-[--color-charcoal]',
-            'placeholder:text-gray-400',
-            'transition-colors duration-[--duration-fast]',
-            'focus:outline-none focus:ring-2 focus:ring-[--color-gold] focus:ring-offset-0 focus:border-transparent',
+            'h-12 w-full rounded-xl border-[1.5px] bg-white/90 px-4 text-base text-[--color-charcoal]',
+            'placeholder:text-[--color-charcoal]/30',
+            'transition-[border-color,box-shadow] duration-200',
+            'focus:outline-none focus:border-[--color-gold]/55 focus:shadow-[0_0_0_3px_rgba(201,169,98,0.18),0_0_18px_rgba(201,169,98,0.1)]',
             'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
             error
-              ? 'border-[--color-terracotta] focus:ring-[--color-terracotta]'
-              : 'border-gray-200 hover:border-gray-300',
+              ? 'border-[--color-terracotta]/70 focus:border-[--color-terracotta] focus:shadow-[0_0_0_3px_rgba(212,117,108,0.18)]'
+              : 'border-[--color-gold]/22 hover:border-[--color-gold]/45',
             className
           )}
           {...props}
