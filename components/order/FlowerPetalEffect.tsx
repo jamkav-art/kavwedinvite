@@ -47,13 +47,14 @@ export default function FlowerPetalEffect({
   const [petals, setPetals] = useState<FlowerPetal[]>([]);
 
   useEffect(() => {
+    console.log("FlowerPetalEffect trigger:", trigger);
     if (!trigger) return;
 
     const newPetals: FlowerPetal[] = Array.from(
       { length: petalCount },
       (_, i) => {
         const angle = Math.random() * Math.PI * 2;
-        const distance = 0.3 + Math.random() * 0.7;
+        const distance = 0.5 + Math.random() * 1.0;
         const endX = Math.cos(angle) * distance;
         const endY = Math.sin(angle) * distance;
 
@@ -62,7 +63,7 @@ export default function FlowerPetalEffect({
           x: endX,
           y: endY,
           rotate: Math.random() * 360,
-          scale: 0.5 + Math.random() * 0.8,
+          scale: 0.7 + Math.random() * 1.0,
           color: COLORS[Math.floor(Math.random() * COLORS.length)],
           duration: 1.5 + Math.random() * 1.5,
           delay: Math.random() * 0.5,
@@ -72,6 +73,7 @@ export default function FlowerPetalEffect({
     );
 
     const animationTimeout = setTimeout(() => {
+      console.log("Setting petals:", newPetals.length);
       setPetals(newPetals);
     }, 0);
 
@@ -86,10 +88,13 @@ export default function FlowerPetalEffect({
     };
   }, [trigger, petalCount]);
 
-  if (petals.length === 0) return null;
+  if (petals.length === 0) {
+    console.log("No petals to render, returning null");
+    return null;
+  }
 
   return (
-    <div className="fixed inset-0 pointer-events-none z-50 overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-50 overflow-visible">
       {petals.map((p) => (
         <motion.div
           key={p.id}
@@ -97,8 +102,8 @@ export default function FlowerPetalEffect({
           style={{
             left: `${origin.x * 100}%`,
             top: `${origin.y * 100}%`,
-            width: 24,
-            height: 24,
+            width: 40,
+            height: 40,
             x: p.x * window.innerWidth,
             y: p.y * window.innerHeight,
             rotate: p.rotate,
@@ -119,13 +124,13 @@ export default function FlowerPetalEffect({
           }}
         >
           <svg
-            width="24"
-            height="24"
+            width="40"
+            height="40"
             viewBox="0 0 24 24"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <path d={p.path} fill={p.color} fillOpacity="0.7" />
+            <path d={p.path} fill={p.color} fillOpacity="0.9" />
           </svg>
         </motion.div>
       ))}

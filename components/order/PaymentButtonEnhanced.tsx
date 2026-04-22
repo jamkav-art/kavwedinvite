@@ -123,10 +123,12 @@ export default function PaymentButtonEnhanced({
           disabled={disabled}
           onClick={() => void handleClick()}
           title={disabledReason ?? undefined}
-          className="w-full h-14 text-base font-semibold relative overflow-hidden"
+          className="w-full h-14 text-xl font-semibold relative overflow-hidden"
           style={{
-            background: `linear-gradient(135deg, ${priceColors[flipIndex]}20, ${priceColors[(flipIndex + 2) % priceColors.length]}20)`,
-            border: `2px solid ${priceColors[flipIndex]}40`,
+            background: `linear-gradient(135deg, ${priceColors[flipIndex]}C0, ${priceColors[(flipIndex + 2) % priceColors.length]}C0)`,
+            border: `2px solid ${priceColors[flipIndex]}FF`,
+            color: priceColors[flipIndex],
+            boxShadow: `0 0 20px ${priceColors[flipIndex]}80`,
           }}
         >
           <span className="flex items-center justify-center gap-2">
@@ -135,7 +137,7 @@ export default function PaymentButtonEnhanced({
               className="inline-block font-bold px-1 rounded"
               animate={priceControls}
               style={{
-                color: priceColors[flipIndex],
+                color: "#FBF7F0",
                 textShadow: `0 0 10px ${priceColors[flipIndex]}80`,
               }}
             >

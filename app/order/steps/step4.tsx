@@ -57,8 +57,7 @@ export default function Step4() {
       email: store.email,
       custom_message: store.custom_message,
     });
-    if (!check.success)
-      return "Please complete contact details correctly before payment.";
+    if (!check.success) return "Please complete contact details.";
     return null;
   }, [mediaCount, store]);
 
@@ -111,7 +110,7 @@ export default function Step4() {
       />
       <div className="space-y-8 relative z-10">
         <div>
-          <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold text-[--color-charcoal] leading-tight">
+          <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold review-pay-gradient-text leading-tight">
             Review and pay
           </h1>
           <p className="mt-1 text-sm text-[--color-sage]">
@@ -252,7 +251,7 @@ export default function Step4() {
           <FloralBorderWrapper
             corners={true}
             sides={false}
-            className="glass-card rounded-2xl p-4 space-y-4"
+            className="glass-card rounded-2xl p-4 space-y-4 contact-details"
           >
             <h2 className="text-base font-semibold text-[--color-terracotta]">
               Contact details
@@ -303,7 +302,7 @@ export default function Step4() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-[--color-sage]">Total payable</p>
+                <p className="text-sm memorable-gradient-text">Memorable@</p>
                 <AnimatedPrice />
               </div>
               <p className="text-xs text-[--color-blush] text-right">

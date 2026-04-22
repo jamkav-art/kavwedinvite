@@ -2,18 +2,18 @@
 
 @theme {
   /* Brand palette */
-  --color-cream: #FBF7F0;
-  --color-sage: #9CA986;
-  --color-terracotta: #D4756C;
-  --color-charcoal: #2D2D2D;
-  --color-gold: #C9A962;
+  --color-cream: #fbf7f0;
+  --color-sage: #9ca986;
+  --color-terracotta: #d4756c;
+  --color-charcoal: #2d2d2d;
+  --color-gold: #c9a962;
 
   /* AI-ADDED: Festive & Ethereal extended palette */
-  --color-blush: #FFF5F5;
-  --color-champagne: #F7E7CE;
-  --color-magenta: #C0185F;
-  --color-rose: #E8638C;
-  --color-deep-gold: #A8720A;
+  --color-blush: #fff5f5;
+  --color-champagne: #f7e7ce;
+  --color-magenta: #c0185f;
+  --color-rose: #e8638c;
+  --color-deep-gold: #a8720a;
 
   /* Fluid typography */
   --text-xs: clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
@@ -33,12 +33,12 @@
 }
 
 :root {
-  --background: #FBF7F0;
-  --foreground: #2D2D2D;
+  --background: #fbf7f0;
+  --foreground: #2d2d2d;
   /* AI-ADDED: Dynamic gradient vars — GSAP can tween these on scroll */
-  --hero-grad-from: #FFF5F5;
-  --hero-grad-via: #F7E7CE;
-  --hero-grad-to: #FBF7F0;
+  --hero-grad-from: #fff5f5;
+  --hero-grad-via: #f7e7ce;
+  --hero-grad-to: #fbf7f0;
   /* AI-ADDED: Pricing glow border angle — animated by GSAP */
   --border-angle: 0deg;
 }
@@ -90,36 +90,71 @@ body {
    ============================================================ */
 
 @keyframes float-a {
-  0%, 100% { transform: perspective(900px) rotateY(8deg) rotateX(4deg) translateY(0px); }
-  50%       { transform: perspective(900px) rotateY(5deg) rotateX(2deg) translateY(-18px); }
+  0%,
+  100% {
+    transform: perspective(900px) rotateY(8deg) rotateX(4deg) translateY(0px);
+  }
+  50% {
+    transform: perspective(900px) rotateY(5deg) rotateX(2deg) translateY(-18px);
+  }
 }
 
 @keyframes float-b {
-  0%, 100% { transform: perspective(900px) rotateY(-7deg) rotateX(-3deg) translateY(-8px); }
-  50%       { transform: perspective(900px) rotateY(-9deg) rotateX(1deg) translateY(10px); }
+  0%,
+  100% {
+    transform: perspective(900px) rotateY(-7deg) rotateX(-3deg) translateY(-8px);
+  }
+  50% {
+    transform: perspective(900px) rotateY(-9deg) rotateX(1deg) translateY(10px);
+  }
 }
 
 @keyframes float-c {
-  0%, 100% { transform: perspective(900px) rotateY(10deg) rotateX(-4deg) translateY(5px); }
-  50%       { transform: perspective(900px) rotateY(7deg)  rotateX(2deg)  translateY(-14px); }
+  0%,
+  100% {
+    transform: perspective(900px) rotateY(10deg) rotateX(-4deg) translateY(5px);
+  }
+  50% {
+    transform: perspective(900px) rotateY(7deg) rotateX(2deg) translateY(-14px);
+  }
 }
 
-.float-card-a { animation: float-a 6s   ease-in-out infinite; }
-.float-card-b { animation: float-b 7.5s ease-in-out infinite; animation-delay: -3s; }
-.float-card-c { animation: float-c 5.5s ease-in-out infinite; animation-delay: -1.5s; }
+.float-card-a {
+  animation: float-a 6s ease-in-out infinite;
+}
+.float-card-b {
+  animation: float-b 7.5s ease-in-out infinite;
+  animation-delay: -3s;
+}
+.float-card-c {
+  animation: float-c 5.5s ease-in-out infinite;
+  animation-delay: -1.5s;
+}
 
 /* ============================================================
    AI-ADDED: ORNAMENT DRIFT (Hero decorative glyphs)
    ============================================================ */
 
 @keyframes ornament-drift {
-  0%, 100% { transform: translateY(0)   rotate(0deg); }
-  33%       { transform: translateY(-18px) rotate(4deg); }
-  66%       { transform: translateY(10px)  rotate(-3deg); }
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-18px) rotate(4deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-3deg);
+  }
 }
 
-.ornament-drift      { animation: ornament-drift 14s ease-in-out infinite; }
-.ornament-drift-slow { animation: ornament-drift 20s ease-in-out infinite; animation-delay: -8s; }
+.ornament-drift {
+  animation: ornament-drift 14s ease-in-out infinite;
+}
+.ornament-drift-slow {
+  animation: ornament-drift 20s ease-in-out infinite;
+  animation-delay: -8s;
+}
 
 /* ============================================================
    AI-ADDED: PRICING GLOW BORDER
@@ -134,26 +169,26 @@ body {
 }
 
 .pricing-glow-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -2px;
   border-radius: 26px; /* matches rounded-3xl (24px) + 2px border */
   background: conic-gradient(
     from var(--border-angle),
-    #C9A962 0deg,
-    #F7E7CE 60deg,
-    #E8638C 130deg,
-    #C0185F 190deg,
-    #E8638C 250deg,
-    #F7E7CE 310deg,
-    #C9A962 360deg
+    #c9a962 0deg,
+    #f7e7ce 60deg,
+    #e8638c 130deg,
+    #c0185f 190deg,
+    #e8638c 250deg,
+    #f7e7ce 310deg,
+    #c9a962 360deg
   );
   z-index: -1;
   opacity: 0.55;
 }
 
 .pricing-glow-card::after {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   border-radius: 24px;
@@ -166,22 +201,28 @@ body {
    ============================================================ */
 
 @keyframes bridal-shimmer {
-  0%   { background-position: 0% 50%; }
-  50%  { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Logo: vibrant floral-inspired gradient inside letters */
 .logo-gradient-text {
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 15%,
-    #C9A962 32%,
-    #F7E7CE 50%,
-    #C9A962 68%,
-    #E8638C 82%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 15%,
+    #c9a962 32%,
+    #f7e7ce 50%,
+    #c9a962 68%,
+    #e8638c 82%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -193,7 +234,10 @@ body {
 
 /* Nav items: warm bridal gradient fill — gradient set via --nav-grad CSS var */
 .nav-gradient-text {
-  background: var(--nav-grad, linear-gradient(135deg, #C9A962, #F7E7CE, #E8638C, #C9A962));
+  background: var(
+    --nav-grad,
+    linear-gradient(135deg, #c9a962, #f7e7ce, #e8638c, #c9a962)
+  );
   background-size: 300% 300%;
   -webkit-background-clip: text;
   background-clip: text;
@@ -206,12 +250,12 @@ body {
 .cta-gradient-btn {
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 22%,
-    #C9A962 44%,
-    #9B59B6 66%,
-    #E8638C 88%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 22%,
+    #c9a962 44%,
+    #9b59b6 66%,
+    #e8638c 88%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   animation: bridal-shimmer 4s ease-in-out infinite;
@@ -224,12 +268,12 @@ body {
 .price-gradient-text {
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 20%,
-    #C9A962 45%,
-    #F7C948 58%,
-    #E8638C 78%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 20%,
+    #c9a962 45%,
+    #f7c948 58%,
+    #e8638c 78%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -247,7 +291,7 @@ body {
   background: linear-gradient(
     140deg,
     #180a12 0%,
-    #2D2D2D 38%,
+    #2d2d2d 38%,
     #1e0e19 68%,
     #27121f 100%
   );
@@ -261,9 +305,9 @@ body {
 .feature-heading-gradient {
   background: linear-gradient(
     135deg,
-    var(--fh-from, #C9A962),
-    var(--fh-via, #A8720A),
-    var(--fh-to, #F7E7CE)
+    var(--fh-from, #c9a962),
+    var(--fh-via, #a8720a),
+    var(--fh-to, #f7e7ce)
   );
   background-size: 300% 300%;
   -webkit-background-clip: text;
@@ -280,8 +324,13 @@ body {
    ============================================================ */
 
 @keyframes template-btn-shine {
-  0%        { transform: translateX(-130%) skewX(-18deg); }
-  55%, 100% { transform: translateX(230%)  skewX(-18deg); }
+  0% {
+    transform: translateX(-130%) skewX(-18deg);
+  }
+  55%,
+  100% {
+    transform: translateX(230%) skewX(-18deg);
+  }
 }
 
 .template-card-btn {
@@ -289,22 +338,23 @@ body {
   overflow: hidden;
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 28%,
-    #C9A962 55%,
-    #E8638C 80%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 28%,
+    #c9a962 55%,
+    #e8638c 80%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   animation: bridal-shimmer 5s ease-in-out infinite;
   color: #fff;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.25s ease,
-              filter 0.25s ease;
+  transition:
+    transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
 }
 
 .template-card-btn::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -323,7 +373,7 @@ body {
   box-shadow:
     0 0 0 3px rgba(192, 24, 95, 0.18),
     0 6px 24px rgba(192, 24, 95, 0.35),
-    0 2px 8px  rgba(201, 169, 98, 0.2);
+    0 2px 8px rgba(201, 169, 98, 0.2);
   filter: brightness(1.1);
 }
 
@@ -337,28 +387,108 @@ body {
   position: relative;
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 22%,
-    #C9A962 44%,
-    #9B59B6 66%,
-    #E8638C 88%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 22%,
+    #c9a962 44%,
+    #9b59b6 66%,
+    #e8638c 88%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   animation: bridal-shimmer 4s ease-in-out infinite;
   color: #fff;
   font-weight: 600;
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 0.35s ease;
+  transition:
+    transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.35s ease;
 }
 
 .templates-main-cta:hover {
   transform: scale(1.05);
   box-shadow:
-    0 0 0 5px  rgba(192, 24, 95, 0.12),
+    0 0 0 5px rgba(192, 24, 95, 0.12),
     0 0 22px 6px rgba(192, 24, 95, 0.28),
-    0 12px 40px  rgba(192, 24, 95, 0.3),
-    0 4px  16px  rgba(201, 169, 98, 0.18);
+    0 12px 40px rgba(192, 24, 95, 0.3),
+    0 4px 16px rgba(201, 169, 98, 0.18);
+}
+
+/* ============================================================
+   AI-ADDED: CUSTOM GRADIENTS FOR STEP4
+   ============================================================ */
+
+.memorable-gradient-text {
+  background: #333333; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #a43931,
+    #a2ab58,
+    #333333
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #a43931,
+    #a2ab58,
+    #333333
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.review-pay-gradient-text {
+  background: #ff0000; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #fdcf58,
+    #ff0000
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #fdcf58,
+    #ff0000
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.form-label-gradient-text {
+  background: #7ec6bc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ebe717,
+    #7ec6bc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ebe717,
+    #7ec6bc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Contact details form labels gradient */
+.contact-details label.text-sm.font-semibold {
+  background: #7ec6bc; /* fallback for old browsers */
+  background: -webkit-linear-gradient(
+    to right,
+    #ebe717,
+    #7ec6bc
+  ); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(
+    to right,
+    #ebe717,
+    #7ec6bc
+  ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
 }
 
 /* ============================================================
@@ -370,11 +500,11 @@ body {
 .order-cta-btn {
   background: linear-gradient(
     135deg,
-    #C0185F 0%,
-    #E8638C 24%,
-    #C9A962 48%,
-    #9B59B6 72%,
-    #C0185F 100%
+    #c0185f 0%,
+    #e8638c 24%,
+    #c9a962 48%,
+    #9b59b6 72%,
+    #c0185f 100%
   );
   background-size: 300% 300%;
   animation: bridal-shimmer 4s ease-in-out infinite;
