@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import PaymentButtonEnhanced from "@/components/order/PaymentButtonEnhanced";
+import AnimatedPrice from "@/components/order/AnimatedPrice";
 import TemplatePreview from "@/components/order/TemplatePreview";
 import { useOrderStore } from "@/hooks/useOrderStore";
 import { useRazorpay } from "@/hooks/useRazorpay";
@@ -86,20 +87,18 @@ export default function Step4() {
       setFlowerTrigger(false);
     }, 3000);
 
-    // Wait for flower effect to show, then open payment gateway
-    setTimeout(() => {
-      initializePayment({
-        couple_name_1: store.couple_name_1,
-        couple_name_2: store.couple_name_2,
-        wedding_date: store.wedding_date,
-        template_slug: store.template_slug,
-        events: store.events,
-        media: store.media,
-        phone_number: store.phone_number,
-        email: store.email,
-        custom_message: store.custom_message,
-      });
-    }, 1800); // Slightly before flower effect ends
+    // Open payment gateway immediately (flower effect will show concurrently)
+    initializePayment({
+      couple_name_1: store.couple_name_1,
+      couple_name_2: store.couple_name_2,
+      wedding_date: store.wedding_date,
+      template_slug: store.template_slug,
+      events: store.events,
+      media: store.media,
+      phone_number: store.phone_number,
+      email: store.email,
+      custom_message: store.custom_message,
+    });
   };
 
   return (
@@ -115,7 +114,7 @@ export default function Step4() {
           <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold text-[--color-charcoal] leading-tight">
             Review and pay
           </h1>
-          <p className="mt-1 text-sm text-gray-500">
+          <p className="mt-1 text-sm text-[--color-sage]">
             Step 4 of 4 — verify your details before secure payment
           </p>
         </div>
@@ -131,7 +130,7 @@ export default function Step4() {
             className="glass-card rounded-2xl p-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-[--color-charcoal]">
+              <h2 className="text-base font-semibold text-[--color-terracotta]">
                 Couple and template
               </h2>
               <Button
@@ -142,12 +141,19 @@ export default function Step4() {
                 Edit
               </Button>
             </div>
-            <p className="text-sm text-gray-600 mt-2">
+            <p className="text-sm text-[--color-terracotta] mt-2">
               {store.couple_name_1} & {store.couple_name_2}
             </p>
-            <p className="text-sm text-gray-500">{store.wedding_date}</p>
+            <p className="text-sm text-[--color-sage]">{store.wedding_date}</p>
             <div className="mt-3 max-w-[220px]">
-              <TemplatePreview template={selectedTemplate} />
+              <TemplatePreview
+                template={selectedTemplate}
+                coupleName1={store.couple_name_1}
+                coupleName2={store.couple_name_2}
+                weddingDate={store.wedding_date}
+                events={store.events}
+                mediaCount={mediaCount}
+              />
             </div>
           </FloralBorderWrapper>
         </motion.div>
@@ -163,7 +169,7 @@ export default function Step4() {
             className="glass-card rounded-2xl p-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-[--color-charcoal]">
+              <h2 className="text-base font-semibold text-[--color-terracotta]">
                 Events ({store.events.length})
               </h2>
               <Button
@@ -180,13 +186,15 @@ export default function Step4() {
                   key={`${event.event_name}-${index}`}
                   className="rounded-lg border border-gray-100 p-2.5 text-sm"
                 >
-                  <p className="font-medium text-[--color-charcoal]">
+                  <p className="font-medium text-[--color-terracotta]">
                     {event.event_name}
                   </p>
-                  <p className="text-gray-500">
+                  <p className="text-[--color-dusty-rose]">
                     {event.event_date} at {event.event_time}
                   </p>
-                  <p className="text-gray-500">{event.venue_name}</p>
+                  <p className="text-[--color-dusty-rose]">
+                    {event.venue_name}
+                  </p>
                 </div>
               ))}
             </div>
@@ -204,7 +212,7 @@ export default function Step4() {
             className="glass-card rounded-2xl p-4"
           >
             <div className="flex items-center justify-between">
-              <h2 className="text-base font-semibold text-[--color-charcoal]">
+              <h2 className="text-base font-semibold text-[--color-terracotta]">
                 Media ({mediaCount})
               </h2>
               <Button
@@ -228,7 +236,7 @@ export default function Step4() {
                 />
               ))}
               {store.media.photos.length === 0 && (
-                <p className="text-xs text-gray-400 col-span-full">
+                <p className="text-xs text-[--color-gold] col-span-full">
                   No photo previews yet.
                 </p>
               )}
@@ -246,7 +254,7 @@ export default function Step4() {
             sides={false}
             className="glass-card rounded-2xl p-4 space-y-4"
           >
-            <h2 className="text-base font-semibold text-[--color-charcoal]">
+            <h2 className="text-base font-semibold text-[--color-terracotta]">
               Contact details
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -295,12 +303,10 @@ export default function Step4() {
           >
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-sm text-gray-500">Total payable</p>
-                <p className="text-3xl font-semibold text-[--color-charcoal]">
-                  ₹{PRICING.basePrice}
-                </p>
+                <p className="text-sm text-[--color-sage]">Total payable</p>
+                <AnimatedPrice />
               </div>
-              <p className="text-xs text-gray-400 text-right">
+              <p className="text-xs text-[--color-blush] text-right">
                 One-time payment
                 <br />
                 No hidden fees

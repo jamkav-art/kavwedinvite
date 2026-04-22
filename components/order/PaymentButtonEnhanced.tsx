@@ -57,7 +57,11 @@ export default function PaymentButtonEnhanced({
 
   return (
     <div className="space-y-2">
-      <div className="relative inline-block w-full">
+      <motion.div
+        className="relative inline-block w-full"
+        whileHover={{ scale: 1.05 }}
+        transition={{ duration: 0.3 }}
+      >
         {/* Floral border SVG */}
         <div className="absolute -inset-2 -z-10 overflow-hidden rounded-2xl">
           <svg
@@ -166,7 +170,7 @@ export default function PaymentButtonEnhanced({
             </>
           )}
         </Button>
-      </div>
+      </motion.div>
       {disabledReason && (
         <p className="text-xs text-[--color-terracotta]">{disabledReason}</p>
       )}
