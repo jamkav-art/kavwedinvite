@@ -28,6 +28,10 @@ type RSVPFormProps = {
   primaryColor?: string;
   secondaryColor?: string;
   className?: string;
+  /** Custom label for the "Accept" button — default "Joyfully Accept" */
+  acceptLabel?: string;
+  /** Custom label for the "Decline" button — default "Regretfully Decline" */
+  declineLabel?: string;
 };
 
 export default function RSVPForm({
@@ -36,6 +40,8 @@ export default function RSVPForm({
   primaryColor,
   secondaryColor,
   className,
+  acceptLabel = "Joyfully Accept",
+  declineLabel = "Regretfully Decline",
 }: RSVPFormProps) {
   const primary = primaryColor || accentColor || "var(--invite-primary)";
   const secondary = secondaryColor || accentColor || "var(--invite-secondary)";
@@ -245,9 +251,7 @@ export default function RSVPForm({
                           : undefined
                       }
                     >
-                      {choice === "yes"
-                        ? "Joyfully Accept"
-                        : "Regretfully Decline"}
+                      {choice === "yes" ? acceptLabel : declineLabel}
                     </button>
                   );
                 })}

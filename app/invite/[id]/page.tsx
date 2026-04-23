@@ -62,7 +62,7 @@ async function fetchInvite(inviteId: string): Promise<{
 export async function generateMetadata({
   params,
 }: InvitePageProps): Promise<Metadata> {
-  const { id } = params;
+  const { id } = await params;
 
   try {
     const { order } = await fetchInvite(id);
@@ -102,7 +102,7 @@ export async function generateMetadata({
 }
 
 export default async function InvitePage({ params }: InvitePageProps) {
-  const { id } = params;
+  const { id } = await params;
   const { order, events, media } = await fetchInvite(id);
   const template = getTemplateBySlug(order.template_slug) ?? DEFAULT_TEMPLATE;
 

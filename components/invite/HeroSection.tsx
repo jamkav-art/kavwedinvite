@@ -1,9 +1,15 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
+import Image from "next/image";
 import gsap from "gsap";
 import { TemplateConfig } from "@/types/template.types";
 import { FloralCorner } from "@/components/order/FloralBorders";
+import CountdownTimer from "@/components/invite/CountdownTimer";
+
+// ---------------------------------------------------------------------------
+// Types
+// ---------------------------------------------------------------------------
 
 interface HeroSectionProps {
   couple: {
@@ -12,127 +18,13 @@ interface HeroSectionProps {
   };
   weddingDate: string;
   template: TemplateConfig;
+  heroPhoto?: string | null;
 }
 
-// Particle system based on particleType
-const ParticleBackground = ({
-  particleType,
-  colors,
-}: {
-  particleType?: string;
-  colors: TemplateConfig["colors"];
-}) => {
-  if (!particleType) return null;
+// ---------------------------------------------------------------------------
+// Decorative border frame (unchanged from original)
+// ---------------------------------------------------------------------------
 
-  // Simple placeholder for now - will be replaced with actual particle systems
-  return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden">
-      {particleType === "sparkles" && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 30 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-white animate-pulse"
-              style={{
-                left: `${(i * 7) % 100}%`,
-                top: `${(i * 13) % 100}%`,
-                width: `${(i % 3) + 2}px`,
-                height: `${(i % 3) + 2}px`,
-                opacity: 0.3 + (i % 10) * 0.05,
-                animationDelay: `${(i * 0.2) % 4}s`,
-                animationDuration: `${2 + (i % 3)}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-      {particleType === "leaves" && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 20 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${(i * 11) % 100}%`,
-                top: `${(i * 17) % 100}%`,
-                width: "20px",
-                height: "20px",
-                opacity: 0.2,
-                transform: `rotate(${(i * 36) % 360}deg)`,
-                animation: `float ${8 + (i % 5)}s ease-in-out infinite`,
-                animationDelay: `${(i * 0.5) % 4}s`,
-              }}
-            >
-              <svg viewBox="0 0 24 24" fill={colors.accent}>
-                <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z" />
-              </svg>
-            </div>
-          ))}
-        </div>
-      )}
-      {particleType === "bokeh" && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 15 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full blur-md"
-              style={{
-                left: `${(i * 23) % 100}%`,
-                top: `${(i * 29) % 100}%`,
-                width: `${40 + (i % 5) * 10}px`,
-                height: `${40 + (i % 5) * 10}px`,
-                background: `radial-gradient(circle, ${colors.primary}30, transparent 70%)`,
-                opacity: 0.1 + (i % 5) * 0.02,
-                animation: `pulse ${10 + (i % 10)}s ease-in-out infinite`,
-                animationDelay: `${(i * 0.7) % 6}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-      {particleType === "stars" && (
-        <div className="absolute inset-0">
-          {Array.from({ length: 40 }).map((_, i) => (
-            <div
-              key={i}
-              className="absolute"
-              style={{
-                left: `${(i * 5) % 100}%`,
-                top: `${(i * 7) % 100}%`,
-                width: `${(i % 3) + 1}px`,
-                height: `${(i % 3) + 1}px`,
-                backgroundColor: colors.secondary,
-                opacity: 0.5 + (i % 10) * 0.05,
-                animation: `twinkle ${1 + (i % 3)}s ease-in-out infinite`,
-                animationDelay: `${(i * 0.1) % 2}s`,
-              }}
-            />
-          ))}
-        </div>
-      )}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        @keyframes float {
-          0%, 100% { transform: translateY(0) rotate(0deg); }
-          50% { transform: translateY(-20px) rotate(10deg); }
-        }
-        @keyframes pulse {
-          0%, 100% { opacity: 0.1; transform: scale(1); }
-          50% { opacity: 0.3; transform: scale(1.1); }
-        }
-        @keyframes twinkle {
-          0%, 100% { opacity: 0.3; }
-          50% { opacity: 1; }
-        }
-      `,
-        }}
-      />
-    </div>
-  );
-};
-
-// Border frame using template's SVG
 const BorderFrame = ({
   svgPath,
   color,
@@ -141,7 +33,6 @@ const BorderFrame = ({
   color: string;
 }) => {
   if (!svgPath) {
-    // Fallback to floral corners
     return (
       <>
         <FloralCorner color={color} position="top-left" size={80} />
@@ -152,10 +43,9 @@ const BorderFrame = ({
     );
   }
 
-  // Use img tag for SVG (could be replaced with inline SVG loading)
   return (
     <>
-      <div className="absolute top-0 left-0 w-20 h-20">
+      <div className="absolute top-0 left-0 w-20 h-20 z-20">
         <img
           src={svgPath}
           alt=""
@@ -163,7 +53,7 @@ const BorderFrame = ({
           style={{ transform: "rotate(0deg)" }}
         />
       </div>
-      <div className="absolute top-0 right-0 w-20 h-20">
+      <div className="absolute top-0 right-0 w-20 h-20 z-20">
         <img
           src={svgPath}
           alt=""
@@ -171,7 +61,7 @@ const BorderFrame = ({
           style={{ transform: "rotate(90deg)" }}
         />
       </div>
-      <div className="absolute bottom-0 left-0 w-20 h-20">
+      <div className="absolute bottom-0 left-0 w-20 h-20 z-20">
         <img
           src={svgPath}
           alt=""
@@ -179,7 +69,7 @@ const BorderFrame = ({
           style={{ transform: "rotate(-90deg)" }}
         />
       </div>
-      <div className="absolute bottom-0 right-0 w-20 h-20">
+      <div className="absolute bottom-0 right-0 w-20 h-20 z-20">
         <img
           src={svgPath}
           alt=""
@@ -191,88 +81,357 @@ const BorderFrame = ({
   );
 };
 
+// ---------------------------------------------------------------------------
+// Falling particles — GSAP-driven, DOM-based, supports all particleTypes
+// ---------------------------------------------------------------------------
+
+function FallingParticles({
+  particleType,
+  color,
+}: {
+  particleType?: string;
+  color: string;
+}) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  // Build particle configs once
+  const configs = useMemo(() => {
+    if (!particleType) return [];
+
+    const count =
+      particleType === "sparkles"
+        ? 30
+        : particleType === "leaves"
+          ? 18
+          : particleType === "bokeh"
+            ? 12
+            : 24;
+
+    return Array.from({ length: count }, (_, i) => ({
+      id: i,
+      left: `${Math.random() * 100}%`,
+      delay: Math.random() * 4,
+      duration: 6 + Math.random() * 6,
+      size:
+        particleType === "bokeh"
+          ? 20 + Math.random() * 30
+          : 6 + Math.random() * 10,
+      drift: (Math.random() - 0.5) * 120,
+      rotationEnd: Math.random() * 360,
+    }));
+  }, [particleType]);
+
+  useEffect(() => {
+    if (!containerRef.current || !particleType) return;
+
+    const elements =
+      containerRef.current.querySelectorAll<HTMLElement>(".particle-el");
+    if (!elements.length) return;
+
+    const tl = gsap.timeline({ repeat: -1 });
+
+    elements.forEach((el, i) => {
+      const cfg = configs[i];
+      if (!cfg) return;
+
+      // Set initial position above viewport
+      gsap.set(el, {
+        y: -60,
+        x: 0,
+        opacity: 0,
+        rotation: 0,
+        scale: 0.6,
+      });
+
+      tl.to(
+        el,
+        {
+          y: "120vh",
+          x: cfg.drift,
+          opacity: 0.6,
+          rotation: cfg.rotationEnd,
+          scale: 1,
+          duration: cfg.duration,
+          delay: cfg.delay,
+          ease: "power1.inOut",
+        },
+        0,
+      )
+        .to(
+          el,
+          {
+            opacity: 0,
+            duration: 1.5,
+            ease: "power2.out",
+          },
+          `>-1.5`,
+        )
+        .set(
+          el,
+          {
+            y: -60,
+            x: 0,
+            rotation: 0,
+            opacity: 0,
+            scale: 0.6,
+          },
+          `>`,
+        );
+    });
+
+    return () => {
+      tl.kill();
+    };
+  }, [particleType, color, configs]);
+
+  if (!particleType) return null;
+
+  return (
+    <div
+      ref={containerRef}
+      className="absolute inset-0 pointer-events-none overflow-hidden z-10"
+    >
+      {configs.map((cfg) => (
+        <div
+          key={cfg.id}
+          className="particle-el absolute will-change-transform"
+          style={{
+            left: cfg.left,
+            width: cfg.size,
+            height: cfg.size,
+          }}
+        >
+          {particleType === "leaves" ? (
+            <svg
+              viewBox="0 0 24 24"
+              fill={color}
+              className="w-full h-full drop-shadow-lg"
+            >
+              <path d="M12 2C8.1 2 5 5.1 5 9c0 5.2 7 13 7 13s7-7.8 7-13c0-3.9-3.1-7-7-7zm0 9.5c-1.4 0-2.5-1.1-2.5-2.5s1.1-2.5 2.5-2.5 2.5 1.1 2.5 2.5-1.1 2.5-2.5 2.5z" />
+            </svg>
+          ) : particleType === "bokeh" ? (
+            <div
+              className="w-full h-full rounded-full blur-xl"
+              style={{
+                background: `radial-gradient(circle, ${color}60, transparent 70%)`,
+              }}
+            />
+          ) : (
+            <div
+              className="w-full h-full rounded-full"
+              style={{
+                background: particleType === "sparkles" ? color : color,
+                opacity: 0.5,
+                boxShadow: `0 0 ${cfg.size}px ${color}44`,
+              }}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Main HeroSection component
+// ---------------------------------------------------------------------------
+
 export const HeroSection = ({
   couple,
   weddingDate,
   template,
+  heroPhoto,
 }: HeroSectionProps) => {
-  const heroRef = useRef<HTMLDivElement>(null);
-  const namesRef = useRef<HTMLHeadingElement>(null);
+  const sectionRef = useRef<HTMLDivElement>(null);
+  const namesContainerRef = useRef<HTMLDivElement>(null);
+  const subtitleRef = useRef<HTMLParagraphElement>(null);
+  const dateRef = useRef<HTMLParagraphElement>(null);
+
+  // -----------------------------------------------------------------------
+  // GSAP letter-splitting animation (vanilla JS, no SplitText plugin)
+  // -----------------------------------------------------------------------
 
   useEffect(() => {
-    if (!namesRef.current) return;
+    if (!namesContainerRef.current) return;
 
-    const tl = gsap.timeline({ delay: 0.5 });
+    const container = namesContainerRef.current;
+    const nameLines = container.querySelectorAll<HTMLElement>(".name-line");
+    const ampersand = container.querySelector<HTMLElement>(".ampersand");
 
-    // Animate each letter (simple version without SplitText plugin)
-    const text = namesRef.current;
-    const letters = text.textContent?.split("") || [];
-    text.innerHTML = letters
-      .map(
-        (letter) =>
-          `<span style="display: inline-block; opacity: 0;">${letter === " " ? "&nbsp;" : letter}</span>`,
-      )
-      .join("");
+    const tl = gsap.timeline({ delay: 0.3 });
 
-    const spans = text.querySelectorAll("span");
-
-    tl.to(spans, {
-      opacity: 1,
-      y: 0,
-      stagger: 0.03,
-      duration: 0.5,
-      ease: "power2.out",
+    // Split each name line into letter spans
+    nameLines.forEach((line) => {
+      const text = line.textContent || "";
+      line.innerHTML = text
+        .split("")
+        .map(
+          (ch) =>
+            `<span class="letter" style="display:inline-block;opacity:0">${ch === " " ? "&nbsp;" : ch}</span>`,
+        )
+        .join("");
     });
+
+    const firstLine = nameLines[0];
+    const secondLine = nameLines[1];
+    const firstLetters = firstLine?.querySelectorAll(".letter") || [];
+    const secondLetters = secondLine?.querySelectorAll(".letter") || [];
+
+    // Timeline:
+    // 1. First name letters stagger in
+    // 2. "&" fades in
+    // 3. Second name letters stagger in
+    // 4. Subtitle fades up
+    // 5. Date fades up
+
+    if (firstLetters.length) {
+      tl.fromTo(
+        firstLetters,
+        { opacity: 0, y: 30, rotateX: -20 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          stagger: 0.04,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+      );
+    }
+
+    if (ampersand) {
+      tl.fromTo(
+        ampersand,
+        { opacity: 0, scale: 0 },
+        { opacity: 1, scale: 1, duration: 0.4, ease: "back.out(2)" },
+        "-=0.1",
+      );
+    }
+
+    if (secondLetters.length) {
+      tl.fromTo(
+        secondLetters,
+        { opacity: 0, y: 30, rotateX: -20 },
+        {
+          opacity: 1,
+          y: 0,
+          rotateX: 0,
+          stagger: 0.04,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.05",
+      );
+    }
+
+    if (subtitleRef.current) {
+      tl.fromTo(
+        subtitleRef.current,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.6, ease: "power2.out" },
+        "-=0.2",
+      );
+    }
+
+    if (dateRef.current) {
+      tl.fromTo(
+        dateRef.current,
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.5, ease: "power2.out" },
+        "-=0.15",
+      );
+    }
 
     return () => {
       tl.kill();
     };
   }, []);
 
+  // -----------------------------------------------------------------------
+  // Render
+  // -----------------------------------------------------------------------
+
+  const hasPhoto = Boolean(heroPhoto);
+
   return (
     <section
-      ref={heroRef}
+      ref={sectionRef}
       className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden"
-      style={{
-        background: `linear-gradient(135deg, ${template.colors.background} 0%, ${template.colors.primary}20 100%)`,
-      }}
     >
-      {/* Background Particles */}
-      <ParticleBackground
+      {/* ---- Background ---- */}
+      {hasPhoto ? (
+        <>
+          <Image
+            src={heroPhoto!}
+            alt=""
+            fill
+            className="object-cover"
+            priority
+            sizes="100vw"
+          />
+          {/* Dark gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-black/70 z-[1]" />
+        </>
+      ) : (
+        <div
+          className="absolute inset-0"
+          style={{
+            background: `linear-gradient(135deg, ${template.colors.background} 0%, ${template.colors.primary}20 100%)`,
+          }}
+        />
+      )}
+
+      {/* ---- Falling particles ---- */}
+      <FallingParticles
         particleType={template.animations?.particleType}
-        colors={template.colors}
+        color={template.colors.primary}
       />
 
-      {/* Decorative border frame */}
+      {/* ---- Border frame ---- */}
       <BorderFrame
         svgPath={template.borders.svgPath}
         color={template.colors.border}
       />
 
-      {/* Content */}
-      <div className="relative z-10 text-center px-6 max-w-4xl">
-        {/* Couple Names with clamp typography */}
-        <h1
-          ref={namesRef}
-          className="mb-4"
-          style={{
-            fontFamily: template.fonts.heading,
-            color: template.colors.text,
-            fontSize: "clamp(2.5rem, 8vw, 6rem)",
-            lineHeight: 1.2,
-          }}
-        >
-          {couple.name1} & {couple.name2}
-        </h1>
+      {/* ---- Center content ---- */}
+      <div className="relative z-10 text-center px-6 max-w-4xl w-full flex flex-col items-center justify-center min-h-[70vh]">
+        {/* Couple Names — letter-split friendly structure */}
+        <div ref={namesContainerRef} className="mb-4">
+          <h1
+            style={{
+              fontFamily: template.fonts.heading,
+              color: hasPhoto ? "#ffffff" : template.colors.text,
+              fontSize: "clamp(2.5rem, 8vw, 6rem)",
+              lineHeight: 1.15,
+            }}
+            className="flex flex-col items-center gap-1 sm:gap-2"
+          >
+            <span className="name-line">{couple.name1}</span>
+            <span
+              className="ampersand"
+              style={{
+                fontFamily: template.fonts.accent,
+                fontSize: "clamp(2rem, 5vw, 4rem)",
+                opacity: 0,
+                display: "inline-block",
+                color: hasPhoto ? "#ffffffcc" : template.colors.primary,
+              }}
+            >
+              &bull;
+            </span>
+            <span className="name-line">{couple.name2}</span>
+          </h1>
+        </div>
 
         {/* Subtitle */}
         <p
-          className="mb-2"
+          ref={subtitleRef}
+          className="mb-2 tracking-wide"
           style={{
             fontFamily: template.fonts.body,
-            color: template.colors.text,
-            opacity: 0.8,
+            color: hasPhoto ? "#ffffffcc" : template.colors.text,
             fontSize: "clamp(1.125rem, 3vw, 1.5rem)",
+            opacity: 0,
           }}
         >
           are getting married!
@@ -280,10 +439,12 @@ export const HeroSection = ({
 
         {/* Date */}
         <p
+          ref={dateRef}
           style={{
             fontFamily: template.fonts.accent,
-            color: template.colors.primary,
+            color: hasPhoto ? "#ffffff" : template.colors.primary,
             fontSize: "clamp(1rem, 2.5vw, 1.25rem)",
+            opacity: 0,
           }}
         >
           {new Date(weddingDate).toLocaleDateString("en-US", {
@@ -294,14 +455,33 @@ export const HeroSection = ({
         </p>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="absolute bottom-8 animate-bounce">
+      {/* ---- Countdown integrated at bottom with glassmorphism ---- */}
+      <div className="relative z-10 w-full max-w-2xl mx-auto px-6 pb-10">
+        <div
+          className="backdrop-blur-md rounded-2xl border border-white/20 shadow-2xl"
+          style={{
+            background: hasPhoto
+              ? "rgba(255,255,255,0.08)"
+              : "rgba(255,255,255,0.7)",
+            boxShadow: hasPhoto ? "0 8px 32px rgba(0,0,0,0.2)" : undefined,
+          }}
+        >
+          <CountdownTimer
+            weddingDate={weddingDate}
+            accentColor={hasPhoto ? "#ffffff" : template.colors.primary}
+            className="!border-0 !bg-transparent"
+          />
+        </div>
+      </div>
+
+      {/* ---- Scroll indicator ---- */}
+      <div className="absolute bottom-8 z-10 animate-bounce">
         <svg
           width="24"
           height="24"
           viewBox="0 0 24 24"
           fill="none"
-          stroke={template.colors.primary}
+          stroke={hasPhoto ? "#ffffff" : template.colors.primary}
           strokeWidth="2"
         >
           <path d="M12 5v14M19 12l-7 7-7-7" />

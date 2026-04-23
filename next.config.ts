@@ -3,7 +3,15 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      new URL(`https://lmfpgmnsrhjrpzzedsjk.supabase.co/storage/v1/object/public/**`),
+      {
+        protocol: "https",
+        hostname: "lmfpgmnsrhjrpzzedsjk.supabase.co",
+        pathname: "/storage/v1/object/public/**",
+      },
+      {
+        protocol: "https",
+        hostname: "placehold.co",
+      },
     ],
     formats: ["image/avif", "image/webp"],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920],
@@ -33,9 +41,7 @@ const nextConfig: NextConfig = {
     },
     {
       source: "/api/(.*)",
-      headers: [
-        { key: "Cache-Control", value: "no-store" },
-      ],
+      headers: [{ key: "Cache-Control", value: "no-store" }],
     },
   ],
 };

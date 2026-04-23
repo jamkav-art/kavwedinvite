@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo, useCallback } from "react";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { motion, AnimatePresence } from "framer-motion";
+import confetti from "canvas-confetti";
 import type WaveSurfer from "wavesurfer.js";
 
 interface VoiceMessageProps {
@@ -11,7 +12,53 @@ interface VoiceMessageProps {
   quote?: string;
 }
 
-// Floating heart particle component
+// ---------------------------------------------------------------------------
+// Equalizer bars — animated during playback
+// ---------------------------------------------------------------------------
+
+function EqualizerBars({
+  isPlaying,
+  color,
+}: {
+  isPlaying: boolean;
+  color: string;
+}) {
+  const bars = useMemo(
+    () => [
+      { id: 1, heights: ["30%", "100%", "50%", "80%", "30%"], dur: 0.7 },
+      { id: 2, heights: ["70%", "40%", "100%", "60%", "70%"], dur: 0.9 },
+      { id: 3, heights: ["50%", "80%", "30%", "100%", "50%"], dur: 0.6 },
+      { id: 4, heights: ["90%", "50%", "70%", "30%", "90%"], dur: 0.8 },
+    ],
+    [],
+  );
+
+  return (
+    <div className="flex items-end justify-center gap-[3px] h-8 w-12">
+      {bars.map((bar) => (
+        <motion.div
+          key={bar.id}
+          className="w-[4px] rounded-full"
+          style={{
+            background: color,
+            boxShadow: `0 0 6px ${color}66`,
+          }}
+          animate={isPlaying ? { height: bar.heights } : { height: "30%" }}
+          transition={{
+            repeat: isPlaying ? Infinity : 0,
+            duration: bar.dur,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+    </div>
+  );
+}
+
+// ---------------------------------------------------------------------------
+// Floating heart particles (dark theme)
+// ---------------------------------------------------------------------------
+
 const FloatingHearts = ({
   count = 12,
   color,
@@ -19,16 +66,14 @@ const FloatingHearts = ({
   count: number;
   color: string;
 }) => {
-  // Generate stable deterministic values using useMemo
   const hearts = useMemo(() => {
-    // Deterministic pseudo-random generator
     const deterministicRandom = (seed: number) => {
       const x = Math.sin(seed) * 10000;
       return x - Math.floor(x);
     };
 
     return Array.from({ length: count }, (_, i) => {
-      const rand = deterministicRandom(i * 123.456); // different seed per heart
+      const rand = deterministicRandom(i * 123.456);
       return {
         id: i,
         left: `${rand * 100}%`,
@@ -37,7 +82,7 @@ const FloatingHearts = ({
         size: 16 + rand * 24,
       };
     });
-  }, [count]); // color not needed for random generation
+  }, [count]);
 
   return (
     <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -55,7 +100,7 @@ const FloatingHearts = ({
           initial={{ y: 0, opacity: 0, scale: 0 }}
           animate={{
             y: "-100vh",
-            opacity: [0, 1, 0],
+            opacity: [0, 0.8, 0],
             scale: [0, 1, 0.5],
             rotate: [0, 360],
           }}
@@ -79,6 +124,10 @@ const FloatingHearts = ({
   );
 };
 
+// ---------------------------------------------------------------------------
+// Main VoiceMessage component
+// ---------------------------------------------------------------------------
+
 export const VoiceMessage = ({
   audioUrl,
   templateColor,
@@ -92,12 +141,54 @@ export const VoiceMessage = ({
   const [currentSeconds, setCurrentSeconds] = useState(0);
   const [durationSeconds, setDurationSeconds] = useState(0);
   const containerRef = useScrollAnimation("fade");
+  const hasFiredConfetti = useRef(false);
 
   const formatTime = (seconds: number) => {
     const mins = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
     return `${mins}:${secs.toString().padStart(2, "0")}`;
   };
+
+  // Canvas-confetti burst on finish
+  const fireConfetti = useCallback(() => {
+    if (hasFiredConfetti.current) return;
+    hasFiredConfetti.current = true;
+
+    const colors = [templateColor, "#FFD700", "#FF6B6B"];
+
+    confetti({
+      particleCount: 40,
+      spread: 60,
+      origin: { y: 0.6 },
+      colors,
+      shapes: ["circle", "square"],
+      ticks: 100,
+      gravity: 1.2,
+      scalar: 0.8,
+    });
+
+    // Second burst slightly offset
+    setTimeout(() => {
+      confetti({
+        particleCount: 20,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0.3, y: 0.7 },
+        colors,
+        ticks: 80,
+        scalar: 0.6,
+      });
+      confetti({
+        particleCount: 20,
+        angle: 120,
+        spread: 55,
+        origin: { x: 0.7, y: 0.7 },
+        colors,
+        ticks: 80,
+        scalar: 0.6,
+      });
+    }, 200);
+  }, [templateColor]);
 
   useEffect(() => {
     if (!waveformRef.current || !audioUrl) return;
@@ -112,16 +203,16 @@ export const VoiceMessage = ({
 
         wavesurferInstance = WaveSurfer.create({
           container: waveformRef.current!,
-          waveColor: `${templateColor}40`,
+          waveColor: `${templateColor}30`,
           progressColor: templateColor,
           cursorColor: templateColor,
-          barWidth: 2,
-          barRadius: 3,
+          barWidth: 3,
+          barRadius: 4,
           height: 80,
           normalize: true,
           backend: "WebAudio",
-          barGap: 2,
-          cursorWidth: 1,
+          barGap: 3,
+          cursorWidth: 0,
         });
 
         wavesurferInstance.load(audioUrl);
@@ -130,6 +221,7 @@ export const VoiceMessage = ({
           const dur = wavesurferInstance!.getDuration();
           setDuration(formatTime(dur));
           setDurationSeconds(dur);
+          hasFiredConfetti.current = false;
         });
 
         wavesurferInstance.on("audioprocess", () => {
@@ -140,7 +232,10 @@ export const VoiceMessage = ({
 
         wavesurferInstance.on("play", () => setIsPlaying(true));
         wavesurferInstance.on("pause", () => setIsPlaying(false));
-        wavesurferInstance.on("finish", () => setIsPlaying(false));
+        wavesurferInstance.on("finish", () => {
+          setIsPlaying(false);
+          fireConfetti();
+        });
 
         wavesurferRef.current = wavesurferInstance;
       } catch (error) {
@@ -160,13 +255,12 @@ export const VoiceMessage = ({
         wavesurferRef.current = null;
       }
     };
-  }, [audioUrl, templateColor]);
+  }, [audioUrl, templateColor, fireConfetti]);
 
   const togglePlay = () => {
     wavesurferRef.current?.playPause();
   };
 
-  // Calculate progress percentage safely
   const progressPercent =
     durationSeconds > 0 ? (currentSeconds / durationSeconds) * 100 : 0;
 
@@ -184,61 +278,73 @@ export const VoiceMessage = ({
         💌 A Message From Us
       </h2>
 
-      <div className="bg-white rounded-2xl shadow-xl p-8 relative overflow-hidden">
+      {/* Dark card */}
+      <div className="bg-gray-900 rounded-3xl shadow-2xl p-6 sm:p-8 relative overflow-hidden border border-white/5">
         {/* Floating hearts when playing */}
         <AnimatePresence>
           {isPlaying && <FloatingHearts count={12} color={templateColor} />}
         </AnimatePresence>
 
-        {/* Waveform */}
-        <div ref={waveformRef} className="mb-4" />
+        {/* Waveform — dark theme styling */}
+        <div
+          ref={waveformRef}
+          className="mb-5 [&_wave]:!opacity-80"
+          style={{ filter: "brightness(1.2)" }}
+        />
 
-        {/* Controls */}
-        <div className="flex items-center justify-between">
-          <button
-            onClick={togglePlay}
-            className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform focus:outline-none focus:ring-4 focus:ring-opacity-30"
-            style={{ backgroundColor: templateColor, color: "white" }}
-            aria-label={
-              isPlaying ? "Pause voice message" : "Play voice message"
-            }
-          >
-            {isPlaying ? (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
-              </svg>
-            ) : (
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            )}
-          </button>
+        {/* Controls row */}
+        <div className="flex items-center justify-between relative z-10">
+          {/* Play/Pause button with equalizer */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={togglePlay}
+              className="w-14 h-14 rounded-full flex items-center justify-center shadow-lg hover:scale-110 active:scale-95 transition-transform focus:outline-none focus-visible:ring-4 focus-visible:ring-white/30"
+              style={{ backgroundColor: templateColor, color: "white" }}
+              aria-label={
+                isPlaying ? "Pause voice message" : "Play voice message"
+              }
+            >
+              {isPlaying ? (
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M6 4h4v16H6zM14 4h4v16h-4z" />
+                </svg>
+              ) : (
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="currentColor"
+                >
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+              )}
+            </button>
 
-          <div className="text-sm text-gray-600">
-            <span className="font-medium">{currentTime}</span> /{" "}
-            <span className="font-medium">{duration}</span>
+            {/* Equalizer bars */}
+            <EqualizerBars isPlaying={isPlaying} color={templateColor} />
+          </div>
+
+          {/* Time display */}
+          <div className="text-sm text-white/50 font-mono tabular-nums tracking-wide">
+            <span className="text-white/80 font-medium">{currentTime}</span>
+            <span className="mx-1.5 opacity-40">/</span>
+            <span>{duration}</span>
           </div>
         </div>
 
-        {/* Optional progress bar (alternative) */}
-        <div className="mt-6">
-          <div className="h-1 w-full bg-gray-200 rounded-full overflow-hidden">
-            <div
-              className="h-full rounded-full transition-all duration-300"
-              style={{
-                width: `${progressPercent}%`,
-                backgroundColor: templateColor,
-              }}
+        {/* Progress bar */}
+        <div className="mt-5 relative z-10">
+          <div className="h-1 w-full bg-white/10 rounded-full overflow-hidden">
+            <motion.div
+              className="h-full rounded-full"
+              style={{ backgroundColor: templateColor }}
+              animate={{ width: `${progressPercent}%` }}
+              transition={{ duration: 0.3, ease: "linear" }}
             />
           </div>
         </div>
@@ -246,7 +352,10 @@ export const VoiceMessage = ({
 
       {/* Quote */}
       {quote && (
-        <p className="text-center mt-6 text-lg italic text-gray-700">
+        <p
+          className="text-center mt-6 text-lg italic leading-relaxed max-w-xl mx-auto"
+          style={{ color: templateColor }}
+        >
           “{quote}”
         </p>
       )}
