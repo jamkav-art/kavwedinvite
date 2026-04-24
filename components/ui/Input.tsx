@@ -1,53 +1,97 @@
-'use client'
+"use client";
 
-import { forwardRef } from 'react'
-import { cn } from '@/lib/utils'
+import { forwardRef } from "react";
+import { cn } from "@/lib/utils";
 
 interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label?: string
-  error?: string
-  hint?: string
+  label?: string;
+  error?: string;
+  hint?: string;
+  /** Applies anniversary-themed colorful gradient borders and tinted bg */
+  colorful?: boolean;
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-  ({ label, error, hint, className, id, ...props }, ref) => {
-    const inputId = id ?? label?.toLowerCase().replace(/\s+/g, '-')
+  ({ label, error, hint, className, id, colorful, ...props }, ref) => {
+    const inputId = id ?? label?.toLowerCase().replace(/\s+/g, "-");
 
     return (
       <div className="flex flex-col gap-1.5">
         {label && (
           <label
             htmlFor={inputId}
-            className="text-sm font-semibold text-[--color-charcoal]/75"
+            className={cn(
+              "text-sm font-semibold",
+              colorful
+                ? "anniversary-gradient-text"
+                : "text-[--color-charcoal]/75",
+            )}
           >
             {label}
             {props.required && (
-              <span className="ml-0.5 text-[--color-magenta]/80" aria-hidden="true">
+              <span
+                className="ml-0.5 text-[--color-magenta]/80"
+                aria-hidden="true"
+              >
                 *
               </span>
             )}
           </label>
         )}
-        <input
-          ref={ref}
-          id={inputId}
-          aria-invalid={!!error}
-          aria-describedby={
-            error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined
-          }
-          className={cn(
-            'h-12 w-full rounded-xl border-[1.5px] bg-white/90 px-4 text-base text-[--color-charcoal]',
-            'placeholder:text-[--color-charcoal]/30',
-            'transition-[border-color,box-shadow] duration-200',
-            'focus:outline-none focus:border-[--color-gold]/55 focus:shadow-[0_0_0_3px_rgba(201,169,98,0.18),0_0_18px_rgba(201,169,98,0.1)]',
-            'disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50',
-            error
-              ? 'border-[--color-terracotta]/70 focus:border-[--color-terracotta] focus:shadow-[0_0_0_3px_rgba(212,117,108,0.18)]'
-              : 'border-[--color-gold]/22 hover:border-[--color-gold]/45',
-            className
-          )}
-          {...props}
-        />
+        {colorful ? (
+          <div className="input-anniversary-wrapper">
+            <div
+              className="input-gradient-border-glow-base"
+              aria-hidden="true"
+            />
+            <div className="input-gradient-border-glow" aria-hidden="true" />
+            <input
+              ref={ref}
+              id={inputId}
+              aria-invalid={!!error}
+              aria-describedby={
+                error
+                  ? `${inputId}-error`
+                  : hint
+                    ? `${inputId}-hint`
+                    : undefined
+              }
+              className={cn(
+                "relative h-12 w-full rounded-xl border-[1.5px] bg-[--color-blush]/40 px-4 text-base text-[--color-charcoal]",
+                "placeholder:text-[--color-charcoal]/30",
+                "transition-all duration-200",
+                "focus:outline-none focus:bg-white/90",
+                "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50",
+                error
+                  ? "border-[--color-terracotta]/70 focus:border-[--color-terracotta] focus:shadow-[0_0_0_3px_rgba(212,117,108,0.18)]"
+                  : "border-[--color-gold]/22 hover:border-[--color-gold]/45",
+                className,
+              )}
+              {...props}
+            />
+          </div>
+        ) : (
+          <input
+            ref={ref}
+            id={inputId}
+            aria-invalid={!!error}
+            aria-describedby={
+              error ? `${inputId}-error` : hint ? `${inputId}-hint` : undefined
+            }
+            className={cn(
+              "h-12 w-full rounded-xl border-[1.5px] bg-white/90 px-4 text-base text-[--color-charcoal]",
+              "placeholder:text-[--color-charcoal]/30",
+              "transition-[border-color,box-shadow] duration-200",
+              "focus:outline-none focus:border-[--color-gold]/55 focus:shadow-[0_0_0_3px_rgba(201,169,98,0.18),0_0_18px_rgba(201,169,98,0.1)]",
+              "disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-gray-50",
+              error
+                ? "border-[--color-terracotta]/70 focus:border-[--color-terracotta] focus:shadow-[0_0_0_3px_rgba(212,117,108,0.18)]"
+                : "border-[--color-gold]/22 hover:border-[--color-gold]/45",
+              className,
+            )}
+            {...props}
+          />
+        )}
         {hint && !error && (
           <p id={`${inputId}-hint`} className="text-xs text-gray-500">
             {hint}
@@ -63,11 +107,11 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           </p>
         )}
       </div>
-    )
-  }
-)
+    );
+  },
+);
 
-Input.displayName = 'Input'
+Input.displayName = "Input";
 
-export { Input }
-export type { InputProps }
+export { Input };
+export type { InputProps };

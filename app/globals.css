@@ -496,6 +496,142 @@ body {
 }
 
 /* ============================================================
+   ANNIVERSARY QUIZ LANDING PAGE
+   ============================================================ */
+
+/* ── Heartbeat pulse for CTA buttons ──────────────────────── */
+@keyframes heartbeat-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.4);
+  }
+  15% {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px 6px rgba(201, 169, 98, 0.25);
+  }
+  30% {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px 12px rgba(201, 169, 98, 0.15);
+  }
+  45% {
+    transform: scale(1.03);
+    box-shadow: 0 0 20px 6px rgba(201, 169, 98, 0.25);
+  }
+  60% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(201, 169, 98, 0.4);
+  }
+}
+
+.anniversary-heartbeat-btn {
+  animation: heartbeat-pulse 2.5s ease-in-out infinite;
+}
+
+/* ── Gradient heading text for anniversary sections ───────── */
+.anniversary-gradient-text {
+  background: linear-gradient(
+    135deg,
+    #e8638c 0%,
+    #c0185f 22%,
+    #c9a962 44%,
+    #f7e7ce 64%,
+    #c9a962 80%,
+    #e8638c 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: bridal-shimmer 6s ease-in-out infinite;
+}
+
+/* ── Petal drift keyframe for floating petals ─────────────── */
+@keyframes petal-drift {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  8% {
+    opacity: 0.6;
+  }
+  85% {
+    opacity: 0.25;
+  }
+  100% {
+    transform: translateY(-100vh) rotate(540deg) scale(0.3);
+    opacity: 0;
+  }
+}
+
+/* ── Phone mockup cards for Visual Showcase ───────────────── */
+.quiz-phone-mockup {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.quiz-phone-mockup::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 25px;
+  background: conic-gradient(
+    from var(--border-angle, 0deg),
+    #c9a962 0deg,
+    #e8638c 90deg,
+    #f7e7ce 180deg,
+    #c9a962 270deg,
+    #c9a962 360deg
+  );
+  z-index: -1;
+  opacity: 0.6;
+}
+
+.quiz-phone-mockup::after {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 22px;
+  background: inherit;
+  z-index: -1;
+}
+
+/* ── Step number circle for HowItWorks ────────────────────── */
+.step-number-circle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 169, 98, 0.12),
+    rgba(232, 99, 140, 0.12)
+  );
+  border: 1.5px solid rgba(201, 169, 98, 0.3);
+  font-family: var(--font-cormorant);
+  font-weight: 700;
+  font-size: 1.125rem;
+  color: #c9a962;
+  flex-shrink: 0;
+}
+
+/* ── Timeline connecting line ─────────────────────────────── */
+.timeline-connector {
+  width: 1.5px;
+  flex-shrink: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(201, 169, 98, 0.4),
+    rgba(201, 169, 98, 0.05)
+  );
+}
+
+/* ============================================================
    ORDER FORM — MAIN CTA BUTTON (Continue to Events)
    Metallic gold border + animated gradient + Framer Motion
    handles the hover boxShadow aura directly.
@@ -523,4 +659,224 @@ body {
   box-shadow:
     0 0 0 3px rgba(201, 169, 98, 0.45),
     0 4px 20px rgba(192, 24, 95, 0.2);
+}
+
+/* ============================================================
+   ANNIVERSARY ORDER — LOVE STORY GRADIENT (Step 1 heading)
+   Brighter, faster-shimmering variant for "Tell us about your love"
+   ============================================================ */
+
+@keyframes love-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.love-story-gradient {
+  background: linear-gradient(
+    135deg,
+    #c0185f 0%,
+    #e8638c 12%,
+    #f7c948 28%,
+    #c9a962 45%,
+    #f7e7ce 60%,
+    #c9a962 72%,
+    #e8638c 85%,
+    #c0185f 100%
+  );
+  background-size: 350% 350%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: love-shimmer 3.5s ease-in-out infinite;
+}
+
+/* ============================================================
+   COLORFUL ANNIVERSARY INPUT — animated gradient border
+   ============================================================ */
+
+@keyframes input-border-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.input-anniversary-wrapper {
+  position: relative;
+  isolation: isolate;
+}
+
+.input-anniversary-wrapper .input-gradient-border-glow {
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    #c0185f 0%,
+    #e8638c 20%,
+    #c9a962 40%,
+    #f7e7ce 55%,
+    #c9a962 70%,
+    #e8638c 85%,
+    #c0185f 100%
+  );
+  background-size: 300% 300%;
+  animation: input-border-shimmer 4s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.input-anniversary-wrapper:focus-within .input-gradient-border-glow {
+  opacity: 1;
+}
+
+.input-anniversary-wrapper .input-gradient-border-glow-base {
+  position: absolute;
+  inset: -1px;
+  border-radius: 13px;
+  background: linear-gradient(
+    135deg,
+    rgba(201, 169, 98, 0.3),
+    rgba(232, 99, 140, 0.2),
+    rgba(201, 169, 98, 0.3)
+  );
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* ============================================================
+   QUIZ CARD — PER-INDEX COLORFUL THEME
+   ============================================================ */
+
+.quiz-card-gradient-0 {
+  background: linear-gradient(135deg, #fff5f5, #fef7f0);
+  border-color: rgba(192, 24, 95, 0.2);
+}
+.quiz-card-gradient-1 {
+  background: linear-gradient(135deg, #fef7f0, #fbf7f0);
+  border-color: rgba(201, 169, 98, 0.25);
+}
+.quiz-card-gradient-2 {
+  background: linear-gradient(135deg, #f5f0ff, #fef7f0);
+  border-color: rgba(155, 89, 182, 0.2);
+}
+.quiz-card-gradient-3 {
+  background: linear-gradient(135deg, #f0faf5, #fef7f0);
+  border-color: rgba(156, 169, 134, 0.3);
+}
+.quiz-card-gradient-4 {
+  background: linear-gradient(135deg, #fff0f5, #fef7f0);
+  border-color: rgba(232, 99, 140, 0.2);
+}
+.quiz-card-gradient-5 {
+  background: linear-gradient(135deg, #fefce8, #fef7f0);
+  border-color: rgba(168, 114, 10, 0.2);
+}
+
+/* ============================================================
+   CORRECT ANSWER GLOW BADGE
+   ============================================================ */
+
+@keyframes correct-glow {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(201, 169, 98, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(201, 169, 98, 0.6), 0 0 24px rgba(201, 169, 98, 0.15);
+  }
+}
+
+.correct-answer-badge {
+  animation: correct-glow 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   MUSIC TRACK CARD — GRADIENT BORDER
+   ============================================================ */
+
+.music-track-card {
+  position: relative;
+  isolation: isolate;
+  border-radius: 12px;
+}
+
+.music-track-card::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 14px;
+  background: linear-gradient(
+    135deg,
+    var(--track-color, #c9a962),
+    var(--track-color2, #e8638c),
+    var(--track-color, #c9a962)
+  );
+  background-size: 300% 300%;
+  animation: input-border-shimmer 4s ease-in-out infinite;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.music-track-card.selected::before {
+  opacity: 1;
+}
+
+/* ============================================================
+   AUDIO UPLOAD WAVEFORM ANIMATION
+   ============================================================ */
+
+@keyframes waveform-bar {
+  0%, 100% {
+    height: 4px;
+  }
+  50% {
+    height: 16px;
+  }
+}
+
+.waveform-bar {
+  animation: waveform-bar var(--wave-duration, 0.5s) ease-in-out infinite;
+}
+
+/* ============================================================
+   STEP 3 MUSIC SECTION HEADING BADGE
+   ============================================================ */
+
+.music-section-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background: linear-gradient(135deg, rgba(192, 24, 95, 0.1), rgba(201, 169, 98, 0.1));
+  border: 1px solid rgba(201, 169, 98, 0.2);
+  color: var(--color-magenta);
+}
+
+/* ============================================================
+   STEP 2 EMPTY STATE COLORFUL
+   ============================================================ */
+
+.empty-state-colorful {
+  background: linear-gradient(135deg, rgba(255, 245, 245, 0.8), rgba(251, 247, 240, 0.8));
+  border-color: rgba(201, 169, 98, 0.2);
+  border-style: dashed;
 }
