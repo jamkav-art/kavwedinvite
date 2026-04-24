@@ -8,7 +8,7 @@ interface AnimatedPriceProps {
 }
 
 export default function AnimatedPrice({
-  price = 699,
+  price = 399,
   className = "",
 }: AnimatedPriceProps) {
   return (

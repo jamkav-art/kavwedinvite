@@ -95,7 +95,7 @@ export const metadata: Metadata = {
     template: "%s | WedInviter",
   },
   description:
-    "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹699 one-time.",
+    "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹399 one-time.",
   metadataBase: new URL(APP_URL),
   keywords: [
     "digital wedding invitation",
@@ -113,7 +113,7 @@ export const metadata: Metadata = {
     siteName: "WedInviter",
     title: "WedInviter — Premium Digital Wedding Invitations",
     description:
-      "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹699 one-time.",
+      "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹399 one-time.",
     url: APP_URL,
     images: [
       {
@@ -128,7 +128,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "WedInviter — Premium Digital Wedding Invitations",
     description:
-      "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹699 one-time.",
+      "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP. ₹399 one-time.",
     images: ["/og-default.png"],
   },
   robots: {

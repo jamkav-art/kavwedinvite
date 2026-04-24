@@ -1,8 +1,8 @@
 import type { TemplateConfig } from "@/types/template.types";
 import type { CSSProperties } from "react";
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/Button";
+import { useRouter } from "next/navigation";
 
 interface TemplatePreviewProps {
   template: TemplateConfig;
@@ -27,18 +27,13 @@ export default function TemplatePreview({
   mediaCount,
   previewLink,
 }: TemplatePreviewProps) {
+  const router = useRouter();
   const { colors, name, borders } = template;
   const isDouble = borders.style === "double";
   const hasData = coupleName1 || coupleName2 || weddingDate || events?.length;
 
-  const [showPreviewModal, setShowPreviewModal] = useState(false);
-
   const openPreview = () => {
-    setShowPreviewModal(true);
-  };
-
-  const closePreview = () => {
-    setShowPreviewModal(false);
+    router.push("/order/preview");
   };
 
   return (
@@ -291,126 +286,6 @@ export default function TemplatePreview({
           </motion.div>
         )}
       </div>
-
-      {/* Preview Modal */}
-      {showPreviewModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.9 }}
-            className="relative bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-          >
-            <div className="sticky top-0 bg-white/95 backdrop-blur-sm border-b p-4 flex items-center justify-between">
-              <h3 className="text-xl font-bold text-[--color-charcoal]">
-                Invitation Preview
-              </h3>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={closePreview}
-                className="rounded-full w-8 h-8 p-0"
-              >
-                <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <path d="M18 6L6 18M6 6l12 12" />
-                </svg>
-              </Button>
-            </div>
-            <div className="p-6">
-              <p className="text-gray-600 mb-4">
-                This is a preview of how your invite will look after payment.
-                Your actual invite will be accessible via a unique link.
-              </p>
-              <div className="space-y-4">
-                <div>
-                  <h4 className="font-semibold text-[--color-charcoal]">
-                    Couple
-                  </h4>
-                  <p className="text-lg" style={{ color: colors.primary }}>
-                    {coupleName1} & {coupleName2}
-                  </p>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-[--color-charcoal]">
-                    Wedding Date
-                  </h4>
-                  <p>{weddingDate}</p>
-                </div>
-                {events && events.length > 0 && (
-                  <div>
-                    <h4 className="font-semibold text-[--color-charcoal]">
-                      Events
-                    </h4>
-                    <ul className="list-disc pl-5">
-                      {events.map((event, idx) => (
-                        <li key={idx}>
-                          {event.event_name} – {event.event_date} at{" "}
-                          {event.event_time}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {mediaCount !== undefined && (
-                  <div>
-                    <h4 className="font-semibold text-[--color-charcoal]">
-                      Media
-                    </h4>
-                    <p>{mediaCount} photos & videos</p>
-                  </div>
-                )}
-                <div>
-                  <h4 className="font-semibold text-[--color-charcoal]">
-                    Template
-                  </h4>
-                  <p>{name}</p>
-                </div>
-                <div className="pt-4 border-t">
-                  <h4 className="font-semibold text-[--color-charcoal]">
-                    Your Invite Link
-                  </h4>
-                  <p className="text-sm text-gray-500">
-                    After payment, your invite will be available at:
-                  </p>
-                  <div className="mt-2 p-3 bg-gray-50 rounded-lg border">
-                    <code className="text-sm break-all">
-                      https://wedinvite.app/invite/{"<unique-id>"}
-                    </code>
-                  </div>
-                  <p className="text-xs text-gray-400 mt-2">
-                    You can share this link with guests, track RSVPs, and manage
-                    your invite.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="sticky bottom-0 bg-white border-t p-4 flex justify-end">
-              <Button
-                variant="secondary"
-                onClick={closePreview}
-                className="mr-2"
-              >
-                Close
-              </Button>
-              <Button
-                onClick={closePreview}
-                style={{ backgroundColor: colors.primary }}
-              >
-                Looks Good
-              </Button>
-            </div>
-          </motion.div>
-        </div>
-      )}
     </>
   );
 }

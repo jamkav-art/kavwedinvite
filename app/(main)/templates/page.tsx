@@ -1,30 +1,30 @@
-import Link from 'next/link'
-import type { Metadata } from 'next'
-import { TEMPLATES } from '@/lib/templates'
-import EtherealParallaxBackground from '@/components/EtherealParallaxBackground'
+import Link from "next/link";
+import type { Metadata } from "next";
+import { TEMPLATES } from "@/lib/templates";
+import EtherealParallaxBackground from "@/components/EtherealParallaxBackground";
 
 export const metadata: Metadata = {
-  title: 'Wedding Invitation Templates',
+  title: "Wedding Invitation Templates",
   description:
-    'Browse 8 premium digital wedding invitation templates — Royal Gold, Celestial Navy, Bohemian Wildflower, and more. All for ₹699.',
+    "Browse 8 premium digital wedding invitation templates — Royal Gold, Celestial Navy, Bohemian Wildflower, and more. All for ₹399.",
   alternates: {
-    canonical: '/templates',
+    canonical: "/templates",
   },
   openGraph: {
-    title: 'Wedding Invitation Templates | WedInviter',
+    title: "Wedding Invitation Templates | WedInviter",
     description:
-      'Browse 8 premium digital wedding invitation templates — Royal Gold, Celestial Navy, Bohemian Wildflower, and more. All for ₹699.',
-    url: '/templates',
-    images: [{ url: '/og-default.png', width: 1200, height: 630 }],
+      "Browse 8 premium digital wedding invitation templates — Royal Gold, Celestial Navy, Bohemian Wildflower, and more. All for ₹399.",
+    url: "/templates",
+    images: [{ url: "/og-default.png", width: 1200, height: 630 }],
   },
   twitter: {
-    card: 'summary_large_image',
-    title: 'Wedding Invitation Templates | WedInviter',
+    card: "summary_large_image",
+    title: "Wedding Invitation Templates | WedInviter",
     description:
-      'Browse 8 premium digital wedding invitation templates. Royal Gold, Celestial Navy, Bohemian Wildflower & more. All for ₹699.',
-    images: ['/og-default.png'],
+      "Browse 8 premium digital wedding invitation templates. Royal Gold, Celestial Navy, Bohemian Wildflower & more. All for ₹399.",
+    images: ["/og-default.png"],
   },
-}
+};
 
 export default function TemplatesPage() {
   return (
@@ -40,8 +40,9 @@ export default function TemplatesPage() {
             Choose Your Template
           </h1>
           <p className="text-[--color-charcoal]/55 max-w-lg mx-auto text-base leading-relaxed">
-            Each template is meticulously crafted with unique typography, colours, and decorative
-            motifs. One price — ₹699 — gets you everything.
+            Each template is meticulously crafted with unique typography,
+            colours, and decorative motifs. One price — ₹399 — gets you
+            everything.
           </p>
         </div>
 
@@ -119,16 +120,17 @@ export default function TemplatesPage() {
         {/* Bottom CTA */}
         <div className="mt-16 text-center">
           <p className="text-sm text-[--color-charcoal]/45 mb-5">
-            Not sure which to choose? You can preview and change it during checkout.
+            Not sure which to choose? You can preview and change it during
+            checkout.
           </p>
           <Link
             href="/order"
             className="templates-main-cta inline-flex items-center justify-center h-12 px-8 rounded-full"
           >
-            Start your invite — ₹699
+            Start your invite — ₹399
           </Link>
         </div>
       </div>
     </div>
-  )
+  );
 }

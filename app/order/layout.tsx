@@ -1,12 +1,16 @@
-import type { Metadata } from 'next'
-import Link from 'next/link'
+import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: 'Create Your Invitation',
-  description: 'Build your premium digital wedding invitation in 4 easy steps.',
-}
+  title: "Create Your Invitation",
+  description: "Build your premium digital wedding invitation in 4 easy steps.",
+};
 
-export default function OrderLayout({ children }: { children: React.ReactNode }) {
+export default function OrderLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <div className="min-h-screen bg-[--color-cream]">
       {/* Header */}
@@ -21,18 +25,18 @@ export default function OrderLayout({ children }: { children: React.ReactNode })
           </Link>
 
           <div className="flex items-center gap-3 text-sm">
-            <span className="hidden sm:inline text-gray-400">All features included</span>
+            <span className="hidden sm:inline text-gray-400">
+              All features included
+            </span>
             <span className="bg-[--color-charcoal] text-[--color-cream] px-3 py-1 rounded-full text-xs font-semibold">
-              ₹699 one-time
+              ₹399 one-time
             </span>
           </div>
         </div>
       </header>
 
       {/* Main content */}
-      <main className="max-w-3xl mx-auto px-4 pt-8 pb-24">
-        {children}
-      </main>
+      <main className="max-w-3xl mx-auto px-4 pt-8 pb-24">{children}</main>
     </div>
-  )
+  );
 }

@@ -141,7 +141,7 @@ export default function PaymentButtonEnhanced({
                 textShadow: `0 0 10px ${priceColors[flipIndex]}80`,
               }}
             >
-              ₹699
+              ₹399
             </motion.span>
             <span>Securely</span>
           </span>
