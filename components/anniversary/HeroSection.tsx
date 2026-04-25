@@ -207,7 +207,7 @@ export default function HeroSection() {
         >
           <Link
             href={ANNIVERSARY_ORDER_ROUTE}
-            className="inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full cta-gradient-btn text-white font-semibold text-base tracking-wide anniversary-heartbeat-btn shadow-lg"
+            className="inline-flex items-center justify-center gap-2 h-14 px-9 rounded-full anniv-hero-cta-btn text-white font-semibold text-base tracking-wide anniversary-heartbeat-btn shadow-lg"
           >
             Create Your Anniversary Quiz
             <motion.span

@@ -15,17 +15,31 @@ export default function Step1() {
   const store = useAnniversaryOrderStore();
   const [errors, setErrors] = useState<FieldErrors>({});
 
-  // Auto-calculate years together
-  const yearsTogether = useMemo(() => {
-    if (!store.anniversaryDate) return 0;
+  // Auto-calculate years, months, days together dynamically with current date
+  const timeTogether = useMemo(() => {
+    if (!store.anniversaryDate) return null;
     const anniv = new Date(store.anniversaryDate);
     const now = new Date();
+
     let years = now.getFullYear() - anniv.getFullYear();
-    const monthDiff = now.getMonth() - anniv.getMonth();
-    if (monthDiff < 0 || (monthDiff === 0 && now.getDate() < anniv.getDate())) {
-      years--;
+    let months = now.getMonth() - anniv.getMonth();
+    let days = now.getDate() - anniv.getDate();
+
+    if (days < 0) {
+      months--;
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+      days += prevMonth.getDate();
     }
-    return Math.max(0, years);
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    return {
+      years: Math.max(0, years),
+      months: Math.max(0, months),
+      days: Math.max(0, days),
+    };
   }, [store.anniversaryDate]);
 
   const handleNext = () => {
@@ -48,7 +62,7 @@ export default function Step1() {
     }
 
     setErrors({});
-    store.updateCouple({ yearsTogether });
+    store.updateCouple({ yearsTogether: timeTogether?.years ?? 0 });
     store.nextStep();
   };
 
@@ -59,7 +73,7 @@ export default function Step1() {
         <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold love-story-gradient leading-tight">
           Tell us about your love
         </h1>
-        <p className="mt-1 text-sm text-[--color-charcoal]/55">
+        <p className="mt-1 text-sm anniversary-gradient-text">
           Step 1 of 4 — your names, anniversary, and a photo
         </p>
       </div>
@@ -103,12 +117,12 @@ export default function Step1() {
       {/* Anniversary date + years */}
       <div className="space-y-4">
         <h2 className="text-base font-semibold anniversary-gradient-text">
-          Your anniversary
+          Your Marriage Date
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <Input
-              label="Anniversary date"
+              label="Marriage date"
               type="date"
               required
               colorful
@@ -122,18 +136,27 @@ export default function Step1() {
               hint="The date you became each other's forever"
             />
           </div>
-          {store.anniversaryDate && (
+          {timeTogether && (
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col justify-center items-center rounded-2xl bg-[--color-blush] border border-[--color-gold]/20 p-4"
             >
               <span className="text-3xl font-[var(--font-cormorant)] font-bold anniversary-gradient-text">
-                {yearsTogether}
+                {timeTogether.years}
               </span>
-              <span className="text-xs text-[--color-charcoal]/55">
-                {yearsTogether === 1 ? "year" : "years"} together
+              <span className="text-xs anniversary-gradient-text">
+                {timeTogether.years === 1 ? "year" : "years"}
               </span>
+              <div className="flex gap-3 mt-1">
+                <span className="text-xs anniversary-gradient-text">
+                  {timeTogether.months}{" "}
+                  {timeTogether.months === 1 ? "month" : "months"}
+                </span>
+                <span className="text-xs anniversary-gradient-text">
+                  {timeTogether.days} {timeTogether.days === 1 ? "day" : "days"}
+                </span>
+              </div>
             </motion.div>
           )}
         </div>
@@ -143,7 +166,7 @@ export default function Step1() {
       <div className="space-y-3">
         <h2 className="text-base font-semibold anniversary-gradient-text">
           Couple photo{" "}
-          <span className="text-xs text-gray-400 font-normal">
+          <span className="text-xs anniversary-gradient-text font-normal">
             (optional — becomes hero background)
           </span>
         </h2>
@@ -183,7 +206,7 @@ export default function Step1() {
           }}
           whileTap={{ scale: 0.97, y: 0 }}
           transition={{ type: "spring", stiffness: 280, damping: 18 }}
-          className="order-cta-btn inline-flex items-center gap-2 h-14 px-8 text-base font-semibold rounded-full text-white"
+          className="anniv-step1-cta-btn inline-flex items-center gap-2 h-14 px-8 text-base font-semibold rounded-full text-white"
         >
           Continue to Quiz Builder
           <svg

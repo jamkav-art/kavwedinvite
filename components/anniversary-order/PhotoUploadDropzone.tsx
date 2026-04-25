@@ -1,8 +1,13 @@
 "use client";
 
-import { useRef, useState, type ChangeEvent, type DragEvent } from "react";
+import {
+  useRef,
+  useState,
+  useEffect,
+  type ChangeEvent,
+  type DragEvent,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 interface PhotoUploadDropzoneProps {
@@ -21,8 +26,26 @@ export default function PhotoUploadDropzone({
   className,
 }: PhotoUploadDropzoneProps) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [dragOver, setDragOver] = useState(false);
   const [preview, setPreview] = useState<string | null>(value?.url ?? null);
+
+  // Draw image onto canvas when preview changes
+  useEffect(() => {
+    if (!preview || !canvasRef.current) return;
+    const img = new window.Image();
+    img.onload = () => {
+      const canvas = canvasRef.current;
+      if (!canvas) return;
+      canvas.width = img.naturalWidth;
+      canvas.height = img.naturalHeight;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.drawImage(img, 0, 0);
+      }
+    };
+    img.src = preview;
+  }, [preview]);
 
   const handleFile = (file: File | null) => {
     if (!file) return;
@@ -57,7 +80,9 @@ export default function PhotoUploadDropzone({
   return (
     <div className={cn("space-y-2", className)}>
       {label && (
-        <p className="text-sm font-semibold text-[--color-charcoal]">{label}</p>
+        <p className="text-sm font-semibold anniversary-gradient-text">
+          {label}
+        </p>
       )}
       <div
         role="button"
@@ -97,14 +122,11 @@ export default function PhotoUploadDropzone({
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.9 }}
-              className="relative w-full h-full min-h-[140px]"
+              className="relative w-full h-full min-h-[140px] flex items-center justify-center"
             >
-              <Image
-                src={preview}
-                alt="Uploaded photo"
-                fill
-                className="object-cover rounded-xl"
-                unoptimized
+              <canvas
+                ref={canvasRef}
+                className="max-w-full max-h-full rounded-xl object-contain"
               />
               <button
                 type="button"
@@ -146,10 +168,12 @@ export default function PhotoUploadDropzone({
                 </svg>
               </div>
               <div>
-                <p className="text-sm font-medium text-[--color-charcoal]">
+                <p className="text-sm font-medium anniversary-gradient-text">
                   {label}
                 </p>
-                <p className="text-xs text-gray-400 mt-0.5">{hint}</p>
+                <p className="text-xs anniversary-gradient-text mt-0.5">
+                  {hint}
+                </p>
               </div>
             </motion.div>
           )}

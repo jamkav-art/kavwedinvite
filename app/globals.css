@@ -899,6 +899,252 @@ body {
   will-change: transform;
 }
 
+/* ============================================================
+   ANNIVERSARY QUIZ: GRADIENT TEXT UTILITIES
+   ============================================================ */
+
+/* ── Anniversary Quiz: Gradient text — animated shimmer ── */
+.anniversary-gradient-text {
+  background: linear-gradient(
+    135deg,
+    #e8638c 0%,
+    #c0185f 25%,
+    #c9a962 50%,
+    #f7e7ce 70%,
+    #c9a962 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: bridal-shimmer 6s ease-in-out infinite;
+}
+
+/* ── Anniversary Quiz: Love story heading gradient ── */
+.love-story-gradient {
+  background: linear-gradient(
+    135deg,
+    #c0185f 0%,
+    #e8638c 30%,
+    #c9a962 65%,
+    #f7e7ce 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: bridal-shimmer 7s ease-in-out infinite;
+}
+
+/* ── Anniversary Quiz: Gradient text — static (no animation) ── */
+.anniversary-gradient-text-static {
+  background: linear-gradient(
+    135deg,
+    #e8638c 0%,
+    #c0185f 30%,
+    #c9a962 70%,
+    #f7e7ce 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* ============================================================
+   ANNIVERSARY QUIZ: UNIQUE ANIMATED GRADIENT BUTTONS
+   ============================================================ */
+
+/* ── Anniversary Hero CTA — unique animated gradient ── */
+@keyframes anniv-hero-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.anniv-hero-cta-btn {
+  background: linear-gradient(
+    135deg,
+    #4a1528 0%,
+    #8b3a4a 15%,
+    #c0185f 30%,
+    #e8638c 45%,
+    #c9a962 60%,
+    #e8638c 75%,
+    #c0185f 85%,
+    #4a1528 100%
+  );
+  background-size: 400% 400%;
+  animation: anniv-hero-shimmer 6s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.anniv-hero-cta-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.12) 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.06) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Anniversary Final CTA — unique animated gradient ── */
+@keyframes anniv-final-shimmer {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+.anniv-final-cta-btn {
+  background: linear-gradient(
+    135deg,
+    #8b5e3c 0%,
+    #b8864e 15%,
+    #c9a962 35%,
+    #f7e7ce 55%,
+    #c9a962 70%,
+    #e8638c 85%,
+    #8b5e3c 100%
+  );
+  background-size: 300% 300%;
+  animation: anniv-final-shimmer 8s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+}
+.anniv-final-cta-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.1) 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.05) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Anniversary Step 1 CTA — unique animated gradient ── */
+@keyframes anniv-step1-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 25%;
+  }
+  50% {
+    background-position: 50% 100%;
+  }
+  75% {
+    background-position: 0% 75%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.anniv-step1-cta-btn {
+  background: linear-gradient(
+    135deg,
+    #2c0a3e 0%,
+    #5c2a7a 18%,
+    #c0185f 38%,
+    #c9a962 58%,
+    #c0185f 72%,
+    #5c2a7a 86%,
+    #2c0a3e 100%
+  );
+  background-size: 400% 400%;
+  animation: anniv-step1-shimmer 7s ease-in-out infinite;
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid rgba(201, 169, 98, 0.55);
+  box-shadow:
+    0 4px 20px rgba(192, 24, 95, 0.2),
+    inset 0 1px rgba(255, 255, 255, 0.12);
+}
+.anniv-step1-cta-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 40%,
+    rgba(255, 255, 255, 0.08) 60%,
+    transparent 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Anniversary Quiz Option Button — animated gradient ── */
+@keyframes anniv-option-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.anniv-option-btn {
+  background: linear-gradient(135deg, #c9a962 0%, #e8638c 50%, #c0185f 100%);
+  background-size: 300% 300%;
+  animation: anniv-option-shimmer 4s ease-in-out infinite;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.anniv-option-btn::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.15) 0%,
+    transparent 50%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Anniversary Quiz Toggle — Red/Green ── */
+.anniv-toggle-on {
+  background-color: #22c55e;
+}
+.anniv-toggle-off {
+  background-color: #ef4444;
+}
+
 /* ── Reduced motion fallback ── */
 
 @media (prefers-reduced-motion: reduce) {

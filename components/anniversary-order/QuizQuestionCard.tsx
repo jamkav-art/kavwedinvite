@@ -50,8 +50,8 @@ export default function QuizQuestionCard({
           type="button"
           onClick={() => onToggle(question.id)}
           className={cn(
-            "relative shrink-0 w-10 h-6 rounded-full transition-colors duration-200",
-            question.enabled ? "bg-[--color-magenta]" : "bg-gray-300",
+            "relative shrink-0 w-10 h-6 rounded-full transition-all duration-200",
+            question.enabled ? "anniv-toggle-on" : "anniv-toggle-off",
           )}
           aria-label={question.enabled ? "Disable question" : "Enable question"}
         >
@@ -74,22 +74,20 @@ export default function QuizQuestionCard({
 
         {/* Expand / remove */}
         <div className="flex items-center gap-1">
-          {question.isCustom && (
-            <button
-              type="button"
-              onClick={() => onRemove(question.id)}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 hover:text-[--color-terracotta] hover:bg-red-50 transition-colors"
-              aria-label="Remove question"
-            >
-              <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
-                <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z" />
-                <path
-                  fillRule="evenodd"
-                  d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                />
-              </svg>
-            </button>
-          )}
+          <button
+            type="button"
+            onClick={() => onRemove(question.id)}
+            className="w-7 h-7 rounded-full flex items-center justify-center text-gray-400 hover:text-[--color-terracotta] hover:bg-red-50 transition-colors"
+            aria-label="Remove question"
+          >
+            <svg viewBox="0 0 16 16" fill="currentColor" className="w-4 h-4">
+              <path d="M5.5 5.5A.5.5 0 016 6v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm2.5 0a.5.5 0 01.5.5v6a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm3 .5a.5.5 0 00-1 0v6a.5.5 0 001 0V6z" />
+              <path
+                fillRule="evenodd"
+                d="M14.5 3a1 1 0 01-1 1H13v9a2 2 0 01-2 2H5a2 2 0 01-2-2V4h-.5a1 1 0 01-1-1V2a1 1 0 011-1H6a1 1 0 011-1h2a1 1 0 011 1h3.5a1 1 0 011 1v1zM4.118 4L4 4.059V13a1 1 0 001 1h6a1 1 0 001-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+              />
+            </svg>
+          </button>
           <button
             type="button"
             onClick={() => setExpanded(!expanded)}
@@ -153,14 +151,19 @@ export default function QuizQuestionCard({
                           onUpdate(question.id, { correctAnswer: oi })
                         }
                         className={cn(
-                          "shrink-0 w-7 h-7 rounded-full text-xs font-bold flex items-center justify-center transition-all",
+                          "shrink-0 rounded-full text-xs font-bold flex items-center justify-center gap-1.5 px-3 transition-all min-w-[100px] h-9",
                           question.correctAnswer === oi
-                            ? "bg-[--color-gold] text-white correct-answer-badge"
-                            : "bg-gray-100 text-gray-400 hover:bg-gray-200",
+                            ? "anniv-option-btn shadow-md"
+                            : "bg-gray-100 text-gray-500 hover:bg-gray-200",
                         )}
                         aria-label={`Mark option ${OPTION_LABELS[oi]} as correct`}
                       >
-                        {OPTION_LABELS[oi]}
+                        <span>{OPTION_LABELS[oi]}</span>
+                        {question.correctAnswer === oi && (
+                          <span className="text-[10px] font-semibold text-green-300">
+                            Correct Option
+                          </span>
+                        )}
                       </button>
                       <input
                         type="text"

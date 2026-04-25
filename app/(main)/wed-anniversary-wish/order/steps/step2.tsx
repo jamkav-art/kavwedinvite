@@ -33,8 +33,9 @@ export default function Step2() {
         <h1 className="text-2xl sm:text-3xl font-[var(--font-cormorant)] font-semibold love-story-gradient leading-tight">
           Build your quiz
         </h1>
-        <p className="mt-1 text-sm text-[--color-charcoal]/55">
-          Step 2 of 4 — toggle, edit, and create questions about yourself
+        <p className="mt-1 text-sm anniversary-gradient-text">
+          Step 2 of 4 — toggle, edit, and create questions about yourself.
+          Choose your correct option for each question.
         </p>
       </div>
 
@@ -140,7 +141,11 @@ export default function Step2() {
           Back
         </Button>
 
-        <Button onClick={handleNext} size="lg" className="gap-2">
+        <Button
+          onClick={handleNext}
+          size="lg"
+          className="gap-2 bg-gradient-to-r from-[#c0185f] to-[#c9a962] text-white shadow-md"
+        >
           Continue to Theme
           <svg viewBox="0 0 20 20" fill="currentColor" className="w-4 h-4">
             <path
