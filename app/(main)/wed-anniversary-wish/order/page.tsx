@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
 
@@ -59,6 +59,10 @@ function LoadingSkeleton() {
 export default function AnniversaryOrderPage() {
   const currentStep = useAnniversaryOrderStore((s) => s.currentStep);
   const hasHydrated = useAnniversaryOrderStore((s) => s.hasHydrated);
+
+  useEffect(() => {
+    useAnniversaryOrderStore.persist.rehydrate();
+  }, []);
 
   if (!hasHydrated) {
     return <LoadingSkeleton />;
