@@ -3,10 +3,12 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
+import { useAnniversaryPayment } from "@/hooks/useAnniversaryPayment";
 
 export default function SlideReviewPay() {
   const store = useAnniversaryOrderStore();
   const prevStep = useAnniversaryOrderStore((s) => s.prevStep);
+  const { initializePayment, isLoading } = useAnniversaryPayment();
 
   const yearsTogether = useMemo(() => {
     if (!store.anniversaryDate) return 0;
@@ -128,14 +130,39 @@ export default function SlideReviewPay() {
 
         {/* Pay Button — animated hero gradient */}
         <motion.button
-          className="w-full py-4 rounded-2xl font-semibold text-lg anniv-hero-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl transition-all"
-          whileTap={{ scale: 0.98 }}
+          className={`w-full py-4 rounded-2xl font-semibold text-lg anniv-hero-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl transition-all ${
+            isLoading ? "opacity-70 cursor-not-allowed" : ""
+          }`}
+          whileTap={{ scale: isLoading ? 1 : 0.98 }}
           onClick={() => {
-            // TODO: Integrate Razorpay payment
-            alert("Payment integration coming soon!");
+            if (isLoading) return;
+            initializePayment({
+              yourName: store.yourName,
+              partnerName: store.partnerName,
+              anniversaryDate: store.anniversaryDate,
+              yearsTogether: store.yearsTogether,
+              couplePhoto: store.couplePhoto,
+              questions: store.questions,
+              floralTheme: store.floralTheme,
+              colorMood: store.colorMood,
+              customBgPhoto: store.customBgPhoto,
+              loveNote: store.loveNote,
+              voiceNote: store.voiceNote,
+              backgroundMusic: store.backgroundMusic,
+              customBackgroundMusic: store.customBackgroundMusic,
+              phone: store.phone,
+              email: store.email,
+            });
           }}
         >
-          Pay & Create ✨
+          {isLoading ? (
+            <span className="flex items-center justify-center gap-2">
+              <span className="w-5 h-5 rounded-full border-2 border-white/30 border-t-white animate-spin" />
+              Processing...
+            </span>
+          ) : (
+            "Pay & Create ✨"
+          )}
         </motion.button>
 
         {/* Back button */}

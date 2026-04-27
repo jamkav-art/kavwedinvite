@@ -134,14 +134,12 @@ export function useAnniversaryPayment() {
               }
 
               const successParams = new URLSearchParams({
-                orderId: createPayload.orderId ?? "",
-                quizUrl: verifyPayload.quizUrl ?? "",
-                names: `${orderData.yourName} & ${orderData.partnerName}`,
-                questionCount: String(questionCount),
-                phone: orderData.phone,
+                id: verifyPayload.quizId ?? "",
+                name1: orderData.yourName,
+                name2: orderData.partnerName,
               });
               router.push(
-                `/wed-anniversary-wish/order/success?${successParams.toString()}`,
+                `/wed-anniversary-wish/success?${successParams.toString()}`,
               );
             } catch (error) {
               const message =
