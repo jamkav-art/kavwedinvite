@@ -32,12 +32,12 @@ export default function SlidePartnerName() {
         💕
       </motion.div>
 
-      {/* Question */}
-      <h1 className="font-serif text-2xl sm:text-3xl text-[--color-charcoal] mb-2 leading-snug">
+      {/* Question — gradient text */}
+      <h1 className="font-serif text-2xl sm:text-3xl love-story-gradient mb-2 leading-snug">
         {yourName ? `${yourName}, who's your` : "Who's your"}{" "}
-        <span className="text-[--color-rose]">forever person</span>?
+        <span className="text-[#C4497C]">forever person</span>?
       </h1>
-      <p className="text-sm text-gray-400 mb-8">
+      <p className="text-sm text-[#F5C6DA]/70 mb-8">
         The one who makes your heart skip 💓
       </p>
 
@@ -50,7 +50,7 @@ export default function SlidePartnerName() {
             onChange={(e) => updateCouple({ partnerName: e.target.value })}
             placeholder="Their name..."
             autoFocus
-            className="w-full px-6 py-4 text-lg text-center bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 focus:border-[--color-rose] focus:ring-2 focus:ring-[--color-rose]/20 outline-none transition-all placeholder:text-gray-300 font-medium"
+            className="w-full px-6 py-4 text-lg text-center bg-white/10 backdrop-blur-sm rounded-2xl border border-white/10 focus:border-[#C4497C] focus:ring-2 focus:ring-[#C4497C]/30 outline-none transition-all placeholder:text-white/25 text-white font-medium"
             maxLength={50}
           />
           {partnerName && (
@@ -64,14 +64,14 @@ export default function SlidePartnerName() {
           )}
         </div>
 
-        {/* Next Button */}
+        {/* Next Button — animated gradient */}
         <motion.button
           type="submit"
           disabled={!partnerName.trim()}
           className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all ${
             partnerName.trim()
-              ? "bg-gradient-to-r from-[--color-gold] to-[--color-rose] text-white shadow-lg shadow-[--color-rose]/20 hover:shadow-xl hover:scale-[1.02]"
-              : "bg-gray-100 text-gray-300 cursor-not-allowed"
+              ? "anniv-step1-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl"
+              : "bg-white/5 text-white/20 cursor-not-allowed"
           }`}
           whileTap={{ scale: partnerName.trim() ? 0.98 : 1 }}
         >

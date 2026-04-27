@@ -19,27 +19,34 @@ export default function WizardProgress() {
           <React.Fragment key={stepNum}>
             {/* Dot */}
             <motion.button
-              className={`relative w-3 h-3 rounded-full transition-colors ${
+              className={`relative w-3 h-3 rounded-full transition-all ${
                 isActive
-                  ? "bg-[--color-gold] ring-2 ring-[--color-gold]/30"
+                  ? "bg-[#C4497C] ring-2 ring-[#C4497C]/40 shadow-lg shadow-[#C4497C]/30"
                   : isCompleted
-                    ? "bg-[--color-rose]"
-                    : "bg-gray-200"
+                    ? "bg-[#D4AF37]"
+                    : "bg-white/15"
               }`}
-              animate={isActive ? { scale: [1, 1.3, 1] } : { scale: 1 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
+              animate={isActive ? { scale: [1, 1.35, 1] } : { scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut" }}
               aria-label={`Step ${stepNum}: ${step.label}`}
-            />
+            >
+              {isActive && (
+                <motion.span
+                  className="absolute inset-0 rounded-full bg-[#C4497C]"
+                  initial={{ opacity: 0.6, scale: 1 }}
+                  animate={{ opacity: 0, scale: 2 }}
+                  transition={{ duration: 1, repeat: Infinity }}
+                />
+              )}
+            </motion.button>
 
             {/* Connector line (except after last) */}
             {index < WIZARD_STEPS.length - 1 && (
               <motion.div
                 className={`h-0.5 w-6 sm:w-10 rounded-full ${
-                  isCompleted ? "bg-[--color-rose]" : "bg-gray-200"
+                  isCompleted ? "bg-[#D4AF37]" : "bg-white/10"
                 }`}
-                animate={
-                  isCompleted ? { backgroundColor: "var(--color-rose)" } : {}
-                }
+                animate={isCompleted ? { backgroundColor: "#D4AF37" } : {}}
                 transition={{ duration: 0.3 }}
               />
             )}

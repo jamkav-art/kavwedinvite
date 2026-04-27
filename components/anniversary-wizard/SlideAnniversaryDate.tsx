@@ -48,11 +48,11 @@ export default function SlideAnniversaryDate() {
         📅
       </motion.div>
 
-      {/* Question */}
-      <h1 className="font-serif text-2xl sm:text-3xl text-[--color-charcoal] mb-2 leading-snug">
+      {/* Question — gradient text */}
+      <h1 className="font-serif text-2xl sm:text-3xl love-story-gradient mb-2 leading-snug">
         When did forever begin?
       </h1>
-      <p className="text-sm text-gray-400 mb-8">Your anniversary date 💌</p>
+      <p className="text-sm text-[#F5C6DA]/70 mb-8">Your anniversary date 💌</p>
 
       {/* Date Input */}
       <form onSubmit={handleSubmit} className="space-y-6">
@@ -69,7 +69,7 @@ export default function SlideAnniversaryDate() {
               }
             }}
             autoFocus
-            className="w-full px-6 py-4 text-lg text-center bg-white/80 backdrop-blur-sm rounded-2xl border border-gray-200 focus:border-[--color-gold] focus:ring-2 focus:ring-[--color-gold]/20 outline-none transition-all text-[--color-charcoal] [color-scheme:light]"
+            className="w-full px-6 py-4 text-lg text-center bg-white/10 backdrop-blur-sm rounded-2xl border border-white/10 focus:border-[#C4497C] focus:ring-2 focus:ring-[#C4497C]/30 outline-none transition-all text-white [color-scheme:dark]"
             max={new Date().toISOString().split("T")[0]}
           />
         </div>
@@ -80,28 +80,28 @@ export default function SlideAnniversaryDate() {
             initial={{ scale: 0, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ type: "spring", stiffness: 150 }}
-            className="bg-gradient-to-r from-[--color-blush]/30 to-[--color-gold]/10 rounded-2xl p-4 border border-[--color-gold]/20"
+            className="bg-white/5 backdrop-blur-sm rounded-2xl p-4 border border-white/10"
           >
             <motion.span
               key={yearsTogether}
               initial={{ scale: 1.5, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              className="block text-3xl font-bold text-[--color-rose]"
+              className="block text-3xl font-bold text-[#C4497C]"
             >
               {yearsTogether} {yearsTogether === 1 ? "year" : "years"} ❤️
             </motion.span>
-            <span className="text-xs text-gray-400">of togetherness</span>
+            <span className="text-xs text-white/40">of togetherness</span>
           </motion.div>
         )}
 
-        {/* Next Button */}
+        {/* Next Button — animated gradient */}
         <motion.button
           type="submit"
           disabled={!anniversaryDate}
           className={`w-full py-4 rounded-2xl font-semibold text-lg transition-all ${
             anniversaryDate
-              ? "bg-gradient-to-r from-[--color-gold] to-[--color-rose] text-white shadow-lg shadow-[--color-rose]/20 hover:shadow-xl hover:scale-[1.02]"
-              : "bg-gray-100 text-gray-300 cursor-not-allowed"
+              ? "anniv-step1-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl"
+              : "bg-white/5 text-white/20 cursor-not-allowed"
           }`}
           whileTap={{ scale: anniversaryDate ? 0.98 : 1 }}
         >

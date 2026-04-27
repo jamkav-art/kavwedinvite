@@ -3,7 +3,6 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
-import { WIZARD_STEPS } from "@/types/anniversary-quiz.types";
 
 export default function SlideReviewPay() {
   const store = useAnniversaryOrderStore();
@@ -43,22 +42,24 @@ export default function SlideReviewPay() {
         ✨
       </motion.div>
 
-      {/* Title */}
-      <h1 className="font-serif text-2xl sm:text-3xl text-[--color-charcoal] mb-1 leading-snug">
+      {/* Title — gradient text */}
+      <h1 className="font-serif text-2xl sm:text-3xl love-story-gradient mb-1 leading-snug">
         Your Love Story Quiz
       </h1>
-      <p className="text-sm text-gray-400 mb-6">Review & bring it to life</p>
+      <p className="text-sm text-[#F5C6DA]/70 mb-6">
+        Review & bring it to life
+      </p>
 
-      {/* Summary Card */}
+      {/* Summary Card — glassmorphism on dark */}
       <motion.div
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.2 }}
-        className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 border border-gray-100 shadow-sm space-y-4 mb-6 text-left"
+        className="bg-white/5 backdrop-blur-sm rounded-2xl p-6 border border-white/10 space-y-4 mb-6 text-left"
       >
         {/* Couple */}
-        <div className="flex items-center gap-3 pb-4 border-b border-gray-50">
-          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[--color-blush] to-[--color-gold]/20 flex items-center justify-center text-2xl">
+        <div className="flex items-center gap-3 pb-4 border-b border-white/10">
+          <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#C4497C]/30 to-[#D4AF37]/20 flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
             {store.couplePhoto ? (
               <img
                 src={store.couplePhoto.url}
@@ -70,11 +71,11 @@ export default function SlideReviewPay() {
             )}
           </div>
           <div>
-            <p className="font-serif text-lg text-[--color-charcoal]">
+            <p className="font-serif text-lg text-[#F5C6DA]">
               {store.yourName || "You"} ❤️ {store.partnerName || "Them"}
             </p>
             {yearsTogether > 0 && (
-              <p className="text-sm text-gray-400">
+              <p className="text-sm text-white/40">
                 {yearsTogether} {yearsTogether === 1 ? "year" : "years"}{" "}
                 together
               </p>
@@ -84,19 +85,17 @@ export default function SlideReviewPay() {
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-3">
-          <div className="text-center p-3 rounded-xl bg-[--color-blush]/20">
-            <p className="text-xl font-bold text-[--color-rose]">
-              {questionCount}
-            </p>
-            <p className="text-xs text-gray-400">Questions</p>
+          <div className="text-center p-3 rounded-xl bg-[#C4497C]/20">
+            <p className="text-xl font-bold text-[#C4497C]">{questionCount}</p>
+            <p className="text-xs text-white/40">Questions</p>
           </div>
-          <div className="text-center p-3 rounded-xl bg-[--color-gold]/10">
-            <p className="text-xl font-bold text-[--color-gold]">🎨</p>
-            <p className="text-xs text-gray-400">{store.floralTheme}</p>
+          <div className="text-center p-3 rounded-xl bg-[#D4AF37]/15">
+            <p className="text-xl font-bold text-[#D4AF37]">🎨</p>
+            <p className="text-xs text-white/40">{store.floralTheme}</p>
           </div>
-          <div className="text-center p-3 rounded-xl bg-purple-50">
-            <p className="text-xl font-bold text-purple-400">🎵</p>
-            <p className="text-xs text-gray-400">
+          <div className="text-center p-3 rounded-xl bg-[#7B5EA7]/20">
+            <p className="text-xl font-bold text-[#7B5EA7]">🎵</p>
+            <p className="text-xs text-white/40">
               {store.backgroundMusic ? "Music" : "No music"}
             </p>
           </div>
@@ -104,9 +103,9 @@ export default function SlideReviewPay() {
 
         {/* Love note preview */}
         {store.loveNote && (
-          <div className="pt-3 border-t border-gray-50">
-            <p className="text-xs text-gray-400 mb-1">💌 Love Note</p>
-            <p className="text-sm text-gray-500 italic line-clamp-2">
+          <div className="pt-3 border-t border-white/10">
+            <p className="text-xs text-white/40 mb-1">💌 Love Note</p>
+            <p className="text-sm text-[#F5C6DA]/70 italic line-clamp-2">
               "{store.loveNote}"
             </p>
           </div>
@@ -120,16 +119,16 @@ export default function SlideReviewPay() {
         transition={{ delay: 0.3 }}
         className="space-y-4"
       >
-        <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-[--color-gold]/10 to-[--color-rose]/10 border border-[--color-gold]/20">
-          <span className="text-2xl font-bold font-serif text-[--color-rose]">
+        <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-[#D4AF37]/30">
+          <span className="text-2xl font-bold font-serif text-[#D4AF37]">
             ₹399
           </span>
-          <span className="text-sm text-gray-400">one-time</span>
+          <span className="text-sm text-white/40">one-time</span>
         </div>
 
-        {/* Pay Button */}
+        {/* Pay Button — animated hero gradient */}
         <motion.button
-          className="w-full py-4 rounded-2xl font-semibold text-lg bg-gradient-to-r from-[--color-gold] to-[--color-rose] text-white shadow-lg shadow-[--color-rose]/20 hover:shadow-xl hover:scale-[1.02] transition-all"
+          className="w-full py-4 rounded-2xl font-semibold text-lg anniv-hero-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl transition-all"
           whileTap={{ scale: 0.98 }}
           onClick={() => {
             // TODO: Integrate Razorpay payment
@@ -142,7 +141,7 @@ export default function SlideReviewPay() {
         {/* Back button */}
         <motion.button
           onClick={prevStep}
-          className="w-full py-3 rounded-2xl font-medium text-sm text-gray-400 hover:text-gray-600 transition-colors"
+          className="w-full py-3 rounded-2xl font-medium text-sm text-white/30 hover:text-white/60 transition-colors"
           whileTap={{ scale: 0.98 }}
         >
           ← Edit something

@@ -52,11 +52,11 @@ export default function SlideCouplePhoto() {
         📸
       </motion.div>
 
-      {/* Question */}
-      <h1 className="font-serif text-2xl sm:text-3xl text-[--color-charcoal] mb-2 leading-snug">
+      {/* Question — gradient text */}
+      <h1 className="font-serif text-2xl sm:text-3xl love-story-gradient mb-2 leading-snug">
         Show us your smile
       </h1>
-      <p className="text-sm text-gray-400 mb-8">
+      <p className="text-sm text-[#F5C6DA]/70 mb-8">
         Add a couple photo (optional, you can skip)
       </p>
 
@@ -66,7 +66,7 @@ export default function SlideCouplePhoto() {
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative rounded-2xl overflow-hidden aspect-[4/3] max-w-sm mx-auto shadow-lg"
+            className="relative rounded-2xl overflow-hidden aspect-[4/3] max-w-sm mx-auto shadow-lg ring-1 ring-white/10"
           >
             <img
               src={couplePhoto.url}
@@ -75,7 +75,7 @@ export default function SlideCouplePhoto() {
             />
             <button
               onClick={handleRemove}
-              className="absolute top-3 right-3 w-8 h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+              className="absolute top-3 right-3 w-8 h-8 bg-black/60 backdrop-blur-sm rounded-full flex items-center justify-center text-white hover:bg-black/80 transition-colors"
               aria-label="Remove photo"
             >
               <svg
@@ -96,13 +96,13 @@ export default function SlideCouplePhoto() {
         ) : (
           <motion.button
             onClick={() => fileInputRef.current?.click()}
-            className="w-full max-w-sm mx-auto aspect-[4/3] rounded-2xl border-2 border-dashed border-gray-200 hover:border-[--color-gold] bg-white/50 backdrop-blur-sm flex flex-col items-center justify-center gap-3 transition-all hover:bg-[--color-gold]/5 group cursor-pointer"
+            className="w-full max-w-sm mx-auto aspect-[4/3] rounded-2xl border-2 border-dashed border-white/10 hover:border-[#C4497C] bg-white/5 backdrop-blur-sm flex flex-col items-center justify-center gap-3 transition-all hover:bg-[#C4497C]/10 group cursor-pointer"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
-            <div className="w-16 h-16 rounded-full bg-gradient-to-br from-[--color-blush] to-[--color-gold]/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+            <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center group-hover:scale-110 transition-transform">
               <svg
-                className="w-8 h-8 text-[--color-rose]"
+                className="w-8 h-8 text-[#C4497C]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -115,10 +115,10 @@ export default function SlideCouplePhoto() {
                 />
               </svg>
             </div>
-            <span className="text-sm text-gray-400">
+            <span className="text-sm text-white/50">
               Tap to upload your photo
             </span>
-            <span className="text-xs text-gray-300">JPG, PNG or WebP</span>
+            <span className="text-xs text-white/30">JPG, PNG or WebP</span>
           </motion.button>
         )}
 
@@ -134,14 +134,14 @@ export default function SlideCouplePhoto() {
         <div className="flex gap-3">
           <motion.button
             onClick={prevStep}
-            className="flex-1 py-4 rounded-2xl font-semibold bg-white border border-gray-200 text-gray-500 hover:bg-gray-50 transition-all"
+            className="flex-1 py-4 rounded-2xl font-semibold bg-white/5 border border-white/10 text-white/50 hover:bg-white/10 transition-all"
             whileTap={{ scale: 0.98 }}
           >
             ← Back
           </motion.button>
           <motion.button
             onClick={nextStep}
-            className="flex-1 py-4 rounded-2xl font-semibold bg-gradient-to-r from-[--color-gold] to-[--color-rose] text-white shadow-lg shadow-[--color-rose]/20 hover:shadow-xl hover:scale-[1.02] transition-all"
+            className="flex-1 py-4 rounded-2xl font-semibold anniv-step1-cta-btn text-white shadow-lg shadow-[#C4497C]/30 hover:shadow-xl transition-all"
             whileTap={{ scale: 0.98 }}
           >
             {couplePhoto ? "Looks great! →" : "Skip →"}
