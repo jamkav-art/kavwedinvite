@@ -9,6 +9,12 @@ import type {
   ColorMood,
   UploadedAsset,
 } from "@/types/anniversary-order.types";
+import type {
+  QuestionBankItem,
+  QuizConfigItem,
+  QuizBuilderState,
+  WizardStep,
+} from "@/types/anniversary-quiz.types";
 import {
   createDefaultQuestions,
   createCustomQuestion,
@@ -28,15 +34,33 @@ type PersonalFields = Pick<
 >;
 type ContactFields = Pick<AnniversaryOrderState, "phone" | "email">;
 
+const MAX_STEP: WizardStep = 7;
+
+const initialQuizBuilder: QuizBuilderState = {
+  currentQuestions: [],
+  answers: [],
+  questionsLoaded: false,
+  isLoadingQuestions: false,
+};
+
 export interface AnniversaryOrderStore extends AnniversaryOrderState {
-  currentStep: number;
+  // ── Wizard Navigation ──
+  currentStep: WizardStep;
   hasHydrated: boolean;
   setHasHydrated: (value: boolean) => void;
+
+  // ── Quiz Builder State (Matrix Randomization) ──
+  quizBuilder: QuizBuilderState;
+  setCurrentQuestions: (questions: QuestionBankItem[]) => void;
+  setQuizAnswer: (q_id: string, correct_idx: number) => void;
+  removeQuizAnswer: (q_id: string) => void;
+  clearQuizBuilder: () => void;
+  setIsLoadingQuestions: (loading: boolean) => void;
 
   // Step 1
   updateCouple: (data: Partial<CoupleFields>) => void;
 
-  // Step 2
+  // Step 2 (legacy - kept for compatibility)
   toggleQuestion: (id: string) => void;
   updateQuestion: (
     id: string,
@@ -45,24 +69,27 @@ export interface AnniversaryOrderStore extends AnniversaryOrderState {
   addCustomQuestion: () => void;
   removeQuestion: (id: string) => void;
 
-  // Step 3
+  // Step 3 (theme/music)
   setFloralTheme: (theme: FloralTheme) => void;
   setColorMood: (mood: ColorMood) => void;
   setCustomBgPhoto: (asset: UploadedAsset | null) => void;
   setCustomBackgroundMusic: (asset: UploadedAsset | null) => void;
 
-  // Step 4
+  // Step 4 (personal message)
   updatePersonalMessage: (data: Partial<PersonalFields>) => void;
   updateContact: (data: Partial<ContactFields>) => void;
 
   // Navigation
   nextStep: () => void;
   prevStep: () => void;
-  goToStep: (step: number) => void;
+  goToStep: (step: WizardStep) => void;
   reset: () => void;
 }
 
-const initial: AnniversaryOrderState & { currentStep: number } = {
+const initial: AnniversaryOrderState & {
+  currentStep: WizardStep;
+  quizBuilder: QuizBuilderState;
+} = {
   currentStep: 1,
   yourName: "",
   partnerName: "",
@@ -79,6 +106,7 @@ const initial: AnniversaryOrderState & { currentStep: number } = {
   customBackgroundMusic: null,
   phone: "",
   email: "",
+  quizBuilder: initialQuizBuilder,
 };
 
 export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
@@ -88,10 +116,48 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
       hasHydrated: false,
       setHasHydrated: (value) => set({ hasHydrated: value }),
 
+      // ── Quiz Builder Actions ──
+      setCurrentQuestions: (questions) =>
+        set((s) => ({
+          quizBuilder: {
+            ...s.quizBuilder,
+            currentQuestions: questions,
+            questionsLoaded: true,
+            isLoadingQuestions: false,
+          },
+        })),
+      setQuizAnswer: (q_id, correct_idx) =>
+        set((s) => {
+          const existing = s.quizBuilder.answers.findIndex(
+            (a) => a.q_id === q_id,
+          );
+          let answers: QuizConfigItem[];
+          if (existing >= 0) {
+            answers = s.quizBuilder.answers.map((a) =>
+              a.q_id === q_id ? { q_id, correct_idx } : a,
+            );
+          } else {
+            answers = [...s.quizBuilder.answers, { q_id, correct_idx }];
+          }
+          return { quizBuilder: { ...s.quizBuilder, answers } };
+        }),
+      removeQuizAnswer: (q_id) =>
+        set((s) => ({
+          quizBuilder: {
+            ...s.quizBuilder,
+            answers: s.quizBuilder.answers.filter((a) => a.q_id !== q_id),
+          },
+        })),
+      clearQuizBuilder: () => set({ quizBuilder: initialQuizBuilder }),
+      setIsLoadingQuestions: (loading) =>
+        set((s) => ({
+          quizBuilder: { ...s.quizBuilder, isLoadingQuestions: loading },
+        })),
+
       // Step 1
       updateCouple: (data) => set(data),
 
-      // Step 2
+      // Step 2 (legacy)
       toggleQuestion: (id) =>
         set((s) => ({
           questions: s.questions.map((q) =>
@@ -120,17 +186,24 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
       setCustomBackgroundMusic: (asset) =>
         set({ customBackgroundMusic: asset }),
 
-      // Step 4
+      // Step 4 (now Slide 6 in wizard)
       updatePersonalMessage: (data) => set(data),
       updateContact: (data) => set(data),
 
       // Navigation
       nextStep: () =>
-        set((s) => ({ currentStep: Math.min(s.currentStep + 1, 4) })),
+        set((s) => ({
+          currentStep: Math.min(
+            (s.currentStep as number) + 1,
+            MAX_STEP,
+          ) as WizardStep,
+        })),
       prevStep: () =>
-        set((s) => ({ currentStep: Math.max(s.currentStep - 1, 1) })),
+        set((s) => ({
+          currentStep: Math.max((s.currentStep as number) - 1, 1) as WizardStep,
+        })),
       goToStep: (step) => set({ currentStep: step }),
-      reset: () => set(initial),
+      reset: () => set({ ...initial, quizBuilder: initialQuizBuilder }),
     }),
     {
       name: "wedinviter-anniversary-order",
@@ -162,6 +235,12 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
         customBackgroundMusic: state.customBackgroundMusic,
         phone: state.phone,
         email: state.email,
+        quizBuilder: {
+          currentQuestions: state.quizBuilder.currentQuestions,
+          answers: state.quizBuilder.answers,
+          questionsLoaded: state.quizBuilder.questionsLoaded,
+          isLoadingQuestions: state.quizBuilder.isLoadingQuestions,
+        },
       }),
       skipHydration: true,
       onRehydrateStorage: () => (state, error) => {
