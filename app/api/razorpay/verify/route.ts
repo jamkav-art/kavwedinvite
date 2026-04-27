@@ -10,12 +10,14 @@ import type {
 } from "@/types/database.types";
 import type { OrderFormState } from "@/types/order.types";
 import type { AnniversaryOrderState } from "@/types/anniversary-order.types";
+import type { QuizConfigItem } from "@/types/anniversary-quiz.types";
 
 interface VerifyRequestBody {
   razorpay_order_id: string;
   razorpay_payment_id: string;
   razorpay_signature: string;
   orderData: OrderFormState | AnniversaryOrderState;
+  quizConfig?: QuizConfigItem[];
   productType?: string;
 }
 
@@ -212,7 +214,7 @@ async function handleAnniversaryVerify(
     | "razorpay_payment_id"
     | "razorpay_signature"
     | "orderData"
-  >,
+  > & { quizConfig?: QuizConfigItem[] },
 ) {
   const orderData = body.orderData as AnniversaryOrderState;
   const inviteId = buildInviteId(orderData.yourName, orderData.partnerName);
@@ -302,11 +304,58 @@ async function handleAnniversaryVerify(
     }
   }
 
+  // ── Create quiz_sessions record ──
+  // Build config from either quizConfig (from Quiz Matrix) or legacy questions
+  const quizConfig: QuizConfigItem[] =
+    body.quizConfig && body.quizConfig.length > 0
+      ? body.quizConfig
+      : orderData.questions
+          .filter((q) => q.enabled)
+          .map((q) => ({ q_id: q.id, correct_idx: q.correctAnswer }));
+
+  const { data: quizSession, error: quizError } = await supabase
+    .from("quiz_sessions")
+    .insert({
+      invite_id: createdOrder.invite_id,
+      couple_name_1: orderData.yourName,
+      couple_name_2: orderData.partnerName,
+      config: quizConfig,
+      couple_photo_url: orderData.couplePhoto?.url ?? null,
+      love_note: orderData.loveNote || null,
+      floral_theme: orderData.floralTheme,
+      color_mood: orderData.colorMood,
+      background_music:
+        orderData.customBackgroundMusic?.url ??
+        orderData.backgroundMusic ??
+        null,
+      payment_id: body.razorpay_payment_id,
+      paid: true,
+      expires_at: new Date(
+        Date.now() + 365 * 24 * 60 * 60 * 1000,
+      ).toISOString(), // 1 year
+    })
+    .select("id, invite_id")
+    .single();
+
+  if (quizError || !quizSession) {
+    console.error(
+      "[Anniversary verify] quiz_sessions insert error:",
+      quizError,
+    );
+    // Non-fatal — payment succeeded but quiz record missing; return the invite_id anyway
+    return NextResponse.json({
+      success: true,
+      inviteId: createdOrder.invite_id,
+      quizId: createdOrder.invite_id, // Use invite_id (slug) as quizId so URL resolves
+      quizUrl: `/quiz/${createdOrder.invite_id}`,
+    });
+  }
+
   return NextResponse.json({
     success: true,
     inviteId: createdOrder.invite_id,
-    quizId: createdOrder.id,
-    quizUrl: `/invite/${createdOrder.invite_id}`,
+    quizId: quizSession.invite_id, // Use invite_id (slug) so /quiz/[invite_id] resolves correctly
+    quizUrl: `/quiz/${quizSession.invite_id}`,
   });
 }
 

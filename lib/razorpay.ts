@@ -57,10 +57,18 @@ export function buildInviteId(coupleOne: string, coupleTwo: string): string {
 }
 
 function slugifyName(name: string): string {
-  return name
-    .toLowerCase()
+  // First, clean the name to alphanumeric + spaces
+  const cleaned = name
     .trim()
-    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/[^a-zA-Z0-9\s]/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  // Title-case: capitalize first letter of each word
+  const titled = cleaned.replace(/\b\w/g, (char) => char.toUpperCase());
+
+  // Convert spaces to hyphens and truncate
+  return titled
     .replace(/\s+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "")

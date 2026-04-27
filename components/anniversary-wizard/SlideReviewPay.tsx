@@ -136,23 +136,26 @@ export default function SlideReviewPay() {
           whileTap={{ scale: isLoading ? 1 : 0.98 }}
           onClick={() => {
             if (isLoading) return;
-            initializePayment({
-              yourName: store.yourName,
-              partnerName: store.partnerName,
-              anniversaryDate: store.anniversaryDate,
-              yearsTogether: store.yearsTogether,
-              couplePhoto: store.couplePhoto,
-              questions: store.questions,
-              floralTheme: store.floralTheme,
-              colorMood: store.colorMood,
-              customBgPhoto: store.customBgPhoto,
-              loveNote: store.loveNote,
-              voiceNote: store.voiceNote,
-              backgroundMusic: store.backgroundMusic,
-              customBackgroundMusic: store.customBackgroundMusic,
-              phone: store.phone,
-              email: store.email,
-            });
+            initializePayment(
+              {
+                yourName: store.yourName,
+                partnerName: store.partnerName,
+                anniversaryDate: store.anniversaryDate,
+                yearsTogether: store.yearsTogether,
+                couplePhoto: store.couplePhoto,
+                questions: store.questions,
+                floralTheme: store.floralTheme,
+                colorMood: store.colorMood,
+                customBgPhoto: store.customBgPhoto,
+                loveNote: store.loveNote,
+                voiceNote: store.voiceNote,
+                backgroundMusic: store.backgroundMusic,
+                customBackgroundMusic: store.customBackgroundMusic,
+                phone: store.phone,
+                email: store.email,
+              },
+              store.quizBuilder.answers,
+            );
           }}
         >
           {isLoading ? (

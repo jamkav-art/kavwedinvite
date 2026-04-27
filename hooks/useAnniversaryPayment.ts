@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 import type { AnniversaryOrderState } from "@/types/anniversary-order.types";
+import type { QuizConfigItem } from "@/types/anniversary-quiz.types";
 import { ANNIVERSARY_PRICE } from "@/lib/anniversary-constants";
 
 interface CreateResponse {
@@ -64,7 +65,7 @@ export function useAnniversaryPayment() {
   const [isLoading, setIsLoading] = useState(false);
 
   const initializePayment = useCallback(
-    async (orderData: AnniversaryOrderState) => {
+    async (orderData: AnniversaryOrderState, quizConfig?: QuizConfigItem[]) => {
       setIsLoading(true);
       try {
         if (!window.Razorpay) {
@@ -122,6 +123,7 @@ export function useAnniversaryPayment() {
                 body: JSON.stringify({
                   ...paymentResponse,
                   orderData,
+                  quizConfig,
                   productType: "anniversary-quiz",
                 }),
               });
