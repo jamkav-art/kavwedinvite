@@ -80,9 +80,14 @@ export default function ChallengePartnerCTA({
 
   return (
     <div className="text-center space-y-4">
-      <h3 className="font-serif text-lg text-[--color-charcoal]">
+      {/* Animated Gradient Heading with Zoom */}
+      <motion.h3
+        animate={{ scale: [1, 1.06, 1] }}
+        transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+        className="font-serif text-lg font-bold challenge-heading-grad"
+      >
         Challenge {coupleName2} 💕
-      </h3>
+      </motion.h3>
       <p className="text-sm text-gray-400">
         Think {coupleName2} knows {coupleName1} better? Create their challenge
         quiz and find out who scores higher!
@@ -95,37 +100,19 @@ export default function ChallengePartnerCTA({
       )}
 
       <div className="flex flex-col sm:flex-row gap-3">
-        {/* Challenge Button */}
-        <motion.button
-          whileTap={isCreating ? {} : { scale: 0.97 }}
-          onClick={handleChallengePartner}
-          disabled={isCreating}
-          className="flex-1 px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[--color-gold] to-[--color-rose] hover:opacity-90 transition-all shadow-md shadow-[--color-rose]/20 disabled:opacity-60"
+        {/* Challenge Button — Animated Gradient + Glowing Border + Links to Quiz Creation */}
+        <Link
+          href="/wed-anniversary-wish"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex-1"
         >
-          {isCreating ? (
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                className="w-4 h-4 animate-spin"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                />
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
-                />
-              </svg>
-              Creating...
-            </span>
-          ) : (
+          <motion.button
+            whileHover={{ scale: 1.03 }}
+            whileTap={{ scale: 0.97 }}
+            className="w-full px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[--color-gold] via-[--color-rose] to-[--color-magenta] bg-[length:200%_200%] btn-border-glow transition-all"
+            style={{ animation: "heading-grad-shift 3s ease infinite" }}
+          >
             <span className="flex items-center justify-center gap-2">
               <svg
                 className="w-4 h-4"
@@ -142,8 +129,8 @@ export default function ChallengePartnerCTA({
               </svg>
               Challenge {coupleName2}
             </span>
-          )}
-        </motion.button>
+          </motion.button>
+        </Link>
 
         {/* Copy Link Button */}
         <motion.button

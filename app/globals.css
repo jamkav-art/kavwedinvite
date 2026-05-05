@@ -1790,3 +1790,55 @@ body {
     transition: none;
   }
 }
+
+/* ── Challenge Heading Animated Gradient Text ── */
+@keyframes heading-grad-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+.challenge-heading-grad {
+  background: linear-gradient(
+    90deg,
+    #c9a962,
+    #e8638c,
+    #c0185f,
+    #a855f7,
+    #c9a962
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: heading-grad-shift 3s ease infinite;
+}
+
+/* ── Challenge Button Glowing Border ── */
+@keyframes btn-border-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 8px rgba(201, 169, 98, 0.4),
+      0 0 16px rgba(201, 169, 98, 0.15),
+      inset 0 0 0 2px rgba(201, 169, 98, 0.5);
+  }
+  33% {
+    box-shadow:
+      0 0 8px rgba(232, 99, 140, 0.4),
+      0 0 16px rgba(232, 99, 140, 0.15),
+      inset 0 0 0 2px rgba(232, 99, 140, 0.5);
+  }
+  66% {
+    box-shadow:
+      0 0 8px rgba(168, 85, 247, 0.4),
+      0 0 16px rgba(168, 85, 247, 0.15),
+      inset 0 0 0 2px rgba(168, 85, 247, 0.5);
+  }
+}
+.btn-border-glow {
+  animation: btn-border-glow 4s ease infinite;
+}
