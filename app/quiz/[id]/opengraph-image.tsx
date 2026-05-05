@@ -25,6 +25,7 @@ export default async function Image({ params }: Props) {
 
   const name1 = quiz?.couple_name_1 ?? "Someone";
   const name2 = quiz?.couple_name_2 ?? "Special";
+  const photoUrl = quiz?.couple_photo_url;
 
   return new ImageResponse(
     <div
@@ -35,74 +36,173 @@ export default async function Image({ params }: Props) {
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        background:
-          "linear-gradient(135deg, #FDF2F8 0%, #FEF3C7 50%, #FFF7ED 100%)",
+        background: photoUrl
+          ? "#000000"
+          : "linear-gradient(135deg, #FDF2F8 0%, #FEF3C7 50%, #FFF7ED 100%)",
         fontFamily: "Georgia, serif",
         position: "relative",
       }}
     >
-      {/* Decorative border */}
-      <div
-        style={{
-          position: "absolute",
-          inset: 24,
-          border: "2px solid #C9A962",
-          borderRadius: 12,
-          opacity: 0.4,
-        }}
-      />
-      <div
-        style={{
-          position: "absolute",
-          inset: 32,
-          border: "1px solid #C9A962",
-          borderRadius: 8,
-          opacity: 0.2,
-        }}
-      />
+      {photoUrl ? (
+        <>
+          {/* Photo as background */}
+          <img
+            src={photoUrl}
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+            }}
+          />
+          {/* Gradient overlay */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              background:
+                "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.3) 40%, rgba(0,0,0,0.1) 100%)",
+            }}
+          />
+          {/* Decorative gold border */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 16,
+              border: "3px solid rgba(201, 169, 98, 0.6)",
+              borderRadius: 16,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 24,
+              border: "1px solid rgba(201, 169, 98, 0.3)",
+              borderRadius: 10,
+            }}
+          />
+          {/* Content on top of photo */}
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              zIndex: 10,
+            }}
+          >
+            {/* Emoji */}
+            <div style={{ fontSize: 64, marginBottom: 16, opacity: 0.9 }}>
+              💫
+            </div>
+            {/* Headline */}
+            <p
+              style={{
+                fontSize: 18,
+                color: "#C9A962",
+                letterSpacing: "0.25em",
+                textTransform: "uppercase",
+                margin: "0 0 12px",
+                textShadow: "0 2px 8px rgba(0,0,0,0.3)",
+              }}
+            >
+              Soul-Sync Quiz
+            </p>
+            {/* Couple Names */}
+            <h1
+              style={{
+                fontSize: name1.length + name2.length > 20 ? 56 : 72,
+                color: "#FFFFFF",
+                fontWeight: 700,
+                margin: "0 0 16px",
+                textAlign: "center",
+                lineHeight: 1.1,
+                padding: "0 60px",
+                textShadow: "0 4px 16px rgba(0,0,0,0.4)",
+              }}
+            >
+              {name1} & {name2}
+            </h1>
+            {/* Tagline */}
+            <p
+              style={{
+                fontSize: 22,
+                color: "rgba(255,255,255,0.8)",
+                margin: 0,
+                letterSpacing: "0.05em",
+              }}
+            >
+              How well do you know them?
+            </p>
+          </div>
+        </>
+      ) : (
+        <>
+          {/* Decorative border */}
+          <div
+            style={{
+              position: "absolute",
+              inset: 24,
+              border: "2px solid #C9A962",
+              borderRadius: 12,
+              opacity: 0.4,
+            }}
+          />
+          <div
+            style={{
+              position: "absolute",
+              inset: 32,
+              border: "1px solid #C9A962",
+              borderRadius: 8,
+              opacity: 0.2,
+            }}
+          />
 
-      {/* Emoji */}
-      <div style={{ fontSize: 72, marginBottom: 20 }}>💫</div>
+          {/* Emoji */}
+          <div style={{ fontSize: 72, marginBottom: 20 }}>💫</div>
 
-      {/* Headline */}
-      <p
-        style={{
-          fontSize: 18,
-          color: "#C9A962",
-          letterSpacing: "0.25em",
-          textTransform: "uppercase",
-          margin: "0 0 12px",
-        }}
-      >
-        Soul-Sync Quiz
-      </p>
+          {/* Headline */}
+          <p
+            style={{
+              fontSize: 18,
+              color: "#C9A962",
+              letterSpacing: "0.25em",
+              textTransform: "uppercase",
+              margin: "0 0 12px",
+            }}
+          >
+            Soul-Sync Quiz
+          </p>
 
-      {/* Couple Names */}
-      <h1
-        style={{
-          fontSize: name1.length + name2.length > 20 ? 56 : 72,
-          color: "#1A0A00",
-          fontWeight: 600,
-          margin: "0 0 16px",
-          textAlign: "center",
-          lineHeight: 1.1,
-          padding: "0 60px",
-        }}
-      >
-        {name1} & {name2}
-      </h1>
+          {/* Couple Names */}
+          <h1
+            style={{
+              fontSize: name1.length + name2.length > 20 ? 56 : 72,
+              color: "#1A0A00",
+              fontWeight: 600,
+              margin: "0 0 16px",
+              textAlign: "center",
+              lineHeight: 1.1,
+              padding: "0 60px",
+            }}
+          >
+            {name1} & {name2}
+          </h1>
 
-      {/* Tagline */}
-      <p
-        style={{
-          fontSize: 22,
-          color: "#8B4513",
-          margin: 0,
-          letterSpacing: "0.05em",
-        }}
-      >
-        How well do you know them?
-      </p>
+          {/* Tagline */}
+          <p
+            style={{
+              fontSize: 22,
+              color: "#8B4513",
+              margin: 0,
+              letterSpacing: "0.05em",
+            }}
+          >
+            How well do you know them?
+          </p>
+        </>
+      )}
 
       {/* Bottom bar */}
       <div
@@ -113,7 +213,7 @@ export default async function Image({ params }: Props) {
           alignItems: "center",
           gap: 8,
           fontSize: 14,
-          color: "#C9A962",
+          color: photoUrl ? "rgba(255,255,255,0.6)" : "#C9A962",
           letterSpacing: "0.1em",
         }}
       >

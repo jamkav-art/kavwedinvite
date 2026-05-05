@@ -65,9 +65,11 @@ export function calculateSoulScore(
       score.total > 0 ? Math.round((score.correct / score.total) * 100) : 0;
   }
 
-  // Calculate overall soul percentage
-  const soul_percentage =
-    totalCount > 0 ? Math.round((totalCorrect / totalCount) * 100) : 0;
+  // Calculate overall soul percentage — Base 80% + 20% variable
+  const basePercentage = 80;
+  const variablePercentage =
+    totalCount > 0 ? Math.round((totalCorrect / totalCount) * 20) : 0;
+  const soul_percentage = Math.min(100, basePercentage + variablePercentage);
 
   // Determine tier
   const soul_tier = getScoreTier(soul_percentage);

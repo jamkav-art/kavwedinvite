@@ -113,21 +113,21 @@ export interface ScoreTierInfo {
 export const SCORE_TIERS: ScoreTierInfo[] = [
   {
     id: "beautiful-strangers",
-    range: [0, 40],
+    range: [80, 85],
     title: "The Beautiful Strangers",
     emoji: "🌟",
     description: "A beautiful mystery waiting to unfold",
   },
   {
     id: "twin-flames",
-    range: [41, 75],
+    range: [86, 90],
     title: "The Twin Flames",
     emoji: "🔥",
     description: "Two souls, one flame — growing brighter",
   },
   {
     id: "architects",
-    range: [76, 99],
+    range: [91, 99],
     title: "The Architects",
     emoji: "🏛️",
     description: "Built on understanding, brick by brick",

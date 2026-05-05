@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface ChallengePartnerCTAProps {
   coupleName1: string;
@@ -185,6 +186,36 @@ export default function ChallengePartnerCTA({
           )}
         </motion.button>
       </div>
+
+      {/* New: Challenge [coupleName1] button — create their own quiz */}
+      <Link
+        href="/wed-anniversary-wish"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="block"
+      >
+        <motion.button
+          whileTap={{ scale: 0.97 }}
+          className="w-full px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[--color-magenta] via-[--color-rose] to-[--color-gold] hover:opacity-90 transition-all shadow-md shadow-[--color-magenta]/20 bg-[length:200%_100%] animate-pulse"
+        >
+          <span className="flex items-center justify-center gap-2">
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 4v16m8-8H4"
+              />
+            </svg>
+            Challenge {coupleName1} 🔄
+          </span>
+        </motion.button>
+      </Link>
 
       {/* WhatsApp Share */}
       <motion.button

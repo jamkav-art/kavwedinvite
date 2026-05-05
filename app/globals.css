@@ -1216,6 +1216,306 @@ body {
   background-color: #ef4444;
 }
 
+/* ══════════════════════════════════════════════════════════════
+   ANNIVERSARY QUIZ MEGA UI ENHANCEMENTS
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Love Opening Animated Background ── */
+@keyframes love-opening-bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 50% 0%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  75% {
+    background-position: 50% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.love-opening-bg {
+  background: linear-gradient(
+    135deg,
+    #fff5f5 0%,
+    #f7e7ce 25%,
+    #e8638c 50%,
+    #d4a0e0 75%,
+    #fff5f5 100%
+  );
+  background-size: 400% 400%;
+  animation: love-opening-bg-shift 8s ease-in-out infinite;
+}
+
+/* ── Golden Petal Burst ── */
+@keyframes petal-burst {
+  0% {
+    transform: translate(0, 0) scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--drift-x, 100px), var(--drift-y, -150px)) scale(1)
+      rotate(var(--rotation, 360deg));
+    opacity: 0;
+  }
+}
+.petal-particle {
+  animation: petal-burst var(--fall-duration, 3s) ease-out forwards;
+}
+
+/* ── Love Opening Text Fade ── */
+@keyframes love-text-reveal {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.9);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+.love-text-reveal {
+  animation: love-text-reveal 0.8s ease-out forwards;
+}
+
+/* ── Love Emoji Zoom ── */
+@keyframes love-emoji-zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+}
+.love-emoji-zoom {
+  animation: love-emoji-zoom 2s ease-in-out infinite;
+}
+
+/* ── 3D Question Card Float ── */
+@keyframes card-float {
+  0%,
+  100% {
+    transform: perspective(800px) rotateX(1deg) translateY(0);
+  }
+  50% {
+    transform: perspective(800px) rotateX(-1deg) translateY(-10px);
+  }
+}
+.question-card-3d {
+  animation: card-float 4s ease-in-out infinite;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+/* ── Option Button Gradients ── */
+@keyframes option-shimmer-a {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+@keyframes option-shimmer-b {
+  0% {
+    background-position: 100% 50%;
+  }
+  50% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+@keyframes option-shimmer-c {
+  0% {
+    background-position: 0% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.option-btn-a {
+  background: linear-gradient(135deg, #c9a962, #e8638c, #c0185f);
+  background-size: 300% 300%;
+  animation: option-shimmer-a 4s ease infinite;
+  color: #fff;
+}
+.option-btn-b {
+  background: linear-gradient(135deg, #e8638c, #c0185f, #c9a962);
+  background-size: 300% 300%;
+  animation: option-shimmer-b 5s ease infinite;
+  color: #fff;
+}
+.option-btn-c {
+  background: linear-gradient(135deg, #c0185f, #c9a962, #e8638c);
+  background-size: 300% 300%;
+  animation: option-shimmer-c 4.5s ease infinite;
+  color: #fff;
+}
+
+/* ── Animated Quiz Background ── */
+@keyframes quiz-bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  25% {
+    background-position: 100% 0%;
+  }
+  50% {
+    background-position: 100% 100%;
+  }
+  75% {
+    background-position: 0% 100%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.quiz-bg-animated {
+  background: linear-gradient(
+    135deg,
+    #fff5f5 0%,
+    #fef3c7 25%,
+    #fce7f3 50%,
+    #ede9fe 75%,
+    #fff5f5 100%
+  );
+  background-size: 400% 400%;
+  animation: quiz-bg-shift 12s ease-in-out infinite;
+}
+
+/* ── Floating Heart/Sparkle Particles ── */
+@keyframes float-particle {
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.3;
+  }
+  80% {
+    opacity: 0.3;
+  }
+  100% {
+    transform: translateY(-120px) rotate(180deg) scale(0.5);
+    opacity: 0;
+  }
+}
+.float-particle {
+  animation: float-particle var(--float-duration, 6s) ease-in-out infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+
+/* ── Score Circle Multi-Color Gradient ── */
+.score-ring-gradient {
+  --ring-gradient: conic-gradient(
+    #c9a962 0deg,
+    #e8638c 120deg,
+    #c0185f 240deg,
+    #a855f7 300deg,
+    #c9a962 360deg
+  );
+}
+
+/* ── Certificate Multi-Color Category Gradients ── */
+.cert-bar-nostalgia {
+  background: linear-gradient(90deg, #c9a962, #f7b38a);
+}
+.cert-bar-playful {
+  background: linear-gradient(90deg, #e8638c, #c0185f);
+}
+.cert-bar-soul {
+  background: linear-gradient(90deg, #a855f7, #e8638c);
+}
+.cert-bar-discovery {
+  background: linear-gradient(90deg, #14b8a6, #c9a962);
+}
+.cert-bar-future {
+  background: linear-gradient(90deg, #c9a962, #d4756c);
+}
+
+/* ── University Certificate Styles ── */
+@keyframes certificate-border-shimmer {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+.certificate-parchment {
+  background: linear-gradient(
+    135deg,
+    #fdf6e3 0%,
+    #fef9ef 30%,
+    #f5e6c8 70%,
+    #fdf6e3 100%
+  );
+  position: relative;
+}
+.certificate-gold-border {
+  border: 3px solid transparent;
+  border-image: linear-gradient(
+      135deg,
+      #c9a962,
+      #ffd700,
+      #c9a962,
+      #a8720a,
+      #c9a962
+    )
+    1;
+  border-radius: 16px;
+}
+.certificate-corner {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border-color: #c9a962;
+  border-style: solid;
+}
+.certificate-corner-tl {
+  top: 12px;
+  left: 12px;
+  border-width: 3px 0 0 3px;
+  border-radius: 8px 0 0 0;
+}
+.certificate-corner-tr {
+  top: 12px;
+  right: 12px;
+  border-width: 3px 3px 0 0;
+  border-radius: 0 8px 0 0;
+}
+.certificate-corner-bl {
+  bottom: 12px;
+  left: 12px;
+  border-width: 0 0 3px 3px;
+  border-radius: 0 0 0 8px;
+}
+.certificate-corner-br {
+  bottom: 12px;
+  right: 12px;
+  border-width: 0 3px 3px 0;
+  border-radius: 0 0 8px 0;
+}
+
 /* ── Reduced motion fallback ── */
 
 @media (prefers-reduced-motion: reduce) {
