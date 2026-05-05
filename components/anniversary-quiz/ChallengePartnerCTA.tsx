@@ -18,7 +18,6 @@ export default function ChallengePartnerCTA({
   inviteId,
 }: ChallengePartnerCTAProps) {
   const [copied, setCopied] = useState(false);
-  const [isCreating, setIsCreating] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const quizUrl = `${window.location.origin}/quiz/${inviteId}`;
 
@@ -36,38 +35,6 @@ export default function ChallengePartnerCTA({
       document.body.removeChild(textarea);
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleChallengePartner = async () => {
-    if (isCreating) return;
-    setIsCreating(true);
-    setError(null);
-
-    try {
-      const res = await fetch("/api/quiz/challenge", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          original_quiz_id: quizId,
-          taker_name: coupleName2,
-        }),
-      });
-
-      const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.error ?? "Failed to create challenge");
-      }
-
-      // Navigate to the new challenge URL
-      window.open(data.url, "_blank", "noopener,noreferrer");
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Something went wrong. Try again.",
-      );
-    } finally {
-      setIsCreating(false);
     }
   };
 
@@ -100,34 +67,90 @@ export default function ChallengePartnerCTA({
       )}
 
       <div className="flex flex-col sm:flex-row gap-3">
-        {/* Challenge Button — Animated Gradient + Glowing Border + Links to Quiz Creation */}
+        {/* ═══ SINGLE CHALLENGE BUTTON ═══ */}
+        {/* Animated gradient background + floating petals inside + links to quiz creation */}
         <Link
           href="/wed-anniversary-wish"
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-1"
+          className="flex-[2]"
         >
           <motion.button
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
-            className="w-full px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[--color-gold] via-[--color-rose] to-[--color-magenta] bg-[length:200%_200%] btn-border-glow transition-all"
-            style={{ animation: "heading-grad-shift 3s ease infinite" }}
+            className="challenge-btn-main relative w-full px-5 py-4 rounded-xl font-bold text-sm text-white overflow-hidden"
           >
-            <span className="flex items-center justify-center gap-2">
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
+            {/* ── Animated Gradient Background ── */}
+            <span className="absolute inset-0 bg-gradient-to-r from-[--color-magenta] via-[--color-rose] to-[--color-gold] bg-[length:200%_200%] animate-grad-shift" />
+
+            {/* ── Floating Petals ── */}
+            <svg
+              className="challenge-petal absolute top-0 left-[12%] w-3 h-3"
+              viewBox="0 0 20 20"
+              fill="#ffd700"
+              style={{ animationDelay: "0s", opacity: 0.5 }}
+            >
+              <path d="M10 0c0 0 2 6 2 10s-2 10-2 10-2-6-2-10 2-10 2-10z" />
+            </svg>
+            <svg
+              className="challenge-petal absolute top-0 left-[35%] w-2.5 h-2.5"
+              viewBox="0 0 20 20"
+              fill="#fff"
+              style={{ animationDelay: "0.8s", opacity: 0.4 }}
+            >
+              <path d="M10 0c0 0 2 6 2 10s-2 10-2 10-2-6-2-10 2-10 2-10z" />
+            </svg>
+            <svg
+              className="challenge-petal absolute top-0 left-[60%] w-3.5 h-3.5"
+              viewBox="0 0 20 20"
+              fill="#ffb6c1"
+              style={{ animationDelay: "1.6s", opacity: 0.45 }}
+            >
+              <path d="M10 0c0 0 2 6 2 10s-2 10-2 10-2-6-2-10 2-10 2-10z" />
+            </svg>
+            <svg
+              className="challenge-petal absolute top-0 left-[82%] w-2 h-2"
+              viewBox="0 0 20 20"
+              fill="#ffd700"
+              style={{ animationDelay: "2.4s", opacity: 0.5 }}
+            >
+              <path d="M10 0c0 0 2 6 2 10s-2 10-2 10-2-6-2-10 2-10 2-10z" />
+            </svg>
+
+            {/* ── Floating Flowers ── */}
+            <svg
+              className="challenge-flower absolute left-[5%] w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              strokeWidth="1.5"
+              style={{ animationDelay: "0.4s", opacity: 0.3 }}
+            >
+              <circle cx="12" cy="8" r="3" fill="#ffb6c1" stroke="none" />
+              <circle cx="8" cy="14" r="3" fill="#ffd700" stroke="none" />
+              <circle cx="16" cy="14" r="3" fill="#ffb6c1" stroke="none" />
+              <circle cx="12" cy="12" r="2" fill="#fff" stroke="none" />
+            </svg>
+            <svg
+              className="challenge-flower absolute right-[8%] w-4 h-4"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#fff"
+              strokeWidth="1.5"
+              style={{ animationDelay: "1.8s", opacity: 0.25 }}
+            >
+              <circle cx="12" cy="8" r="3" fill="#ffd700" stroke="none" />
+              <circle cx="8" cy="14" r="3" fill="#ffb6c1" stroke="none" />
+              <circle cx="16" cy="14" r="3" fill="#ffd700" stroke="none" />
+              <circle cx="12" cy="12" r="2" fill="#fff" stroke="none" />
+            </svg>
+
+            {/* ── Button Text ── */}
+            <span className="relative z-10 flex items-center justify-center gap-2">
+              <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
               </svg>
-              Challenge {coupleName2}
+              Challenge your {coupleName1}
             </span>
           </motion.button>
         </Link>
@@ -136,7 +159,7 @@ export default function ChallengePartnerCTA({
         <motion.button
           whileTap={{ scale: 0.97 }}
           onClick={handleCopyLink}
-          className="flex-1 px-5 py-3 rounded-xl border-2 border-[--color-gold]/30 bg-[--color-gold]/5 text-sm font-semibold text-[--color-charcoal] hover:bg-[--color-gold]/10 hover:border-[--color-gold]/50 transition-all"
+          className="flex-1 px-4 py-3 rounded-xl border-2 border-[--color-gold]/30 bg-[--color-gold]/5 text-sm font-semibold text-[--color-charcoal] hover:bg-[--color-gold]/10 hover:border-[--color-gold]/50 transition-all"
         >
           {copied ? (
             <span className="flex items-center justify-center gap-2">
@@ -173,72 +196,6 @@ export default function ChallengePartnerCTA({
           )}
         </motion.button>
       </div>
-
-      {/* Enhanced: Challenge your [coupleName1] button with SVG effects */}
-      <Link
-        href="/wed-anniversary-wish"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block relative"
-      >
-        <motion.button
-          initial={{ scale: 1 }}
-          whileHover={{ scale: 1.03 }}
-          whileTap={{ scale: 0.97 }}
-          className="w-full px-6 py-4 rounded-xl font-bold text-base text-white bg-gradient-to-r from-[--color-magenta] via-[--color-rose] to-[--color-gold] bg-[length:200%_200%] challenge-btn-glow relative overflow-visible"
-          style={{
-            backgroundSize: "200% 200%",
-            animation: "grad-shift 3s ease infinite",
-          }}
-        >
-          {/* SVG Sparkle top-left */}
-          <svg
-            className="absolute -top-1.5 -left-1.5 w-5 h-5 challenge-sparkle"
-            viewBox="0 0 20 20"
-            fill="none"
-            style={{ animationDelay: "0s" }}
-          >
-            <path
-              d="M10 0l1.5 5.5L17 7l-5.5 1.5L10 14l-1.5-5.5L3 7l5.5-1.5L10 0z"
-              fill="#ffd700"
-            />
-          </svg>
-
-          {/* SVG Sparkle top-right */}
-          <svg
-            className="absolute -top-1.5 -right-1.5 w-4 h-4 challenge-sparkle"
-            viewBox="0 0 20 20"
-            fill="none"
-            style={{ animationDelay: "0.5s" }}
-          >
-            <path
-              d="M10 0l1.5 5.5L17 7l-5.5 1.5L10 14l-1.5-5.5L3 7l5.5-1.5L10 0z"
-              fill="#e8638c"
-            />
-          </svg>
-
-          {/* SVG Heart bottom-right */}
-          <svg
-            className="absolute -bottom-1 -right-1 w-5 h-5 challenge-sparkle"
-            viewBox="0 0 24 24"
-            fill="#e8638c"
-            style={{ animationDelay: "1s" }}
-          >
-            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-          </svg>
-
-          <span className="flex items-center justify-center gap-3">
-            {/* Double heart icon */}
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-            <span>Challenge your {coupleName1} 🔄</span>
-            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-            </svg>
-          </span>
-        </motion.button>
-      </Link>
 
       {/* WhatsApp Share */}
       <motion.button
