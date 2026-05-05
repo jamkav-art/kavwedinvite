@@ -23,10 +23,13 @@ export default function UniversityCertificate({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 1.3, duration: 0.7, ease: "easeOut" }}
-      className="relative mt-6"
+      className="relative mt-6 w-full max-w-sm mx-auto"
     >
-      {/* Certificate Card */}
-      <div className="relative bg-gradient-to-br from-[#fdf6e3] via-[#fef9ef] to-[#f5e6c8] rounded-2xl border-2 border-[#c9a962]/40 shadow-2xl overflow-hidden">
+      {/* Certificate Card – A4 Portrait Aspect Ratio */}
+      <div
+        className="relative bg-gradient-to-br from-[#fdf6e3] via-[#fef9ef] to-[#f5e6c8] rounded-2xl border-2 border-[#c9a962]/40 shadow-2xl overflow-hidden"
+        style={{ aspectRatio: "210 / 297" }}
+      >
         {/* Gold corner ornaments */}
         <div className="certificate-corner certificate-corner-tl" />
         <div className="certificate-corner certificate-corner-tr" />
@@ -34,32 +37,32 @@ export default function UniversityCertificate({
         <div className="certificate-corner certificate-corner-br" />
 
         {/* Inner decorative border */}
-        <div className="m-[18px] border border-[#c9a962]/20 rounded-xl p-6 sm:p-8">
+        <div className="m-[14px] border border-[#c9a962]/20 rounded-xl p-4 sm:p-6 flex flex-col justify-between h-[calc(100%-28px)]">
           {/* Header */}
-          <div className="text-center mb-6">
+          <div className="text-center mb-4">
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ delay: 1.5, type: "spring", stiffness: 100 }}
-              className="text-3xl mb-2"
+              className="text-2xl mb-1"
             >
               🎓✨💫
             </motion.div>
-            <h3 className="font-serif text-xl sm:text-2xl text-[--color-gold] font-bold tracking-wide">
+            <h3 className="font-serif text-lg sm:text-xl text-[--color-gold] font-bold tracking-wide">
               SOUL-SYNC CERTIFICATE
             </h3>
-            <p className="text-xs text-[#a8720a] mt-1 font-medium tracking-[0.15em] uppercase">
+            <p className="text-[10px] text-[#a8720a] mt-1 font-medium tracking-[0.15em] uppercase">
               University of Souls
             </p>
-            <p className="text-[10px] text-[#c9a962] mt-0.5">
+            <p className="text-[9px] text-[#c9a962] mt-0.5">
               wedinviter.wasleen.com
             </p>
           </div>
 
           {/* Divider */}
-          <div className="flex items-center gap-3 mb-5">
+          <div className="flex items-center gap-2 mb-4">
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a962]/40 to-transparent" />
-            <span className="text-xs text-[#c9a962] italic font-serif">
+            <span className="text-[10px] text-[#c9a962] italic font-serif">
               Certificate Presented To
             </span>
             <div className="flex-1 h-px bg-gradient-to-r from-transparent via-[#c9a962]/40 to-transparent" />
@@ -70,11 +73,13 @@ export default function UniversityCertificate({
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.7 }}
-            className="text-center mb-5"
+            className="text-center mb-3"
           >
-            <p className="font-serif text-xl sm:text-2xl text-[--color-charcoal] font-bold">
+            <p className="font-serif text-lg sm:text-xl text-[--color-charcoal] font-bold">
               {coupleName1}{" "}
-              <span className="text-[--color-rose] inline-block mx-1">❤️</span>{" "}
+              <span className="text-[--color-rose] inline-block mx-0.5">
+                ❤️
+              </span>{" "}
               {coupleName2}
             </p>
           </motion.div>
@@ -84,33 +89,18 @@ export default function UniversityCertificate({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1.9 }}
-            className="text-center mb-5"
+            className="text-center mb-3 flex-1 flex flex-col justify-center"
           >
-            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed italic font-serif px-2">
+            <p className="text-[10px] sm:text-xs text-gray-600 leading-relaxed italic font-serif px-1">
               For the successful completion of the sacred Soul-Sync Quiz — a
               journey of love, laughter, midnight snacks, inside jokes, and
               proving once again that you really{" "}
               <span className="font-semibold not-italic">do</span> know what's
               in their heart (or at least you're getting warmer).
             </p>
-            <p className="text-xs sm:text-sm text-gray-500 leading-relaxed italic font-serif mt-3 px-2">
+            <p className="text-[10px] sm:text-xs text-gray-500 leading-relaxed italic font-serif mt-2 px-1">
               May your love continue to grow, your arguments stay silly, and
               your partner never finds out you guessed half of these answers.
-            </p>
-          </motion.div>
-
-          {/* Quote */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.1 }}
-            className="text-center mb-6"
-          >
-            <div className="w-12 h-px bg-[#c9a962]/30 mx-auto mb-3" />
-            <p className="text-xs text-gray-500 italic font-serif px-4 leading-relaxed">
-              &ldquo;Love is not about how many days, months, or years you've
-              been together. It's about how much you love each other every
-              single day.&rdquo;
             </p>
           </motion.div>
 

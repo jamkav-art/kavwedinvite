@@ -187,32 +187,68 @@ export default function ChallengePartnerCTA({
         </motion.button>
       </div>
 
-      {/* New: Challenge [coupleName1] button — create their own quiz */}
+      {/* Enhanced: Challenge your [coupleName1] button with SVG effects */}
       <Link
         href="/wed-anniversary-wish"
         target="_blank"
         rel="noopener noreferrer"
-        className="block"
+        className="block relative"
       >
         <motion.button
+          initial={{ scale: 1 }}
+          whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="w-full px-5 py-3 rounded-xl font-semibold text-sm text-white bg-gradient-to-r from-[--color-magenta] via-[--color-rose] to-[--color-gold] hover:opacity-90 transition-all shadow-md shadow-[--color-magenta]/20 bg-[length:200%_100%] animate-pulse"
+          className="w-full px-6 py-4 rounded-xl font-bold text-base text-white bg-gradient-to-r from-[--color-magenta] via-[--color-rose] to-[--color-gold] bg-[length:200%_200%] challenge-btn-glow relative overflow-visible"
+          style={{
+            backgroundSize: "200% 200%",
+            animation: "grad-shift 3s ease infinite",
+          }}
         >
-          <span className="flex items-center justify-center gap-2">
-            <svg
-              className="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4v16m8-8H4"
-              />
+          {/* SVG Sparkle top-left */}
+          <svg
+            className="absolute -top-1.5 -left-1.5 w-5 h-5 challenge-sparkle"
+            viewBox="0 0 20 20"
+            fill="none"
+            style={{ animationDelay: "0s" }}
+          >
+            <path
+              d="M10 0l1.5 5.5L17 7l-5.5 1.5L10 14l-1.5-5.5L3 7l5.5-1.5L10 0z"
+              fill="#ffd700"
+            />
+          </svg>
+
+          {/* SVG Sparkle top-right */}
+          <svg
+            className="absolute -top-1.5 -right-1.5 w-4 h-4 challenge-sparkle"
+            viewBox="0 0 20 20"
+            fill="none"
+            style={{ animationDelay: "0.5s" }}
+          >
+            <path
+              d="M10 0l1.5 5.5L17 7l-5.5 1.5L10 14l-1.5-5.5L3 7l5.5-1.5L10 0z"
+              fill="#e8638c"
+            />
+          </svg>
+
+          {/* SVG Heart bottom-right */}
+          <svg
+            className="absolute -bottom-1 -right-1 w-5 h-5 challenge-sparkle"
+            viewBox="0 0 24 24"
+            fill="#e8638c"
+            style={{ animationDelay: "1s" }}
+          >
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+
+          <span className="flex items-center justify-center gap-3">
+            {/* Double heart icon */}
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
             </svg>
-            Challenge {coupleName1} 🔄
+            <span>Challenge your {coupleName1} 🔄</span>
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
           </span>
         </motion.button>
       </Link>

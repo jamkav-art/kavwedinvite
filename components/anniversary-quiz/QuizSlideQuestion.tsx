@@ -35,6 +35,16 @@ const optionVariants = {
 const OPTION_CLASSES = ["option-btn-a", "option-btn-b", "option-btn-c"];
 const OPTION_LETTERS = ["A", "B", "C"];
 
+const CATEGORY_BADGE_CLASS: Record<QuestionCategory, string> = {
+  nostalgia: "badge-nostalgia",
+  playful: "badge-playful",
+  soul: "badge-soul",
+  discovery: "badge-discovery",
+  future: "badge-future",
+};
+
+const LETTER_CLASSES = ["letter-a", "letter-b", "letter-c"];
+
 export default function QuizSlideQuestion({
   question,
   questionIndex,
@@ -45,6 +55,7 @@ export default function QuizSlideQuestion({
   const category = question.category as QuestionCategory;
   const emoji = CATEGORY_EMOJI[category] ?? "❓";
   const label = CATEGORY_LABEL[category] ?? category;
+  const badgeClass = CATEGORY_BADGE_CLASS[category] ?? "";
 
   // Determine if selected answer was correct or wrong
   // This would need the correct_idx from somewhere - we can pass it or infer
@@ -69,21 +80,21 @@ export default function QuizSlideQuestion({
         Question {questionIndex + 1} of {totalQuestions}
       </motion.div>
 
-      {/* Category Badge — Glassmorphism with animation */}
+      {/* Category Badge — Animated Gradient */}
       <motion.div
         initial={{ scale: 0, rotate: -10 }}
         animate={{ scale: 1, rotate: 0 }}
         transition={{ type: "spring", stiffness: 200, delay: 0.1 }}
-        className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/70 backdrop-blur-md border border-white/50 shadow-lg shadow-[--color-rose]/5 mb-6"
+        className={`inline-flex items-center gap-2 px-5 py-2 rounded-full border shadow-lg mb-6 ${badgeClass || "bg-white/70 backdrop-blur-md border-white/50 shadow-[--color-rose]/5"}`}
       >
         <motion.span
           animate={{ scale: [1, 1.2, 1] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="text-lg"
+          className="text-lg badge-emoji"
         >
           {emoji}
         </motion.span>
-        <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+        <span className="text-xs font-semibold uppercase tracking-wider">
           {label}
         </span>
       </motion.div>
@@ -131,7 +142,7 @@ export default function QuizSlideQuestion({
                     ? `${optionClass} shadow-lg shadow-[--color-rose]/20 scale-[1.02] ring-2 ring-white/30`
                     : isDisabled
                       ? "border border-gray-200 bg-gray-100/50 text-gray-300 cursor-not-allowed backdrop-blur-sm"
-                      : "bg-white/70 backdrop-blur-md border border-white/50 hover:scale-[1.02] hover:shadow-lg hover:shadow-[--color-gold]/10 active:scale-[0.98] cursor-pointer glass-card"
+                      : "bg-white/70 backdrop-blur-md border border-white/50 hover:scale-[1.02] hover:shadow-lg hover:shadow-[--color-gold]/10 active:scale-[0.98] cursor-pointer glass-card option-border-btn"
                 }`}
                 whileTap={selectedOption ? {} : { scale: 0.97 }}
               >
@@ -141,7 +152,7 @@ export default function QuizSlideQuestion({
                     className={`w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold shrink-0 ${
                       isSelected
                         ? "bg-white/30 text-white"
-                        : "bg-white/80 text-gray-500 border border-gray-200"
+                        : `${LETTER_CLASSES[index]} bg-white/80 text-gray-500 border border-gray-200`
                     }`}
                   >
                     {OPTION_LETTERS[index]}
