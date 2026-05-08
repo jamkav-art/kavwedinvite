@@ -4,6 +4,7 @@ import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
 import { useAnniversaryPayment } from "@/hooks/useAnniversaryPayment";
+import { ANNIVERSARY_PRICE_DISPLAY } from "@/lib/anniversary-constants";
 
 export default function SlideReviewPay() {
   const store = useAnniversaryOrderStore();
@@ -129,7 +130,7 @@ export default function SlideReviewPay() {
       >
         <div className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-white/5 border border-[#D4AF37]/30">
           <span className="text-2xl font-bold font-serif text-[#D4AF37]">
-            ₹399
+            {ANNIVERSARY_PRICE_DISPLAY}
           </span>
           <span className="text-sm text-white/40">one-time</span>
         </div>

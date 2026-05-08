@@ -8,7 +8,7 @@ import FinalCtaSection from "@/components/anniversary/FinalCtaSection";
 export const metadata: Metadata = {
   title: "Anniversary Quiz — Test How Well Your Partner Knows You | WedInviter",
   description:
-    "Create a personalized anniversary quiz for your partner in just 5 minutes. A magical, interactive memory with Love Level scores. ₹399 one-time.",
+    "Create a personalized anniversary quiz for your partner in just 5 minutes. A magical, interactive memory with Love Level scores. ₹199 one-time.",
   openGraph: {
     title: "Celebrate Your Love with a Personalized Anniversary Quiz",
     description:
@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Anniversary Quiz — WedInviter",
     description:
-      "Create a personalized anniversary quiz. ₹399 one-time. Surprise your partner!",
+      "Create a personalized anniversary quiz. ₹199 one-time. Surprise your partner!",
     images: ["/og-anniversary.png"],
   },
   robots: {

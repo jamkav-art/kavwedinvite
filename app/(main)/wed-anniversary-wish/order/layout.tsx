@@ -9,7 +9,7 @@ import { APP_URL } from "@/lib/constants";
 export const metadata: Metadata = {
   title: "Create Your Love Story Quiz | WedInviter",
   description:
-    "Build a beautiful anniversary quiz for your partner in minutes. Pick questions, select correct answers, and surprise them with a Soul-Sync Certificate. ₹399 one-time.",
+    "Build a beautiful anniversary quiz for your partner in minutes. Pick questions, select correct answers, and surprise them with a Soul-Sync Certificate. ₹199 one-time.",
   openGraph: {
     title: "Create Your Love Story Quiz — WedInviter",
     description:
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Create Your Love Story Quiz — WedInviter",
     description:
-      "Build a beautiful anniversary quiz for your partner. ₹399 one-time. Soul-Sync Certificate included.",
+      "Build a beautiful anniversary quiz for your partner. ₹199 one-time. Soul-Sync Certificate included.",
     images: ["/og-anniversary.png"],
   },
   robots: {

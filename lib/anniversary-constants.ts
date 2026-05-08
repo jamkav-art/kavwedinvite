@@ -1,5 +1,5 @@
-export const ANNIVERSARY_PRICE = 399;
-export const ANNIVERSARY_PRICE_DISPLAY = "₹399";
+export const ANNIVERSARY_PRICE = 199;
+export const ANNIVERSARY_PRICE_DISPLAY = "₹199";
 export const ANNIVERSARY_ROUTE = "/wed-anniversary-wish";
 export const ANNIVERSARY_ORDER_ROUTE = "/wed-anniversary-wish/order";
 
@@ -64,7 +64,7 @@ export const HOW_IT_WORKS_STEPS = [
     step: "02",
     title: "Preview & Publish",
     description:
-      "See exactly how it looks. Pay a simple ₹399 one-time fee to unlock your unique quiz link.",
+      "See exactly how it looks. Pay a simple ₹199 one-time fee to unlock your unique quiz link.",
   },
   {
     step: "03",

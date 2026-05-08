@@ -4,6 +4,7 @@ import { getRazorpayInstance } from "@/lib/razorpay";
 interface CreateOrderRequest {
   amount: number;
   currency: string;
+  productType?: string;
 }
 
 interface RazorpayOrderResult {
@@ -18,9 +19,17 @@ export async function POST(request: Request) {
     const amount = Number(body.amount);
     const currency = body.currency?.toUpperCase();
 
-    if (!Number.isFinite(amount) || amount !== 399) {
+    const isValidWedding = amount === 399;
+    const isValidAnniversary =
+      body.productType === "anniversary-quiz" && amount === 199;
+
+    if (!Number.isFinite(amount) || (!isValidWedding && !isValidAnniversary)) {
       return NextResponse.json(
-        { success: false, error: "Invalid amount. Expected 399 INR." },
+        {
+          success: false,
+          error:
+            "Invalid amount. Expected 199 (anniversary quiz) or 399 (wedding invite).",
+        },
         { status: 400 },
       );
     }
