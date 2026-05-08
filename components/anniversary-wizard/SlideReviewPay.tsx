@@ -25,7 +25,13 @@ export default function SlideReviewPay() {
     return Math.max(0, years);
   }, [store.anniversaryDate]);
 
-  const questionCount = store.quizBuilder.answers.length;
+  // Detect quiz mode: random (via quizBuilder) or custom (via custom questions in store)
+  const randomQuestionCount = store.quizBuilder.answers.length;
+  const customQuestionsCount = store.questions.filter(
+    (q) => q.isCustom && q.text.trim().length > 0,
+  ).length;
+  const questionCount =
+    randomQuestionCount > 0 ? randomQuestionCount : customQuestionsCount;
 
   return (
     <motion.div

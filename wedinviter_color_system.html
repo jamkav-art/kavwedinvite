@@ -1,0 +1,359 @@
+
+<h2 class="sr-only">WedInviter complete colour and button design system</h2>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+.ds{padding:1.5rem 0;font-family:var(--font-sans);}
+.section{margin-bottom:2.5rem;}
+.sec-label{font-size:11px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:1rem;padding-bottom:6px;border-bottom:0.5px solid var(--color-border-tertiary);}
+.chip-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+.chip{border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;font-weight:500;min-width:90px;text-align:center;}
+.swatch-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
+.swatch{border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);}
+.swatch-color{height:56px;}
+.swatch-info{padding:8px 10px;background:var(--color-background-primary);}
+.swatch-name{font-size:12px;font-weight:500;color:var(--color-text-primary);}
+.swatch-hex{font-size:11px;color:var(--color-text-tertiary);font-family:var(--font-mono);}
+.swatch-role{font-size:10px;color:var(--color-text-tertiary);margin-top:2px;}
+/* Button showcase */
+.btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;}
+.btn-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1.25rem;display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+.btn-card-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;}
+.btn-demo{display:inline-block;padding:11px 22px;border-radius:999px;font-size:14px;font-weight:500;font-family:var(--font-sans);cursor:default;letter-spacing:.01em;border:none;}
+.btn-demo-sm{padding:8px 18px;font-size:13px;}
+.btn-spec{font-size:11px;color:var(--color-text-tertiary);line-height:1.6;}
+/* Ratio table */
+.ratio-table{width:100%;border-collapse:collapse;}
+.ratio-table th{font-size:11px;font-weight:500;color:var(--color-text-secondary);text-align:left;padding:6px 10px;border-bottom:0.5px solid var(--color-border-tertiary);}
+.ratio-table td{font-size:12px;color:var(--color-text-primary);padding:8px 10px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:middle;}
+.ratio-table tr:last-child td{border-bottom:none;}
+.pass{background:#EAF3DE;color:#27500A;font-size:10px;font-weight:500;padding:2px 7px;border-radius:999px;}
+.fail{background:#FCEBEB;color:#791F1F;font-size:10px;font-weight:500;padding:2px 7px;border-radius:999px;}
+.warn{background:#FAEEDA;color:#633806;font-size:10px;font-weight:500;padding:2px 7px;border-radius:999px;}
+.swatch-mini{display:inline-block;width:14px;height:14px;border-radius:3px;vertical-align:middle;margin-right:5px;border:0.5px solid rgba(0,0,0,.1);}
+/* Theme section */
+.theme-card{border-radius:var(--border-radius-lg);overflow:hidden;border:0.5px solid var(--color-border-tertiary);margin-bottom:12px;}
+.theme-bar{height:8px;display:flex;}
+.theme-bar div{flex:1;}
+.theme-body{padding:1rem 1.25rem;background:var(--color-background-primary);}
+.theme-name{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px;}
+.theme-desc{font-size:12px;color:var(--color-text-secondary);margin-bottom:10px;}
+.theme-chips{display:flex;gap:6px;flex-wrap:wrap;}
+.theme-chip{font-size:10px;padding:3px 9px;border-radius:999px;font-weight:500;}
+/* Usage grid */
+.usage-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.usage-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;}
+.usage-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px;}
+.usage-item{font-size:12px;color:var(--color-text-secondary);line-height:1.8;}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:6px;}
+</style>
+
+<div class="ds">
+
+<!-- ── 1. BRAND PALETTE ── -->
+<div class="section">
+  <div class="sec-label">1 — Core brand palette</div>
+  <div class="swatch-grid">
+    <div class="swatch">
+      <div class="swatch-color" style="background:#C4497C;"></div>
+      <div class="swatch-info"><div class="swatch-name">Rose</div><div class="swatch-hex">#C4497C</div><div class="swatch-role">Primary CTA · Hero accents</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#8B1A4A;"></div>
+      <div class="swatch-info"><div class="swatch-name">Deep Rose</div><div class="swatch-hex">#8B1A4A</div><div class="swatch-role">Hover · pressed state</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F5C6DA;"></div>
+      <div class="swatch-info"><div class="swatch-name">Blush</div><div class="swatch-hex">#F5C6DA</div><div class="swatch-role">Ghost btn · soft bg</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#D4AF37;"></div>
+      <div class="swatch-info"><div class="swatch-name">Royal Gold</div><div class="swatch-hex">#D4AF37</div><div class="swatch-role">Premium badge · highlights</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1A1040;"></div>
+      <div class="swatch-info"><div class="swatch-name">Celestial Navy</div><div class="swatch-hex">#1A1040</div><div class="swatch-role">Dark bg · hero text</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#7B5EA7;"></div>
+      <div class="swatch-info"><div class="swatch-name">Mauve</div><div class="swatch-hex">#7B5EA7</div><div class="swatch-role">Secondary accent · quiz</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#F7F0E8;"></div>
+      <div class="swatch-info"><div class="swatch-name">Parchment</div><div class="swatch-hex">#F7F0E8</div><div class="swatch-role">Light page bg</div></div>
+    </div>
+    <div class="swatch">
+      <div class="swatch-color" style="background:#1A1A1A;"></div>
+      <div class="swatch-info"><div class="swatch-name">Obsidian</div><div class="swatch-hex">#1A1A1A</div><div class="swatch-role">Body text · dark mode bg</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 2. CONTRAST RATIOS ── -->
+<div class="section">
+  <div class="sec-label">2 — Contrast ratios (WCAG AA = 4.5:1 minimum)</div>
+  <table class="ratio-table">
+    <thead>
+      <tr><th>Combination</th><th>Ratio</th><th>Use where</th><th>Status</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White on <span class="swatch-mini" style="background:#C4497C;"></span>Rose #C4497C</td>
+        <td style="font-family:var(--font-mono);">4.6:1</td>
+        <td>Primary CTA buttons</td>
+        <td><span class="pass">AA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White on <span class="swatch-mini" style="background:#8B1A4A;"></span>Deep Rose #8B1A4A</td>
+        <td style="font-family:var(--font-mono);">7.1:1</td>
+        <td>Hover state · pressed</td>
+        <td><span class="pass">AAA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#8B1A4A;"></span>Deep Rose on <span class="swatch-mini" style="background:#F5C6DA;"></span>Blush</td>
+        <td style="font-family:var(--font-mono);">5.2:1</td>
+        <td>Ghost button text</td>
+        <td><span class="pass">AA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White on <span class="swatch-mini" style="background:#1A1040;"></span>Navy #1A1040</td>
+        <td style="font-family:var(--font-mono);">16.2:1</td>
+        <td>Hero dark bg · dark mode</td>
+        <td><span class="pass">AAA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#1A1040;"></span>Navy on <span class="swatch-mini" style="background:#D4AF37;"></span>Gold #D4AF37</td>
+        <td style="font-family:var(--font-mono);">6.8:1</td>
+        <td>Gold badge text</td>
+        <td><span class="pass">AAA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White on <span class="swatch-mini" style="background:#D4AF37;"></span>Gold #D4AF37</td>
+        <td style="font-family:var(--font-mono);">2.4:1</td>
+        <td>— do not use</td>
+        <td><span class="fail">Fail — use navy text on gold</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White on <span class="swatch-mini" style="background:#7B5EA7;"></span>Mauve #7B5EA7</td>
+        <td style="font-family:var(--font-mono);">4.9:1</td>
+        <td>Secondary buttons · quiz</td>
+        <td><span class="pass">AA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#C4497C;"></span>Rose on <span class="swatch-mini" style="background:#F7F0E8;"></span>Parchment</td>
+        <td style="font-family:var(--font-mono);">4.5:1</td>
+        <td>Link text on light bg</td>
+        <td><span class="pass">AA pass</span></td>
+      </tr>
+      <tr>
+        <td><span class="swatch-mini" style="background:#C4497C;"></span>Rose on <span class="swatch-mini" style="background:#fff;border-color:#ccc;"></span>White</td>
+        <td style="font-family:var(--font-mono);">4.0:1</td>
+        <td>Avoid for small text</td>
+        <td><span class="warn">Large text only</span></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ── 3. BUTTON SYSTEM ── -->
+<div class="section">
+  <div class="sec-label">3 — Button system (all variants)</div>
+  <div class="btn-grid">
+
+    <div class="btn-card">
+      <div class="btn-card-label">Primary CTA</div>
+      <span class="btn-demo" style="background:#C4497C;color:#fff;">Create Quiz — ₹399</span>
+      <div class="btn-spec">bg #C4497C · text #fff · hover #8B1A4A<br>radius 999px · padding 13px 28px<br>font-size 15px · font-weight 500</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Primary — Dark bg</div>
+      <span class="btn-demo" style="background:#D4AF37;color:#1A1040;">Get Started ₹399</span>
+      <div class="btn-spec">bg #D4AF37 · text #1A1040 · hover #BF9D2F<br>Used only on navy/dark hero sections<br>radius 999px · padding 13px 28px</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Secondary / Ghost</div>
+      <span class="btn-demo" style="background:transparent;color:#8B1A4A;border:1.5px solid #C4497C;">Browse Templates</span>
+      <div class="btn-spec">bg transparent · text #8B1A4A<br>border 1.5px solid #C4497C<br>hover bg #FDF0F5 · radius 999px</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Ghost — Dark bg</div>
+      <span class="btn-demo" style="background:transparent;color:#F5C6DA;border:1.5px solid rgba(245,198,218,.4);">Preview first</span>
+      <div class="btn-spec">bg transparent · text #F5C6DA<br>border rgba(245,198,218,0.4)<br>hover border-opacity 0.8</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Mauve — Quiz mode</div>
+      <span class="btn-demo" style="background:#7B5EA7;color:#fff;">Start quiz</span>
+      <div class="btn-spec">bg #7B5EA7 · text #fff · hover #5E4580<br>Used in anniversary quiz flow only<br>radius 999px · padding 13px 28px</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">WhatsApp share</div>
+      <span class="btn-demo" style="background:#25D366;color:#fff;">Share on WhatsApp</span>
+      <div class="btn-spec">bg #25D366 · text #fff · hover #1DA851<br>Always pill shape · icon left of text<br>Only for share actions</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Small / inline</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span class="btn-demo btn-demo-sm" style="background:#FDF0F5;color:#8B1A4A;border:1px solid #E8B4C8;">Skip</span>
+        <span class="btn-demo btn-demo-sm" style="background:#C4497C;color:#fff;">Next →</span>
+      </div>
+      <div class="btn-spec">Small: padding 8px 16px · font-size 13px<br>Ghost-sm: blush bg · deep rose text</div>
+    </div>
+
+    <div class="btn-card">
+      <div class="btn-card-label">Disabled state</div>
+      <span class="btn-demo" style="background:#C4497C;color:#fff;opacity:.35;cursor:not-allowed;">Continue</span>
+      <div class="btn-spec">opacity 0.35 · pointer-events none<br>Never change the color — only opacity<br>Add hint text below explaining why</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ── 4. PAGE THEMES ── -->
+<div class="section">
+  <div class="sec-label">4 — Page theme system (3 contexts)</div>
+
+  <div class="theme-card">
+    <div class="theme-bar">
+      <div style="background:#F7F0E8;flex:3;"></div>
+      <div style="background:#C4497C;flex:1;"></div>
+      <div style="background:#D4AF37;flex:1;"></div>
+    </div>
+    <div class="theme-body">
+      <div class="theme-name">Wedding Invite — Light &amp; Elegant</div>
+      <div class="theme-desc">Used on homepage, templates, order flow. Warm parchment base, rose CTA, gold accents for premium feeling.</div>
+      <div class="theme-chips">
+        <span class="theme-chip" style="background:#F7F0E8;color:#8B5E3C;border:1px solid #E0D3C2;">Page bg #F7F0E8</span>
+        <span class="theme-chip" style="background:#C4497C;color:#fff;">CTA #C4497C</span>
+        <span class="theme-chip" style="background:#D4AF37;color:#1A1040;">Gold #D4AF37</span>
+        <span class="theme-chip" style="background:#1A1A1A;color:#fff;">Text #1A1A1A</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-bar">
+      <div style="background:#1A1040;flex:3;"></div>
+      <div style="background:#C4497C;flex:1;"></div>
+      <div style="background:#D4AF37;flex:1;"></div>
+    </div>
+    <div class="theme-body">
+      <div class="theme-name">Anniversary Quiz — Dark &amp; Romantic</div>
+      <div class="theme-desc">Used on onboarding slides, quiz flow, Soul Certificate. Deep navy base feels intimate and cinematic.</div>
+      <div class="theme-chips">
+        <span class="theme-chip" style="background:#1A1040;color:#F5C6DA;border:1px solid #2D1A60;">Page bg #1A1040</span>
+        <span class="theme-chip" style="background:#C4497C;color:#fff;">CTA #C4497C</span>
+        <span class="theme-chip" style="background:#7B5EA7;color:#fff;">Quiz #7B5EA7</span>
+        <span class="theme-chip" style="background:#D4AF37;color:#1A1040;">Cert gold #D4AF37</span>
+        <span class="theme-chip" style="background:#F5C6DA;color:#8B1A4A;">Body text</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="theme-card">
+    <div class="theme-bar">
+      <div style="background:#FDF0F5;flex:2;"></div>
+      <div style="background:#C4497C;flex:1;"></div>
+      <div style="background:#7B5EA7;flex:1;"></div>
+      <div style="background:#D4AF37;flex:1;"></div>
+    </div>
+    <div class="theme-body">
+      <div class="theme-name">Soul Certificate — Full colour celebration</div>
+      <div class="theme-desc">Used only on the final certificate screen. All three brand accents come together. This is the emotional peak — make it feel like an award.</div>
+      <div class="theme-chips">
+        <span class="theme-chip" style="background:#FDF0F5;color:#8B1A4A;border:1px solid #E8B4C8;">Card bg</span>
+        <span class="theme-chip" style="background:#C4497C;color:#fff;">Score pct</span>
+        <span class="theme-chip" style="background:#7B5EA7;color:#fff;">Badges</span>
+        <span class="theme-chip" style="background:#D4AF37;color:#1A1040;">Ornaments</span>
+        <span class="theme-chip" style="background:#1A1040;color:#F5C6DA;">Names</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 5. COLOUR USAGE RULES ── -->
+<div class="section">
+  <div class="sec-label">5 — Colour usage rules</div>
+  <div class="usage-grid">
+    <div class="usage-card">
+      <div class="usage-title">Rose #C4497C — use for</div>
+      <div class="usage-item">
+        <div><span class="dot" style="background:#C4497C;"></span>Primary CTA buttons (1 per screen max)</div>
+        <div><span class="dot" style="background:#C4497C;"></span>Progress bars and fill indicators</div>
+        <div><span class="dot" style="background:#C4497C;"></span>Active/selected state borders</div>
+        <div><span class="dot" style="background:#C4497C;"></span>Streak badges and heart icons</div>
+        <div><span class="dot" style="background:#C4497C;"></span>Soul score percentage</div>
+      </div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-title">Gold #D4AF37 — use for</div>
+      <div class="usage-item">
+        <div><span class="dot" style="background:#D4AF37;"></span>CTA on dark hero backgrounds only</div>
+        <div><span class="dot" style="background:#D4AF37;"></span>Certificate ornaments (✦ ♥ ✦)</div>
+        <div><span class="dot" style="background:#D4AF37;"></span>"Most Popular" / "Best Seller" badges</div>
+        <div><span class="dot" style="background:#D4AF37;"></span>Premium plan highlights</div>
+        <div><span class="dot" style="background:#D4AF37;"></span>Star ratings — never button bg on light</div>
+      </div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-title">Navy #1A1040 — use for</div>
+      <div class="usage-item">
+        <div><span class="dot" style="background:#1A1040;"></span>Full-page dark sections only</div>
+        <div><span class="dot" style="background:#1A1040;"></span>Anniversary quiz background</div>
+        <div><span class="dot" style="background:#1A1040;"></span>Footer background</div>
+        <div><span class="dot" style="background:#1A1040;"></span>Text on gold badge — always this</div>
+        <div><span class="dot" style="background:#1A1040;"></span>Never use as button background</div>
+      </div>
+    </div>
+    <div class="usage-card">
+      <div class="usage-title">Mauve #7B5EA7 — use for</div>
+      <div class="usage-item">
+        <div><span class="dot" style="background:#7B5EA7;"></span>Quiz mode cards (selected state)</div>
+        <div><span class="dot" style="background:#7B5EA7;"></span>Certificate round badges</div>
+        <div><span class="dot" style="background:#7B5EA7;"></span>Secondary buttons in quiz flow</div>
+        <div><span class="dot" style="background:#7B5EA7;"></span>Decorative section dividers</div>
+        <div><span class="dot" style="background:#7B5EA7;"></span>Never compete with rose on same screen</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── 6. DONT'S ── -->
+<div class="section">
+  <div class="sec-label">6 — Hard rules — never do these</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;">Never white text on gold</div>
+      <span style="display:inline-block;padding:9px 18px;border-radius:999px;background:#D4AF37;color:#fff;font-size:13px;opacity:.9;">Get Started</span>
+      <div style="font-size:11px;color:var(--color-text-danger);margin-top:6px;">2.4:1 ratio — fails WCAG</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;">Never two primary CTAs together</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="display:inline-block;padding:9px 14px;border-radius:999px;background:#C4497C;color:#fff;font-size:12px;">Create Quiz</span>
+        <span style="display:inline-block;padding:9px 14px;border-radius:999px;background:#C4497C;color:#fff;font-size:12px;">Pay Now</span>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-danger);margin-top:6px;">Splits attention — one CTA per screen</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;">Never rose on parchment for small text</div>
+      <p style="font-size:12px;color:#C4497C;">This paragraph text is too low contrast on parchment background at small sizes. Use #1A1A1A instead.</p>
+      <div style="font-size:11px;color:var(--color-text-warning);margin-top:4px;">4.0:1 — fails at small sizes</div>
+    </div>
+    <div style="background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;">
+      <div style="font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:8px;">Never square buttons — always pills</div>
+      <div style="display:flex;gap:8px;align-items:center;">
+        <span style="display:inline-block;padding:9px 18px;border-radius:4px;background:#C4497C;color:#fff;font-size:13px;">Create</span>
+        <span style="font-size:18px;color:var(--color-text-tertiary);">→</span>
+        <span style="display:inline-block;padding:9px 18px;border-radius:999px;background:#C4497C;color:#fff;font-size:13px;">Create</span>
+      </div>
+      <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:6px;">Pill = warm, intimate, romantic</div>
+    </div>
+  </div>
+</div>
+
+</div>

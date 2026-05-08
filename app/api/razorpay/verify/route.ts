@@ -305,13 +305,63 @@ async function handleAnniversaryVerify(
   }
 
   // ── Create quiz_sessions record ──
-  // Build config from either quizConfig (from Quiz Matrix) or legacy questions
-  const quizConfig: QuizConfigItem[] =
-    body.quizConfig && body.quizConfig.length > 0
-      ? body.quizConfig
-      : orderData.questions
-          .filter((q) => q.enabled)
-          .map((q) => ({ q_id: q.id, correct_idx: q.correctAnswer }));
+  // Build config from either quizConfig (from Quiz Matrix) or legacy/custom questions
+  let quizConfig: QuizConfigItem[];
+
+  if (body.quizConfig && body.quizConfig.length > 0) {
+    // Random quiz mode: use the config from Quiz Matrix directly
+    quizConfig = body.quizConfig;
+  } else {
+    // Custom quiz mode or legacy: questions come from orderData.questions
+    const enabledQuestions = orderData.questions.filter((q) => q.enabled);
+
+    // Check if any of these are custom questions
+    const hasCustomQuestions = enabledQuestions.some(
+      (q) => q.isCustom === true,
+    );
+
+    if (hasCustomQuestions) {
+      // Insert custom questions into question_bank to get real UUIDs
+      const idMap = new Map<string, string>(); // old custom id → new UUID
+
+      for (const q of enabledQuestions) {
+        const { data: insertedQuestion, error: insertError } = await supabase
+          .from("question_bank")
+          .insert({
+            category: "discovery", // default category for custom questions
+            question_text: q.text,
+            options: q.options,
+          })
+          .select("id")
+          .single();
+
+        if (insertError || !insertedQuestion) {
+          console.error(
+            "[Anniversary verify] Failed to insert custom question:",
+            insertError,
+          );
+          // Skip this question if insert fails
+          continue;
+        }
+
+        idMap.set(q.id, insertedQuestion.id);
+      }
+
+      // Build config using the new UUIDs from question_bank
+      quizConfig = enabledQuestions
+        .filter((q) => idMap.has(q.id))
+        .map((q) => ({
+          q_id: idMap.get(q.id)!,
+          correct_idx: q.correctAnswer,
+        }));
+    } else {
+      // Legacy preset questions (IDs already exist in question_bank)
+      quizConfig = enabledQuestions.map((q) => ({
+        q_id: q.id,
+        correct_idx: q.correctAnswer,
+      }));
+    }
+  }
 
   const { data: quizSession, error: quizError } = await supabase
     .from("quiz_sessions")

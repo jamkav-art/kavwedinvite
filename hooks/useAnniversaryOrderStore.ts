@@ -61,6 +61,7 @@ export interface AnniversaryOrderStore extends AnniversaryOrderState {
   updateCouple: (data: Partial<CoupleFields>) => void;
 
   // Step 2 (legacy - kept for compatibility)
+  setQuestions: (questions: QuizQuestion[]) => void;
   toggleQuestion: (id: string) => void;
   updateQuestion: (
     id: string,
@@ -158,6 +159,7 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
       updateCouple: (data) => set(data),
 
       // Step 2 (legacy)
+      setQuestions: (questions) => set({ questions }),
       toggleQuestion: (id) =>
         set((s) => ({
           questions: s.questions.map((q) =>
