@@ -42,6 +42,38 @@ export interface TemplateLayout {
   floatingRsvp: boolean;
 }
 
+// ─── New types for template mega-plan ────────────────────────────────────
+
+export type LayoutType = "centered" | "split" | "full-bleed" | "sidebar";
+export type BackgroundAnimationType =
+  | "stars"
+  | "petals"
+  | "bokeh"
+  | "gold"
+  | "none";
+export type FontAnimationType =
+  | "shimmer"
+  | "gradient"
+  | "typewriter"
+  | "reveal"
+  | "none";
+
+export interface TemplateParticleConfig {
+  component: string; // component name to render (e.g. "StarfieldParticles")
+  density: "low" | "medium" | "high";
+  colors: string[]; // particle color palette
+  speed: number; // animation speed multiplier 0.1-2
+}
+
+export interface TemplateAnimations {
+  heroEntrance: "fade" | "slide" | "scale" | "zoom";
+  particleType: "sparkles" | "leaves" | "bokeh" | "stars" | "petals" | "gold";
+  scrollEffect: "parallax" | "fade" | "reveal" | "none";
+  fontAnimation: FontAnimationType;
+  backgroundAnimation: BackgroundAnimationType;
+  has3DEffects: boolean;
+}
+
 export interface TemplateConfig {
   slug: string;
   name: string;
@@ -53,25 +85,27 @@ export interface TemplateConfig {
     body: FontFamily;
     accent: FontFamily;
   };
-  animations?: {
-    heroEntrance: "fade" | "slide" | "scale";
-    particleType: "sparkles" | "leaves" | "bokeh" | "stars";
-    scrollEffect: "parallax" | "fade" | "reveal";
-  };
+  animations: TemplateAnimations;
+  particles: TemplateParticleConfig;
   music?: {
     defaultTrack?: string;
     waveformColor: string;
   };
   borders: {
-    style: "none" | "thin" | "double" | "ornamental";
+    style: "none" | "thin" | "double" | "ornamental" | "gradient";
     svgPath: string;
     patternOpacity: number;
   };
   decorations: TemplateDecorations;
   features: TemplateFeatures;
-  layout: TemplateLayout;
+  layout: TemplateLayout & {
+    type: LayoutType;
+  };
   tags: string[];
   mood: string;
+  heroComponent: string; // component name for hero section
+  sectionDividerStyle: string; // SVG divider identifier
+  scrollReveal: "fade-up" | "fade-in" | "zoom-in" | "slide-up";
 }
 
 export interface InviteData {

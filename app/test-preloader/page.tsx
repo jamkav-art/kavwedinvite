@@ -29,6 +29,9 @@ const testTemplate = {
     heroEntrance: "fade" as const,
     particleType: "sparkles" as const,
     scrollEffect: "parallax" as const,
+    fontAnimation: "none" as const,
+    backgroundAnimation: "none" as const,
+    has3DEffects: false,
   },
   music: {
     waveformColor: "#c9a96e",
@@ -55,7 +58,17 @@ const testTemplate = {
     sidebarEvents: false,
     galleryGrid: false,
     floatingRsvp: true,
+    type: "full-bleed" as const,
   },
+  particles: {
+    component: "none",
+    density: "low" as const,
+    colors: ["#c9a96e"],
+    speed: 0.5,
+  },
+  heroComponent: "HeroSectionCelestial",
+  sectionDividerStyle: "divider-test",
+  scrollReveal: "fade-up" as const,
 };
 
 export default function TestPreLoaderPage() {

@@ -6,10 +6,9 @@
 // CountdownTimer is rendered inside HeroSection.
 // RSVP is accessed via a floating "RSVP Now" button that opens a bottom sheet.
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gatekeeper } from "@/components/invite/Gatekeeper";
-import { HeroSection } from "@/components/invite/HeroSection";
 import { SaveTheDateVideo } from "@/components/invite/SaveTheDateVideo";
 import { VoiceMessage } from "@/components/invite/VoiceMessage";
 import MediaGallery from "@/components/invite/MediaGallery";
@@ -22,11 +21,48 @@ import type { Order, Event as DbEvent, Media } from "@/types/database.types";
 import type { TemplateConfig } from "@/types/template.types";
 import { APP_URL } from "@/lib/constants";
 
+// ── Template-aware hero component map ───────────────────────────────────
+import HeroSectionCelestial from "@/components/invite/HeroSectionCelestial";
+import HeroSectionVintage from "@/components/invite/HeroSectionVintage";
+import HeroSectionRoyal from "@/components/invite/HeroSectionRoyal";
+import HeroSectionSunset from "@/components/invite/HeroSectionSunset";
+import HeroSectionBohemian from "@/components/invite/HeroSectionBohemian";
+import HeroSectionMinimalist from "@/components/invite/HeroSectionMinimalist";
+import HeroSectionModernSage from "@/components/invite/HeroSectionModernSage";
+import HeroSectionClassicIvory from "@/components/invite/HeroSectionClassicIvory";
+
 interface InvitePageContentProps {
   order: Order;
   events: DbEvent[];
   media: Media[];
   template: TemplateConfig;
+}
+
+// ── Fallback hero for unknown/legacy template slugs ──────────────────────
+function HeroFallback({
+  couple,
+  weddingDate,
+}: {
+  couple: { name1: string; name2: string };
+  weddingDate: string;
+}) {
+  return (
+    <section className="relative min-h-screen flex items-center justify-center bg-[#FBF7F0]">
+      <div className="text-center px-6">
+        <h1 className="text-4xl sm:text-6xl font-serif text-[#8B1A1A]">
+          {couple.name1} & {couple.name2}
+        </h1>
+        <p className="mt-4 text-lg text-[#666]">
+          {new Date(weddingDate).toLocaleDateString("en-US", {
+            weekday: "long",
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </p>
+      </div>
+    </section>
+  );
 }
 
 export function InvitePageContent({
@@ -66,6 +102,21 @@ export function InvitePageContent({
     venueAddress: event.venue_address,
     mapLink: event.venue_map_link ?? undefined,
   }));
+
+  // ── Dynamic hero renderer ──────────────────────────────────────────────
+  const HeroComponent = useMemo(() => {
+    const heroMap: Record<string, React.ComponentType<any>> = {
+      HeroSectionCelestial,
+      HeroSectionVintage,
+      HeroSectionRoyal,
+      HeroSectionSunset,
+      HeroSectionBohemian,
+      HeroSectionMinimalist,
+      HeroSectionModernSage,
+      HeroSectionClassicIvory,
+    };
+    return heroMap[template.heroComponent] || HeroFallback;
+  }, [template.heroComponent]);
 
   // CSS variables for template styling
   const cssVariables = {
@@ -122,7 +173,7 @@ export function InvitePageContent({
 
             <div className="relative space-y-16">
               <div id="hero">
-                <HeroSection
+                <HeroComponent
                   couple={couple}
                   weddingDate={weddingDate}
                   template={template}

@@ -1984,3 +1984,234 @@ body {
   pointer-events: none;
   animation: cert-line-pulse 4s ease-in-out infinite;
 }
+
+/* ── Template-specific animations ─────────────────────────────────── */
+
+@keyframes gold-shimmer {
+  0%,
+  100% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 200% center;
+  }
+}
+
+@keyframes rotate-border {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mandala-rotate {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes leaf-sway {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════════
+   ORDER WIZARD REDESIGN — WIZARD-* KEYFRAMES
+   ══════════════════════════════════════════════════════════════════════════ */
+
+/* Background gradient shift */
+@keyframes wiz-bg-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Heading gold shimmer */
+@keyframes wiz-heading-shimmer {
+  0% {
+    background-position: 0% center;
+  }
+  50% {
+    background-position: 200% center;
+  }
+  100% {
+    background-position: 0% center;
+  }
+}
+
+/* Button glow pulse */
+@keyframes wiz-btn-glow {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Conic gradient border rotation */
+@keyframes wiz-border-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Shimmer sweep overlay */
+@keyframes wiz-shimmer-sweep {
+  0% {
+    transform: translateX(-100%) skewX(-15deg);
+  }
+  100% {
+    transform: translateX(200%) skewX(-15deg);
+  }
+}
+
+/* Petal float up */
+@keyframes wiz-petal-float {
+  0% {
+    transform: translateY(100vh) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-20vh) rotate(720deg) scale(1.2);
+    opacity: 0;
+  }
+}
+
+/* Gold sparkle pop */
+@keyframes wiz-gold-sparkle {
+  0% {
+    transform: scale(0) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Input focus glow pulse */
+@keyframes wiz-focus-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px 4px rgba(212, 175, 55, 0.2);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4);
+  }
+}
+
+/* ── Order Wizard CSS custom properties ── */
+.order-wizard {
+  --wiz-bg-start: #0d0a0a;
+  --wiz-bg-end: #1a0f0f;
+  --wiz-bg-mid: #2d1b1b;
+  --wiz-accent-gold: #d4af37;
+  --wiz-accent-gold-light: #f5d876;
+  --wiz-accent-rose: #c4497c;
+  --wiz-accent-rose-light: #e8789a;
+  --wiz-accent-burgundy: #8b1a2b;
+  --wiz-text-primary: #fbf7f0;
+  --wiz-text-secondary: #d4c5b5;
+  --wiz-text-muted: #8b7d72;
+  --wiz-glass-bg: rgba(255, 255, 255, 0.06);
+  --wiz-glass-border: rgba(255, 255, 255, 0.12);
+  --wiz-input-bg: rgba(255, 255, 255, 0.05);
+  --wiz-input-focus: rgba(212, 175, 55, 0.25);
+}
+
+/* ── Glassmorphism utilities ── */
+.wiz-glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.wiz-glass-input {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  color: var(--wiz-text-primary);
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+.wiz-glass-input:focus {
+  border-color: var(--wiz-accent-gold);
+  box-shadow:
+    0 0 20px rgba(212, 175, 55, 0.15),
+    inset 0 0 20px rgba(212, 175, 55, 0.05);
+  outline: none;
+}
+
+/* ── Order Wizard animated background ── */
+.wiz-bg-animated {
+  background: linear-gradient(
+    135deg,
+    var(--wiz-bg-start),
+    var(--wiz-bg-mid),
+    var(--wiz-bg-end)
+  );
+  background-size: 400% 400%;
+  animation: wiz-bg-shift 12s ease infinite;
+}
+
+/* ── Heading gradient text ── */
+.wiz-heading-gradient {
+  background: linear-gradient(
+    90deg,
+    var(--wiz-accent-gold),
+    var(--wiz-accent-rose-light),
+    var(--wiz-accent-gold-light),
+    var(--wiz-accent-gold)
+  );
+  background-size: 300% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: wiz-heading-shimmer 4s ease infinite;
+}
+
+/* ── CTA Button gradient ── */
+.wiz-btn-gradient {
+  background: linear-gradient(
+    135deg,
+    var(--wiz-accent-burgundy),
+    var(--wiz-accent-rose),
+    var(--wiz-accent-gold)
+  );
+  background-size: 200% 200%;
+  animation: wiz-btn-glow 3s ease infinite;
+}
