@@ -220,7 +220,6 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
         return localStorage;
       }),
       partialize: (state) => ({
-        hasHydrated: state.hasHydrated,
         currentStep: state.currentStep,
         yourName: state.yourName,
         partnerName: state.partnerName,
@@ -247,7 +246,11 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
       skipHydration: true,
       onRehydrateStorage: () => (state, error) => {
         if (error) return;
-        state?.setHasHydrated(true);
+        // Only set hasHydrated if it hasn't already been set by persisted state
+        // (prevents double-update cascade that causes infinite re-render loop)
+        if (!state?.hasHydrated) {
+          state?.setHasHydrated(true);
+        }
       },
     },
   ),

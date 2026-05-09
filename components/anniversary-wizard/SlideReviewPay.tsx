@@ -7,13 +7,23 @@ import { useAnniversaryPayment } from "@/hooks/useAnniversaryPayment";
 import { ANNIVERSARY_PRICE_DISPLAY } from "@/lib/anniversary-constants";
 
 export default function SlideReviewPay() {
-  const store = useAnniversaryOrderStore();
+  // Use individual selectors instead of full store subscription
+  // to prevent unnecessary re-renders on any store change.
+  const anniversaryDate = useAnniversaryOrderStore((s) => s.anniversaryDate);
+  const quizAnswers = useAnniversaryOrderStore((s) => s.quizBuilder.answers);
+  const questions = useAnniversaryOrderStore((s) => s.questions);
+  const couplePhoto = useAnniversaryOrderStore((s) => s.couplePhoto);
+  const yourName = useAnniversaryOrderStore((s) => s.yourName);
+  const partnerName = useAnniversaryOrderStore((s) => s.partnerName);
+  const floralTheme = useAnniversaryOrderStore((s) => s.floralTheme);
+  const backgroundMusic = useAnniversaryOrderStore((s) => s.backgroundMusic);
+  const loveNote = useAnniversaryOrderStore((s) => s.loveNote);
   const prevStep = useAnniversaryOrderStore((s) => s.prevStep);
   const { initializePayment, isLoading } = useAnniversaryPayment();
 
   const yearsTogether = useMemo(() => {
-    if (!store.anniversaryDate) return 0;
-    const date = new Date(store.anniversaryDate);
+    if (!anniversaryDate) return 0;
+    const date = new Date(anniversaryDate);
     const today = new Date();
     let years = today.getFullYear() - date.getFullYear();
     const monthDiff = today.getMonth() - date.getMonth();
@@ -24,15 +34,42 @@ export default function SlideReviewPay() {
       years--;
     }
     return Math.max(0, years);
-  }, [store.anniversaryDate]);
+  }, [anniversaryDate]);
 
   // Detect quiz mode: random (via quizBuilder) or custom (via custom questions in store)
-  const randomQuestionCount = store.quizBuilder.answers.length;
-  const customQuestionsCount = store.questions.filter(
+  const randomQuestionCount = quizAnswers.length;
+  const customQuestionsCount = questions.filter(
     (q) => q.isCustom && q.text.trim().length > 0,
   ).length;
   const questionCount =
     randomQuestionCount > 0 ? randomQuestionCount : customQuestionsCount;
+
+  const handlePay = () => {
+    if (isLoading) return;
+    // Use getState() to read current store state at click time
+    // instead of capturing it during render, avoiding full store subscription.
+    const state = useAnniversaryOrderStore.getState();
+    initializePayment(
+      {
+        yourName: state.yourName,
+        partnerName: state.partnerName,
+        anniversaryDate: state.anniversaryDate,
+        yearsTogether: state.yearsTogether,
+        couplePhoto: state.couplePhoto,
+        questions: state.questions,
+        floralTheme: state.floralTheme,
+        colorMood: state.colorMood,
+        customBgPhoto: state.customBgPhoto,
+        loveNote: state.loveNote,
+        voiceNote: state.voiceNote,
+        backgroundMusic: state.backgroundMusic,
+        customBackgroundMusic: state.customBackgroundMusic,
+        phone: state.phone,
+        email: state.email,
+      },
+      state.quizBuilder.answers,
+    );
+  };
 
   return (
     <motion.div
@@ -69,9 +106,9 @@ export default function SlideReviewPay() {
         {/* Couple */}
         <div className="flex items-center gap-3 pb-4 border-b border-white/10">
           <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[#C4497C]/30 to-[#D4AF37]/20 flex items-center justify-center text-2xl flex-shrink-0 overflow-hidden">
-            {store.couplePhoto ? (
+            {couplePhoto ? (
               <img
-                src={store.couplePhoto.url}
+                src={couplePhoto.url}
                 alt=""
                 className="w-full h-full rounded-full object-cover"
               />
@@ -81,7 +118,7 @@ export default function SlideReviewPay() {
           </div>
           <div>
             <p className="font-serif text-lg text-[#F5C6DA]">
-              {store.yourName || "You"} ❤️ {store.partnerName || "Them"}
+              {yourName || "You"} ❤️ {partnerName || "Them"}
             </p>
             {yearsTogether > 0 && (
               <p className="text-sm text-white/40">
@@ -100,22 +137,22 @@ export default function SlideReviewPay() {
           </div>
           <div className="text-center p-3 rounded-xl bg-[#D4AF37]/15">
             <p className="text-xl font-bold text-[#D4AF37]">🎨</p>
-            <p className="text-xs text-white/40">{store.floralTheme}</p>
+            <p className="text-xs text-white/40">{floralTheme}</p>
           </div>
           <div className="text-center p-3 rounded-xl bg-[#7B5EA7]/20">
             <p className="text-xl font-bold text-[#7B5EA7]">🎵</p>
             <p className="text-xs text-white/40">
-              {store.backgroundMusic ? "Music" : "No music"}
+              {backgroundMusic ? "Music" : "No music"}
             </p>
           </div>
         </div>
 
         {/* Love note preview */}
-        {store.loveNote && (
+        {loveNote && (
           <div className="pt-3 border-t border-white/10">
             <p className="text-xs text-white/40 mb-1">💌 Love Note</p>
             <p className="text-sm text-[#F5C6DA]/70 italic line-clamp-2">
-              "{store.loveNote}"
+              "{loveNote}"
             </p>
           </div>
         )}
@@ -141,29 +178,7 @@ export default function SlideReviewPay() {
             isLoading ? "opacity-70 cursor-not-allowed" : ""
           }`}
           whileTap={{ scale: isLoading ? 1 : 0.98 }}
-          onClick={() => {
-            if (isLoading) return;
-            initializePayment(
-              {
-                yourName: store.yourName,
-                partnerName: store.partnerName,
-                anniversaryDate: store.anniversaryDate,
-                yearsTogether: store.yearsTogether,
-                couplePhoto: store.couplePhoto,
-                questions: store.questions,
-                floralTheme: store.floralTheme,
-                colorMood: store.colorMood,
-                customBgPhoto: store.customBgPhoto,
-                loveNote: store.loveNote,
-                voiceNote: store.voiceNote,
-                backgroundMusic: store.backgroundMusic,
-                customBackgroundMusic: store.customBackgroundMusic,
-                phone: store.phone,
-                email: store.email,
-              },
-              store.quizBuilder.answers,
-            );
-          }}
+          onClick={handlePay}
         >
           {isLoading ? (
             <span className="flex items-center justify-center gap-2">

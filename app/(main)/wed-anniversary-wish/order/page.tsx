@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import dynamic from "next/dynamic";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
 
@@ -56,19 +56,78 @@ function LoadingSkeleton() {
   );
 }
 
+// ── Inline Error Boundary ──
+class SlideErrorBoundary extends React.Component<
+  { children: React.ReactNode; fallback: React.ReactNode },
+  { hasError: boolean; error: Error | null }
+> {
+  constructor(props: { children: React.ReactNode; fallback: React.ReactNode }) {
+    super(props);
+    this.state = { hasError: false, error: null };
+  }
+  static getDerivedStateFromError(error: Error) {
+    return { hasError: true, error };
+  }
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error(
+      "[SlideErrorBoundary] Caught error:",
+      error.message,
+      error.stack,
+    );
+    console.error("[SlideErrorBoundary] Component stack:", info.componentStack);
+  }
+  render() {
+    if (this.state.hasError) {
+      console.log(
+        "[SlideErrorBoundary] Rendering fallback, error:",
+        this.state.error?.message,
+      );
+      return this.props.fallback;
+    }
+    return this.props.children;
+  }
+}
+
 export default function AnniversaryOrderPage() {
   const currentStep = useAnniversaryOrderStore((s) => s.currentStep);
   const hasHydrated = useAnniversaryOrderStore((s) => s.hasHydrated);
 
   useEffect(() => {
-    useAnniversaryOrderStore.persist.rehydrate();
+    console.log("[AnniversaryOrderPage] Calling rehydrate()");
+    const promise = useAnniversaryOrderStore.persist.rehydrate();
+    if (promise && typeof (promise as Promise<void>).then === "function") {
+      (promise as Promise<void>)
+        .then(() => {
+          console.log("[AnniversaryOrderPage] rehydrate() completed");
+        })
+        .catch((err: unknown) => {
+          console.error("[AnniversaryOrderPage] rehydrate() failed:", err);
+        });
+    }
   }, []);
 
+  useEffect(() => {
+    console.log("[AnniversaryOrderPage] state changed", {
+      currentStep,
+      hasHydrated,
+    });
+  }, [currentStep, hasHydrated]);
+
   if (!hasHydrated) {
+    console.log(
+      "[AnniversaryOrderPage] Not hydrated yet, showing LoadingSkeleton",
+    );
     return <LoadingSkeleton />;
   }
 
   const SlideComponent = SLIDE_MAP[currentStep];
+  console.log("[AnniversaryOrderPage] Rendering slide", {
+    currentStep,
+    SlideComponentName:
+      (SlideComponent as any)?.name ||
+      (SlideComponent as any)?.displayName ||
+      "unknown",
+  });
 
   if (!SlideComponent) {
     return (
@@ -78,5 +137,13 @@ export default function AnniversaryOrderPage() {
     );
   }
 
-  return <SlideComponent />;
+  return (
+    <SlideErrorBoundary
+      fallback={
+        <div className="text-white text-center p-10">Slide crashed</div>
+      }
+    >
+      <SlideComponent />
+    </SlideErrorBoundary>
+  );
 }
