@@ -1,43 +1,22 @@
 "use client";
 
 import React from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
 import WizardProgress from "./WizardProgress";
 
 interface WizardContainerProps {
   children: React.ReactNode;
 }
 
-const slideVariants = {
-  enter: (direction: number) => ({
-    x: direction > 0 ? "100%" : "-100%",
-    opacity: 0,
-  }),
-  center: {
-    x: 0,
-    opacity: 1,
-  },
-  exit: (direction: number) => ({
-    x: direction < 0 ? "100%" : "-100%",
-    opacity: 0,
-  }),
-};
-
 /**
  * WizardContainer — full-viewport screen with animated dark navy background.
  * Uses min-h-screen + overflow-hidden to prevent footer bleed-through.
+ *
+ * NOTE: Slide transitions (AnimatePresence) are handled inside the page
+ * component (AnniversaryOrderPage) to avoid unmounting the entire page
+ * when currentStep changes — which was causing React error #310
+ * (Maximum update depth exceeded) via a cascade of rehydrate() calls.
  */
 export default function WizardContainer({ children }: WizardContainerProps) {
-  const currentStep = useAnniversaryOrderStore((s) => s.currentStep);
-  const [direction, setDirection] = React.useState(0);
-  const prevStepRef = React.useRef(currentStep);
-
-  React.useEffect(() => {
-    setDirection(currentStep > prevStepRef.current ? 1 : -1);
-    prevStepRef.current = currentStep;
-  }, [currentStep]);
-
   return (
     <div className="relative min-h-screen flex flex-col overflow-hidden anniversary-bg-animated">
       {/* Animated gradient orbs */}
@@ -54,24 +33,7 @@ export default function WizardContainer({ children }: WizardContainerProps) {
 
       {/* Slide Content */}
       <div className="relative z-10 flex-1 flex items-center justify-center overflow-hidden px-4 sm:px-6">
-        <div className="w-full max-w-lg mx-auto">
-          <AnimatePresence mode="wait" custom={direction} initial={false}>
-            <motion.div
-              key={currentStep}
-              custom={direction}
-              variants={slideVariants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={{
-                x: { type: "spring", stiffness: 300, damping: 30 },
-                opacity: { duration: 0.2 },
-              }}
-            >
-              {children}
-            </motion.div>
-          </AnimatePresence>
-        </div>
+        <div className="w-full max-w-lg mx-auto">{children}</div>
       </div>
     </div>
   );

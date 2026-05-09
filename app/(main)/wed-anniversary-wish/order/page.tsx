@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useAnniversaryOrderStore } from "@/hooks/useAnniversaryOrderStore";
 
@@ -42,6 +43,22 @@ const SLIDE_MAP: Record<number, React.ComponentType> = {
   5: SlideQuizMatrix,
   6: SlideLoveNote,
   7: SlideReviewPay,
+};
+
+// ── Slide transition variants (moved from WizardContainer) ──
+const slideVariants = {
+  enter: (direction: number) => ({
+    x: direction > 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
+  center: {
+    x: 0,
+    opacity: 1,
+  },
+  exit: (direction: number) => ({
+    x: direction < 0 ? "100%" : "-100%",
+    opacity: 0,
+  }),
 };
 
 function LoadingSkeleton() {
@@ -92,6 +109,16 @@ export default function AnniversaryOrderPage() {
   const currentStep = useAnniversaryOrderStore((s) => s.currentStep);
   const hasHydrated = useAnniversaryOrderStore((s) => s.hasHydrated);
 
+  // ── Direction tracking for slide animations (moved from WizardContainer) ──
+  const [direction, setDirection] = React.useState(0);
+  const prevStepRef = React.useRef(currentStep);
+
+  useEffect(() => {
+    setDirection(currentStep > prevStepRef.current ? 1 : -1);
+    prevStepRef.current = currentStep;
+  }, [currentStep]);
+
+  // ── Hydration ──
   useEffect(() => {
     console.log("[AnniversaryOrderPage] Calling rehydrate()");
     const promise = useAnniversaryOrderStore.persist.rehydrate();
@@ -143,7 +170,27 @@ export default function AnniversaryOrderPage() {
         <div className="text-white text-center p-10">Slide crashed</div>
       }
     >
-      <SlideComponent />
+      {/*
+        AnimatePresence is placed HERE, wrapping ONLY the slide component.
+        This prevents the entire AnniversaryOrderPage from being unmounted
+        when currentStep changes (which was the root cause of React error #310).
+      */}
+      <AnimatePresence mode="wait" custom={direction} initial={false}>
+        <motion.div
+          key={currentStep}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 },
+          }}
+        >
+          <SlideComponent />
+        </motion.div>
+      </AnimatePresence>
     </SlideErrorBoundary>
   );
 }
