@@ -137,24 +137,28 @@ function LoadingSkeleton() {
 export default function OrderPage() {
   const hasHydrated = useOrderStore((s) => s.hasHydrated);
   const currentStep = useOrderStore((s) => s.currentStep);
+  const goToStep = useOrderStore((s) => s.goToStep);
 
   // ── Re-render safety net ──
-  // Resets the store if renders spike beyond 15 (catches infinite loops from corrupted data)
+  // Tracks render count to detect infinite loops from corrupted state.
+  // Uses a ref + effect to avoid calling setState() during render phase,
+  // which would trigger React error #185 (Maximum update depth exceeded).
   const renderCountRef = useRef(0);
   renderCountRef.current += 1;
 
-  // Reset store if re-renders exceed threshold (indicates corrupted-state loop)
-  if (renderCountRef.current > 15) {
-    console.warn(
-      "[OrderPage] Re-render threshold exceeded — resetting store to default",
-      { renderCount: renderCountRef.current },
-    );
-    useOrderStore.getState().reset();
-    useOrderStore.getState().setHasHydrated(true);
-    // After reset, we must stop rendering or we'd loop forever
-    renderCountRef.current = 0;
-    // Re-render will settle with clean state
-  }
+  // Moved reset logic to an effect so setState() happens AFTER render,
+  // preventing the deadly feedback loop (reset → re-render → reset → ...)
+  useEffect(() => {
+    if (renderCountRef.current > 30) {
+      console.warn(
+        "[OrderPage] Re-render threshold exceeded — resetting to step 1",
+        { renderCount: renderCountRef.current, currentStep },
+      );
+      // Go to step 1 without destroying user data
+      goToStep(1);
+      renderCountRef.current = 0;
+    }
+  }, [renderCountRef.current, currentStep, goToStep]);
 
   // ── Rehydration ──
   useEffect(() => {
