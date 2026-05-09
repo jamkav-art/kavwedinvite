@@ -139,6 +139,52 @@ export default function SlideQuizMatrix() {
     currentCustom.text.trim().length > 0 &&
     currentCustom.options.every((o) => o.trim().length > 0);
 
+  // ── Random quiz variables (moved BEFORE early returns to keep hooks consistent) ──
+  const questions = quizBuilder.currentQuestions;
+  const totalQuestions = questions.length;
+  const currentQuestion = questions[localQIndex];
+  const answeredCount = quizBuilder.answers.length;
+  const allAnswered = answeredCount >= totalQuestions;
+
+  const existingAnswer = currentQuestion
+    ? quizBuilder.answers.find((a) => a.q_id === currentQuestion.id)
+    : null;
+
+  const handleSelectOption = useCallback(
+    (optionIndex: number) => {
+      if (selectedIdx !== null || isCorrectReveal || !currentQuestion) return;
+
+      const existing = quizBuilder.answers.find(
+        (a) => a.q_id === currentQuestion.id,
+      );
+      if (existing && existing.correct_idx === optionIndex) {
+        return;
+      }
+
+      setQuizAnswer(currentQuestion.id, optionIndex);
+      setSelectedIdx(optionIndex);
+      setIsCorrectReveal(true);
+
+      setTimeout(() => {
+        setSelectedIdx(null);
+        setIsCorrectReveal(false);
+
+        if (localQIndex < totalQuestions) {
+          setLocalQIndex((prev) => prev + 1);
+        }
+      }, 800);
+    },
+    [
+      selectedIdx,
+      isCorrectReveal,
+      currentQuestion,
+      quizBuilder.answers,
+      setQuizAnswer,
+      localQIndex,
+      totalQuestions,
+    ],
+  );
+
   // ══════════════════════════════════════════════
   //  RENDER: CHOOSE SCREEN
   // ══════════════════════════════════════════════
@@ -208,51 +254,6 @@ export default function SlideQuizMatrix() {
       </div>
     );
   }
-
-  const questions = quizBuilder.currentQuestions;
-  const totalQuestions = questions.length;
-  const currentQuestion = questions[localQIndex];
-  const answeredCount = quizBuilder.answers.length;
-  const allAnswered = answeredCount >= totalQuestions;
-
-  const existingAnswer = currentQuestion
-    ? quizBuilder.answers.find((a) => a.q_id === currentQuestion.id)
-    : null;
-
-  const handleSelectOption = useCallback(
-    (optionIndex: number) => {
-      if (selectedIdx !== null || isCorrectReveal || !currentQuestion) return;
-
-      const existing = quizBuilder.answers.find(
-        (a) => a.q_id === currentQuestion.id,
-      );
-      if (existing && existing.correct_idx === optionIndex) {
-        return;
-      }
-
-      setQuizAnswer(currentQuestion.id, optionIndex);
-      setSelectedIdx(optionIndex);
-      setIsCorrectReveal(true);
-
-      setTimeout(() => {
-        setSelectedIdx(null);
-        setIsCorrectReveal(false);
-
-        if (localQIndex < totalQuestions) {
-          setLocalQIndex((prev) => prev + 1);
-        }
-      }, 800);
-    },
-    [
-      selectedIdx,
-      isCorrectReveal,
-      currentQuestion,
-      quizBuilder.answers,
-      setQuizAnswer,
-      localQIndex,
-      totalQuestions,
-    ],
-  );
 
   // Completion — all 10 random answered
   if (allAnswered && localQIndex >= totalQuestions) {
