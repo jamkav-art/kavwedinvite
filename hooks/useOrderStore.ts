@@ -89,7 +89,6 @@ export const useOrderStore = create<OrderStore>()(
         return localStorage;
       }),
       partialize: (state) => ({
-        hasHydrated: state.hasHydrated,
         currentStep: state.currentStep,
         couple_name_1: state.couple_name_1,
         couple_name_2: state.couple_name_2,
@@ -104,7 +103,10 @@ export const useOrderStore = create<OrderStore>()(
       skipHydration: true,
       onRehydrateStorage: () => (state, error) => {
         if (error) return;
-        state?.setHasHydrated(true);
+        // Only set hasHydrated if it hasn't already been set by persisted state
+        if (!state?.hasHydrated) {
+          state?.setHasHydrated(true);
+        }
       },
     },
   ),
