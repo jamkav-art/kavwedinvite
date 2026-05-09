@@ -245,12 +245,31 @@ export const useAnniversaryOrderStore = create<AnniversaryOrderStore>()(
       }),
       skipHydration: true,
       onRehydrateStorage: () => (state, error) => {
-        if (error) return;
-        // Only set hasHydrated if it hasn't already been set by persisted state
-        // (prevents double-update cascade that causes infinite re-render loop)
-        if (!state?.hasHydrated) {
-          state?.setHasHydrated(true);
+        if (error) {
+          console.error(
+            "[useAnniversaryOrderStore] Rehydration error — resetting store",
+            error,
+          );
+          useAnniversaryOrderStore.getState().reset();
+          useAnniversaryOrderStore.getState().setHasHydrated(true);
+          return;
         }
+        // Validate rehydrated state — reset if currentStep is out of valid range
+        if (
+          state &&
+          (typeof state.currentStep !== "number" ||
+            state.currentStep < 1 ||
+            state.currentStep > 7)
+        ) {
+          console.warn(
+            "[useAnniversaryOrderStore] Invalid currentStep — resetting",
+            { currentStep: state.currentStep },
+          );
+          useAnniversaryOrderStore.getState().reset();
+        }
+        // Signal hydration complete (hasHydrated excluded from partialize;
+        // guard would be ineffective, so call unconditionally)
+        useAnniversaryOrderStore.getState().setHasHydrated(true);
       },
     },
   ),

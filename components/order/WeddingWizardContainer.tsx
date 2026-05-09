@@ -33,7 +33,8 @@ export default function WeddingWizardContainer({
   const prevStepRef = React.useRef(currentStep);
 
   React.useEffect(() => {
-    setDirection(currentStep > prevStepRef.current ? 1 : -1);
+    const newDirection = currentStep > prevStepRef.current ? 1 : -1;
+    setDirection(newDirection);
     prevStepRef.current = currentStep;
   }, [currentStep]);
 

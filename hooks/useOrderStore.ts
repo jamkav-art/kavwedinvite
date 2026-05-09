@@ -102,11 +102,32 @@ export const useOrderStore = create<OrderStore>()(
       }),
       skipHydration: true,
       onRehydrateStorage: () => (state, error) => {
-        if (error) return;
-        // Only set hasHydrated if it hasn't already been set by persisted state
-        if (!state?.hasHydrated) {
-          state?.setHasHydrated(true);
+        if (error) {
+          console.error(
+            "[useOrderStore] Rehydration error — resetting store to default",
+            error,
+          );
+          // Corrupted data: reset store to initial state
+          useOrderStore.getState().reset();
+          useOrderStore.getState().setHasHydrated(true);
+          return;
         }
+        // Validate rehydrated state — if currentStep is out of valid range, reset
+        if (
+          state &&
+          (typeof state.currentStep !== "number" ||
+            state.currentStep < 1 ||
+            state.currentStep > 24)
+        ) {
+          console.warn(
+            "[useOrderStore] Invalid currentStep in persisted state — resetting",
+            { currentStep: state.currentStep },
+          );
+          useOrderStore.getState().reset();
+        }
+        // Signal hydration complete (hasHydrated is excluded from partialize,
+        // so it's always false/undefined here — call unconditionally)
+        useOrderStore.getState().setHasHydrated(true);
       },
     },
   ),

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useOrderStore } from "@/hooks/useOrderStore";
 import WeddingWizardContainer from "@/components/order/WeddingWizardContainer";
 import SlideYourName from "@/components/order/SlideYourName";
@@ -138,11 +138,38 @@ export default function OrderPage() {
   const hasHydrated = useOrderStore((s) => s.hasHydrated);
   const currentStep = useOrderStore((s) => s.currentStep);
 
+  // ── Re-render safety net ──
+  // Resets the store if renders spike beyond 15 (catches infinite loops from corrupted data)
+  const renderCountRef = useRef(0);
+  renderCountRef.current += 1;
+
+  // Reset store if re-renders exceed threshold (indicates corrupted-state loop)
+  if (renderCountRef.current > 15) {
+    console.warn(
+      "[OrderPage] Re-render threshold exceeded — resetting store to default",
+      { renderCount: renderCountRef.current },
+    );
+    useOrderStore.getState().reset();
+    useOrderStore.getState().setHasHydrated(true);
+    // After reset, we must stop rendering or we'd loop forever
+    renderCountRef.current = 0;
+    // Re-render will settle with clean state
+  }
+
+  // ── Rehydration ──
   useEffect(() => {
-    useOrderStore.persist.rehydrate();
+    try {
+      useOrderStore.persist.rehydrate();
+    } catch (e) {
+      console.error("[OrderPage] Rehydration threw — resetting store", e);
+      useOrderStore.getState().reset();
+      useOrderStore.getState().setHasHydrated(true);
+    }
   }, []);
 
-  if (!hasHydrated) return <LoadingSkeleton />;
+  if (!hasHydrated) {
+    return <LoadingSkeleton />;
+  }
 
   const StepComponent = SLIDE_MAP[currentStep - 1];
 
