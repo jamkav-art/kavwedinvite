@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOrderStore } from "@/hooks/useOrderStore";
+import { useRazorpay } from "@/hooks/useRazorpay";
 import { TEMPLATES } from "@/lib/templates";
 import TemplatePreviewSlide from "./TemplatePreviewSlide";
 import CarouselNavigation from "./CarouselNavigation";
@@ -68,6 +69,7 @@ export default function SlideTemplateCarousel() {
   const selectTemplate = useOrderStore((s) => s.selectTemplate);
   const prevStep = useOrderStore((s) => s.prevStep);
   const reset = useOrderStore((s) => s.reset);
+  const { initializePayment, isLoading } = useRazorpay();
 
   const [carouselIndex, setCarouselIndex] = useState(0);
   const [direction, setDirection] = useState(0);
@@ -107,20 +109,26 @@ export default function SlideTemplateCarousel() {
 
   const handlePay = useCallback(
     (slug: string) => {
+      // Select the template first
       selectTemplate(slug);
-      // Trigger Razorpay payment flow
-      // This is handled by the existing PaymentButton/PaymentButtonEnhanced components
-      // For now, we just set the template and navigate to payment
-      // In production, this would integrate with useRazorpay.initializePayment
+      // Build the full order data from the store
       const store = useOrderStore.getState();
       store.selectTemplate(slug);
-      // For now, we'll just show an alert as placeholder
-      // The actual payment integration uses the existing PaymentButtonEnhanced
-      alert(
-        `Payment flow for "${slug}" template. Total: ₹399\n\nIn production, this will redirect to Razorpay checkout.`,
-      );
+      const orderData = {
+        couple_name_1: store.couple_name_1,
+        couple_name_2: store.couple_name_2,
+        wedding_date: store.wedding_date,
+        template_slug: slug,
+        events: store.events,
+        media: store.media,
+        phone_number: store.phone_number,
+        email: store.email,
+        custom_message: store.custom_message,
+      };
+      // Fire the actual Razorpay payment flow
+      initializePayment(orderData);
     },
-    [selectTemplate],
+    [selectTemplate, initializePayment],
   );
 
   const handleBackToEditing = () => {
