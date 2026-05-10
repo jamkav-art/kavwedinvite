@@ -158,7 +158,7 @@ export default function OrderPage() {
       goToStep(1);
       renderCountRef.current = 0;
     }
-  }, [renderCountRef.current, currentStep, goToStep]);
+  }, [currentStep, goToStep]);
 
   // ── Rehydration ──
   useEffect(() => {

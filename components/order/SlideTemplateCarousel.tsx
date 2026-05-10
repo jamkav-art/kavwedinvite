@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useOrderStore } from "@/hooks/useOrderStore";
 import { TEMPLATES } from "@/lib/templates";
@@ -28,17 +28,43 @@ const slideVariants = {
 };
 
 export default function SlideTemplateCarousel() {
-  const userData = useOrderStore((s) => ({
-    couple_name_1: s.couple_name_1,
-    couple_name_2: s.couple_name_2,
-    wedding_date: s.wedding_date,
-    template_slug: s.template_slug,
-    events: s.events,
-    media: s.media,
-    phone_number: s.phone_number,
-    email: s.email,
-    custom_message: s.custom_message,
-  }));
+  // Use individual primitive selectors instead of a combined object selector
+  // to avoid creating a new reference on every render (which caused React #185)
+  const couple_name_1 = useOrderStore((s) => s.couple_name_1);
+  const couple_name_2 = useOrderStore((s) => s.couple_name_2);
+  const wedding_date = useOrderStore((s) => s.wedding_date);
+  const template_slug = useOrderStore((s) => s.template_slug);
+  const events = useOrderStore((s) => s.events);
+  const media = useOrderStore((s) => s.media);
+  const phone_number = useOrderStore((s) => s.phone_number);
+  const email = useOrderStore((s) => s.email);
+  const custom_message = useOrderStore((s) => s.custom_message);
+
+  // Memoize the combined object so it only gets a new reference when a value actually changes
+  const userData = useMemo(
+    () => ({
+      couple_name_1,
+      couple_name_2,
+      wedding_date,
+      template_slug,
+      events,
+      media,
+      phone_number,
+      email,
+      custom_message,
+    }),
+    [
+      couple_name_1,
+      couple_name_2,
+      wedding_date,
+      template_slug,
+      events,
+      media,
+      phone_number,
+      email,
+      custom_message,
+    ],
+  );
   const selectTemplate = useOrderStore((s) => s.selectTemplate);
   const prevStep = useOrderStore((s) => s.prevStep);
   const reset = useOrderStore((s) => s.reset);
