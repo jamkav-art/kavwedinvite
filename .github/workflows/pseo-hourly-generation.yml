@@ -1,0 +1,129 @@
+# ============================================================================
+# WEDINVITER pSEO — Hourly Content Generation Workflow
+# ============================================================================
+# Runs every hour from 00:00 to 19:00 UTC (20 runs/day).
+# Each run generates 1 page, evaluates quality, publishes, and revalidates.
+# 4-hour maintenance window: 20:00-23:59 UTC.
+#
+# GitHub Secrets Required:
+#   SUPABASE_URL              — https://lmfpgmnsrhjrpzzedsjk.supabase.co
+#   SUPABASE_SERVICE_ROLE_KEY — Service role key from Supabase
+#   DEEPSEEK_API_KEY          — DeepSeek API key
+#   VERCEL_REVALIDATE_SECRET  — Random 32-char base64 secret
+#   NEXT_PUBLIC_SITE_URL      — https://wedinviter.wasleen.com
+# ============================================================================
+
+name: pSEO Hourly Generation
+
+on:
+  schedule:
+    # Run every hour from 00:00 to 19:00 UTC (20 runs per day)
+    # 4-hour maintenance window: 20:00-23:59 UTC
+    - cron: "0 0-19 * * *"
+
+  # Manual trigger for testing
+  workflow_dispatch:
+    inputs:
+      force_generate:
+        description: "Force generate even if queue is empty"
+        required: false
+        default: "false"
+        type: boolean
+
+# Prevent concurrent runs from picking the same queue item
+concurrency:
+  group: pseo-hourly
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    # Max 45 min per page (DeepSeek API can be slow under load)
+    timeout-minutes: 45
+
+    steps:
+      # --------------------------------------------------------------------
+      # Step 1: Checkout Repository
+      # --------------------------------------------------------------------
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # --------------------------------------------------------------------
+      # Step 2: Setup Node.js with caching
+      # --------------------------------------------------------------------
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # --------------------------------------------------------------------
+      # Step 3: Install Dependencies
+      # --------------------------------------------------------------------
+      - name: Install Dependencies
+        run: npm ci
+
+      # --------------------------------------------------------------------
+      # Step 4: Generate 1 Wedding Content Page
+      # --------------------------------------------------------------------
+      - name: Generate 1 Wedding Content Page
+        run: npx tsx scripts/pseo/generate-wedding-content.ts
+        env:
+          # Supabase
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          # DeepSeek AI
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          # Vercel revalidation
+          VERCEL_REVALIDATE_SECRET: ${{ secrets.VERCEL_REVALIDATE_SECRET }}
+          # Site URL
+          NEXT_PUBLIC_SITE_URL: ${{ secrets.NEXT_PUBLIC_SITE_URL }}
+
+      # --------------------------------------------------------------------
+      # Step 5: Notify on Failure (creates GitHub Issue)
+      # --------------------------------------------------------------------
+      - name: Notify on Failure
+        if: failure()
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const runUrl = `${context.serverUrl}/${context.repo.owner}/${context.repo.repo}/actions/runs/${context.runId}`;
+            const now = new Date().toISOString();
+
+            // Check if an issue already exists for today
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['pseo-alert'],
+            });
+
+            const todayDate = now.split('T')[0];
+            const existingIssue = issues.find(issue =>
+              issue.title.includes(todayDate)
+            );
+
+            if (existingIssue) {
+              // Append to existing issue
+              await github.rest.issues.createComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                issue_number: existingIssue.number,
+                body: `⚠️ Another failure at ${now}\nWorkflow: ${runUrl}`
+              });
+            } else {
+              // Create new issue
+              await github.rest.issues.create({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                title: `⚠️ pSEO Generation Failed — ${todayDate}`,
+                body: `Hourly pSEO generation failed at ${now}.\n\n` +
+                      `Check workflow logs: ${runUrl}\n\n` +
+                      `Possible causes:\n` +
+                      `1. DeepSeek API outage\n` +
+                      `2. Supabase connection issue\n` +
+                      `3. Queue empty\n` +
+                      `4. Script error`,
+                labels: ['pseo-alert', 'bug']
+              });
+            }
