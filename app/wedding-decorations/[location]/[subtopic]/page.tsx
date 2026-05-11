@@ -2,12 +2,9 @@
 // WEDINVITER pSEO — Wedding Decorations Pillar Route
 // ============================================================================
 
-import PseoPage, {
-  generatePseoMetadata,
-  PSEO_REVALIDATE,
-} from "@/lib/pseo/page-component";
+import PseoPage, { generatePseoMetadata } from "@/lib/pseo/page-component";
 
-export const revalidate = PSEO_REVALIDATE;
+export const revalidate = 86400;
 
 export async function generateMetadata({
   params,
