@@ -1,5 +1,6 @@
 import Link from "next/link";
 import EtherealParallaxBackground from "@/components/EtherealParallaxBackground";
+import { WedInviterLogoWithText } from "@/components/brand/WedInviterLogo";
 
 const WHATSAPP_NUMBER =
   process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "919846224086";
@@ -27,9 +28,7 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
             {/* Brand */}
             <div className="backdrop-blur-sm bg-white/[0.04] border border-white/10 rounded-2xl p-6">
-              <div className="font-[--font-cormorant] text-2xl font-semibold mb-3 logo-gradient-text">
-                Wed✦Inviter
-              </div>
+              <WedInviterLogoWithText size={40} />
               <p className="text-sm leading-relaxed text-stone-100/70 max-w-xs">
                 Premium digital wedding invitations delivered via WhatsApp.
                 Beautiful, shareable, and live within 24 hours.

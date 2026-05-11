@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { WedInviterLogoWithText } from "@/components/brand/WedInviterLogo";
 
 const navLinks = [
   {
@@ -125,9 +126,7 @@ export default function Header() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center">
-            <span className="logo-gradient-text font-[--font-cormorant] text-2xl font-semibold tracking-wide">
-              Wed✦Inviter
-            </span>
+            <WedInviterLogoWithText size={32} />
           </Link>
 
           {/* Desktop Nav */}

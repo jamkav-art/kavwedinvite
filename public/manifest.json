@@ -1,0 +1,23 @@
+{
+  "name": "WedInviter — Premium Digital Wedding Invitations",
+  "short_name": "WedInviter",
+  "description": "Create stunning digital wedding invitations in minutes. 8 premium templates, WhatsApp sharing, live RSVP.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FBF7F0",
+  "theme_color": "#C9A962",
+  "icons": [
+    {
+      "src": "/web-app-manifest-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/web-app-manifest-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

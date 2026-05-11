@@ -1,35 +1,36 @@
-'use client'
+"use client";
 
-import { useState, type FormEvent } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState, type FormEvent } from "react";
+import { useRouter } from "next/navigation";
+import { WedInviterLogoWithText } from "@/components/brand/WedInviterLogo";
 
 export default function LoginForm() {
-  const router = useRouter()
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const router = useRouter();
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: FormEvent) {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+    e.preventDefault();
+    setError("");
+    setLoading(true);
     try {
-      const res = await fetch('/api/admin/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const res = await fetch("/api/admin/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ password }),
-      })
+      });
       if (!res.ok) {
-        const data = (await res.json()) as { error?: string }
-        setError(data.error ?? 'Login failed')
-        return
+        const data = (await res.json()) as { error?: string };
+        setError(data.error ?? "Login failed");
+        return;
       }
-      router.push('/admin/dashboard')
-      router.refresh()
+      router.push("/admin/dashboard");
+      router.refresh();
     } catch {
-      setError('Network error. Please try again.')
+      setError("Network error. Please try again.");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }
 
@@ -37,15 +38,17 @@ export default function LoginForm() {
     <div className="min-h-screen bg-[#F0EDE8] flex items-center justify-center px-4">
       <div className="w-full max-w-sm">
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="font-[--font-cormorant] text-3xl font-semibold text-[--color-charcoal] mb-1">
-            Wed<span className="text-[--color-gold]">✦</span>Inviter
-          </div>
-          <p className="text-sm text-[--color-charcoal]/50">Admin Portal</p>
+        <div className="text-center mb-8 flex flex-col items-center">
+          <WedInviterLogoWithText size={48} />
+          <p className="text-sm text-[--color-charcoal]/50 mt-2">
+            Admin Portal
+          </p>
         </div>
 
         <div className="bg-white rounded-2xl shadow-xl shadow-black/8 p-8">
-          <h1 className="text-xl font-semibold text-[--color-charcoal] mb-6">Sign in</h1>
+          <h1 className="text-xl font-semibold text-[--color-charcoal] mb-6">
+            Sign in
+          </h1>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div>
@@ -82,11 +85,11 @@ export default function LoginForm() {
               {loading && (
                 <span className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
               )}
-              {loading ? 'Signing in…' : 'Sign in'}
+              {loading ? "Signing in…" : "Sign in"}
             </button>
           </form>
         </div>
       </div>
     </div>
-  )
+  );
 }

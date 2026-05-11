@@ -108,6 +108,15 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "WedInviter" }],
   creator: "WedInviter",
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+    ],
+    apple: [{ url: "/apple-icon.png", sizes: "180x180", type: "image/png" }],
+  },
+  manifest: "/manifest.json",
   openGraph: {
     type: "website",
     siteName: "WedInviter",
@@ -141,6 +150,9 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
+  },
+  other: {
+    "apple-mobile-web-app-capable": "yes",
   },
 };
 
