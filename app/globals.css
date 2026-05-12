@@ -2215,3 +2215,188 @@ body {
   background-size: 200% 200%;
   animation: wiz-btn-glow 3s ease infinite;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   CONTACT PAGE — 3D WEDDING/LOVE THEME EFFECTS
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 3D Card Float (perspective) ── */
+@keyframes card-3d-float {
+  0%,
+  100% {
+    transform: perspective(1200px) rotateY(-2deg) rotateX(2deg) translateY(0);
+  }
+  50% {
+    transform: perspective(1200px) rotateY(2deg) rotateX(-2deg)
+      translateY(-12px);
+  }
+}
+.card-3d-float {
+  animation: card-3d-float 6s ease-in-out infinite;
+}
+
+@keyframes card-3d-float-reverse {
+  0%,
+  100% {
+    transform: perspective(1200px) rotateY(2deg) rotateX(-2deg) translateY(0);
+  }
+  50% {
+    transform: perspective(1200px) rotateY(-2deg) rotateX(2deg) translateY(-8px);
+  }
+}
+.card-3d-float-reverse {
+  animation: card-3d-float-reverse 7s ease-in-out infinite;
+}
+
+/* ── 3D Floating Heart Pulse ── */
+@keyframes heart-float-3d {
+  0%,
+  100% {
+    transform: perspective(800px) translateZ(0) scale(1);
+    opacity: 0.6;
+  }
+  50% {
+    transform: perspective(800px) translateZ(60px) scale(1.15);
+    opacity: 1;
+  }
+}
+.heart-float-3d {
+  animation: heart-float-3d 3s ease-in-out infinite;
+}
+
+/* ── Floating 3D Orb ── */
+@keyframes orb-3d-float {
+  0%,
+  100% {
+    transform: perspective(800px) translateZ(0) translate(0, 0);
+  }
+  25% {
+    transform: perspective(800px) translateZ(40px) translate(10px, -15px);
+  }
+  50% {
+    transform: perspective(800px) translateZ(-10px) translate(-8px, 10px);
+  }
+  75% {
+    transform: perspective(800px) translateZ(20px) translate(12px, -5px);
+  }
+}
+
+/* ── Conic Gradient Ring Spin ── */
+@property --contact-ring-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.contact-ring-spin {
+  --contact-ring-angle: 0deg;
+  background: conic-gradient(
+    from var(--contact-ring-angle),
+    #e8638c,
+    #c9a962,
+    #a855f7,
+    #f7e7ce,
+    #e8638c
+  );
+  animation: contact-ring-spin 8s linear infinite;
+}
+@keyframes contact-ring-spin {
+  to {
+    --contact-ring-angle: 360deg;
+  }
+}
+
+/* ── 3D Button Glow Pulse ── */
+@keyframes contact-btn-glow {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(232, 99, 140, 0.3),
+      0 0 40px rgba(201, 169, 98, 0.15),
+      0 8px 32px rgba(0, 0, 0, 0.12);
+    transform: perspective(800px) translateZ(0);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(232, 99, 140, 0.5),
+      0 0 60px rgba(201, 169, 98, 0.25),
+      0 12px 40px rgba(0, 0, 0, 0.15);
+    transform: perspective(800px) translateZ(20px);
+  }
+}
+.contact-btn-glow {
+  animation: contact-btn-glow 3s ease-in-out infinite;
+}
+
+/* ── Shooting Star ── */
+@keyframes shooting-star {
+  0% {
+    transform: translateX(0) translateY(0) rotate(-35deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(-300px) translateY(300px) rotate(-35deg);
+    opacity: 0;
+  }
+}
+
+/* ── Contact Text Gradient Shimmer ── */
+.contact-grad-text {
+  background: linear-gradient(
+    135deg,
+    #e8638c,
+    #c9a962,
+    #a855f7,
+    #f7e7ce,
+    #e8638c
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: contact-grad-shimmer 5s ease-in-out infinite;
+}
+@keyframes contact-grad-shimmer {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* ── Contact Heading Gradient ── */
+.contact-heading-grad {
+  background: linear-gradient(
+    135deg,
+    #e8638c 0%,
+    #c0185f 25%,
+    #c9a962 50%,
+    #a855f7 75%,
+    #e8638c 100%
+  );
+  background-size: 300% 300%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: contact-grad-shimmer 6s ease-in-out infinite;
+}
+
+/* ── Floating Petal 3D ── */
+@keyframes petal-drift-3d {
+  0% {
+    transform: perspective(600px) rotateY(0deg) translateY(0) rotate(0deg);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  80% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: perspective(600px) rotateY(360deg) translateY(-120px)
+      rotate(180deg);
+    opacity: 0;
+  }
+}

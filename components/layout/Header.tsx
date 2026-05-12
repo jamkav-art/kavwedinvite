@@ -26,7 +26,7 @@ const navLinks = [
       "linear-gradient(135deg, #F7E7CE 0%, #C9A962 35%, #E8638C 65%, #C9A962 100%)",
   },
   {
-    href: "/#contact",
+    href: "/contact",
     label: "Contact",
     gradient:
       "linear-gradient(135deg, #C0185F 0%, #E8638C 35%, #C9A962 65%, #F7E7CE 100%)",
